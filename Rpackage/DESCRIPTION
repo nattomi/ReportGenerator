@@ -1,0 +1,13 @@
+Package: otulea
+Type: Package
+Title: A collection of R functions utilized by the OTULEA project. 
+Version: 0.1
+Date: 2009-05-21
+Author: Tam\'{a}s Nagy
+Maintainer: Tam\'{a}s Nagy <nagy@uni-bremen.de>
+Depends: XML
+Description: A collection of R functions utilized by the OTULEA project.
+License: GPL-2
+LazyLoad: yes
+LazyData: yes
+Packaged: 2012-04-09 14:17:17 UTC; nattomi

@@ -1,0 +1,30 @@
+	alphaliste.XML consists only of 
+	<alphalist> and it's subnodes <alphanode>
+
+-----------------
+  <alphalist 
+  lang="german"
+  	- language used in the list
+  >
+
+----------------
+	<alphanode 
+	alphaID="2.1.01"" 
+		-	unique ID for each "discretionary clauses" (Kannbestimmung)
+		- first number is the cathegory (1=reading, 2=writing, 3=language, 4=calculation/math)
+		- coresponds to "alphalevel" in (<mark ... alphalevel=".." ....>) of the user-question-XML-files 
+  				
+	order="620"
+		- difficulty of the "discretionary clauses" (Kannbestimmung) in upgrowing order
+		- the initial value for each cathegory ist diffrent
+		- in case of new "discretionary clauses" or statistical evaluation the values may change
+
+	description="Kann buchstabierte einzelne Laute verschriftlichen" 
+		- description of the "discretionary clauses" (Kannbestimmung) (sientific)
+		
+	userdescription="Ich kann einfache Buchstaben schreiben." 
+		- easy discription for users of the "discretionary clauses" (Kannbestimmung) (user like)
+		
+	example="m, l, s, r, f, w, sch, a, e, i, o, u"
+		- example for the "discretionary clauses" (Kannbestimmung)
+	/>

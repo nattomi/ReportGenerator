@@ -1,0 +1,69 @@
+<item>
+  <itemnumber>2.2.01_II</itemnumber>
+  <meta_item>cloze</meta_item>
+  <Item_creation>
+    <version>2</version>
+    <date>6.1.2012</date>
+    <person>Jan Kuester</person>
+  </Item_creation>
+  <presets>
+    <preset purpose="text" style="normal" font="Ideal-0" size="12" color="black"/>
+  </presets>
+  <instruction>
+    <in_text style="bold" font="Verdana" size="14" color="white" sound="2.2.01_II_question_instruct_1.mp3">Martina braucht für ihre Arbeit verschiedene Gegenstände.</in_text>
+    <media file="martinamalt-braun-rahmmen.jpg"/>
+  </instruction>
+  <questions>
+    <questionpage>
+      <q_text sound="2.2.01_II_question_instruct_2.mp3">Schauen Sie sich die Bilder an. Klicken Sie mit der linken Maustaste auf das Lautsprecher-Symbol, hören Sie zu und tippen Sie die gesprochenen Wörter mit der Tastatur in die freien Felder.</q_text>
+      <question>
+        <answertext>
+          <media file="Pinsel.png"/>
+          <gap answerid="2.2.01_II_1" style="TextInput_blue_22" length="20" sound="2.2.01_II_question_1.mp3"/>
+        </answertext>
+      </question>
+      <question>
+        <answertext>
+          <media file="eimer.png"/>
+          <gap answerid="2.2.01_II_2" style="TextInput_blue_22" length="20" sound="2.2.01_II_question_2.mp3"/>
+        </answertext>
+      </question>
+      <question>
+        <answertext>
+          <media file="tapete.png"/>
+          <gap answerid="2.2.01_II_3" style="TextInput_blue_22" length="20" sound="2.2.01_II_question_3.mp3"/>
+        </answertext>
+      </question>
+    </questionpage>
+  </questions>
+  <answers>
+    <answer answerid="2.2.01_II_1" question="1" ability="1">Pinsel</answer>
+    <answer answerid="2.2.01_II_2" question="1" ability="1">Eimer mit Farbe</answer>
+    <answer answerid="2.2.01_II_3" question="1" ability="1">Tapete</answer>
+  </answers>
+  <correctResponse>
+    <value itemnumber="2.2.01_II_1" answerid="2.2.01_II_1" casesensitiv="no" match="full" points="1">Pinsel</value>
+    <value itemnumber="2.2.01_II_2a" answerid="2.2.01_II_2" casesensitiv="no" match="in" matchlength="2" points="1">er</value>
+    <value itemnumber="2.2.01_II_2b" answerid="2.2.01_II_2" casesensitiv="no" match="last" matchlength="2" points="1">be</value>
+    <value itemnumber="2.2.01_II_3" answerid="2.2.01_II_3" casesensitiv="no" match="in" matchlength="2" points="1">pe</value>
+  </correctResponse>
+  <abilities>
+    <ability number="1" alphalevel="2.2.06">Geschlossene Silben, KB 2.2.06</ability>
+    <ability number="2" alphalevel="2.2.05">Wortendungen mit kurzem 'e', KB 2.2.05</ability>
+    <ability number="3" alphalevel="2.2.09">Weiche Stoppkonsonanten, KB 2.2.09</ability>
+    <ability number="4" alphalevel="2.2.10">Harte Stoppkonsonanten, KB 2.2.10</ability>
+  </abilities>
+  <marking>
+    <pointuse maxpoint="1">0</pointuse>
+    <mark itemnumber="2.2.01_II_1" alphalevel="2.2.06" dimension="2" level="2" counter="06">1</mark>
+    <mark itemnumber="2.2.01_II_2a" alphalevel="2.2.05" dimension="2" level="2" counter="05">1</mark>
+    <mark itemnumber="2.2.01_II_2b" alphalevel="2.2.09" dimension="2" level="2" counter="09">1</mark>
+    <mark itemnumber="2.2.01_II_3" alphalevel="2.2.10" dimension="2" level="2" counter="10">1</mark>
+  </marking>
+  <time>
+    <start_time>2012_3_27_14_31_4</start_time>
+    <end_time>2012_3_27_14_31_39</end_time>
+    <time_consumption>35</time_consumption>
+  </time>
+  <usernumber>6CKBT</usernumber>
+</item>
