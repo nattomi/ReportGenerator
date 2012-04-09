@@ -1,0 +1,58 @@
+<html>
+  <body>
+  <head>
+    <title>OTULEA DEV</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  </head>
+  <form action="index.html", method="POST">
+      Select test:
+<%
+## This code snippet is for dynamically creating the select form
+dir <- "/var/www/otulea/data/user/6CKBT";
+exclude <- "6CKBT.xml";
+opts <- list.files(dir);
+realopts <- setdiff(opts,exclude);
+##realopts <- realopts[2];
+select <- newXMLNode("select", attrs=c(name="test"));
+realopts.XML <- lapply(realopts,function(x)
+                       newXMLNode("option", attrs=c(id=x), x));
+addChildren(select, realopts.XML);
+cat(saveXML(select));
+%>
+	  <input type="submit" value="Ruckmeldung 1a" />
+  </form>
+
+
+
+  <pre>
+    <code>
+<%
+fName <- POST$test;
+alphalist <- "/var/www/otulea/data/item/alphalist/alphalist.XML";
+if (!is.null(fName)) {
+  ## writing out 'server side cookie' in order to remember which option was selected
+  cookie <- tempfile()
+  write(fName,file=cookie)
+  ## mining out information from XML files
+  testfile <- file.path(dir,fName)
+  doc.test <- xmlInternalTreeParse(testfile)
+  doc.alphalist <- xmlInternalTreeParse(alphalist)
+  abilities <- getNodeSet(doc.test,"//abilities")
+  listOfAbilities <- abilities[[1]]
+  alphalevels <- xmlSApply(listOfAbilities,xmlGetAttr,"alphalevel")
+  names(alphalevels) <- NULL
+  ans <- as.data.frame(t(sapply(alphalevels,function(x) c(userdescription=getUserDescription(doc.alphalist,x),example=getExample(doc.alphalist,x)))))
+print(ans)
+## set selection based on the information stored in our cookie, using generated javascript
+getcookie <- readLines(cookie)
+cat("<script type='text/javascript'>\n")
+cat("document.getElementById('",getcookie,"').selected=true;\n",sep="")
+cat("</script>\n");
+## remove cookie
+file.remove(cookie);
+};
+%>
+	 </code>
+  </pre>
+  </body>
+</html>
