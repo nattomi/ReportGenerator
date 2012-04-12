@@ -7,6 +7,8 @@
   <form action="index.html", method="POST">
       Select test:
 <%
+##require(XML) ## enabled on the server by default
+##require(otulea) ## enabled on the server by default
 ## This code snippet is for dynamically creating the select form
 dir <- "/var/www/otulea/data/user/6CKBT";
 exclude <- "6CKBT.xml";
@@ -27,7 +29,9 @@ cat(saveXML(select));
   <pre>
     <code>
 <%
+require(xtable)
 fName <- POST$test;
+##fName <- realopts[1] ## only for debugging
 alphalist <- "/var/www/otulea/data/item/alphalist/alphalist.XML";
 if (!is.null(fName)) {
   ## writing out 'server side cookie' in order to remember which option was selected
@@ -35,14 +39,18 @@ if (!is.null(fName)) {
   write(fName,file=cookie)
   ## mining out information from XML files
   testfile <- file.path(dir,fName)
-  doc.test <- xmlInternalTreeParse(testfile)
+  doc.test <- xmlInternalTreeParse(testfile)	      
+  ##x <- readLines(alphalist)
   doc.alphalist <- xmlInternalTreeParse(alphalist)
+  ##doc.alphalist <- alphalist
   abilities <- getNodeSet(doc.test,"//abilities")
   listOfAbilities <- abilities[[1]]
   alphalevels <- xmlSApply(listOfAbilities,xmlGetAttr,"alphalevel")
   names(alphalevels) <- NULL
-  ans <- as.data.frame(t(sapply(alphalevels,function(x) c(userdescription=getUserDescription(doc.alphalist,x),example=getExample(doc.alphalist,x)))))
-print(ans)
+  ##print(xmlAttrs(xmlChildren(doc.alphalist)[[1]][[3]])["userdescription"])
+  ans <- as.data.frame(t(sapply(alphalevels,function(x) c(userdescription=getUserDescription(doc.alphalist,x),example=getExample(doc.alphalist,x)))),stringsAsFactors =F)
+tab <- xtable(ans)
+print(tab,type="html",include.rownames=F)
 ## set selection based on the information stored in our cookie, using generated javascript
 getcookie <- readLines(cookie)
 cat("<script type='text/javascript'>\n")

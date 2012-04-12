@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-15"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <alphalist lang="german">
 	<alphanode alphaID="1.2.1.2" order="60" description="Kann Zeitpläne sinnentnehmend lesen" userdescription="Ich kann Zeitpläne lesen" example="" />
 	<alphanode alphaID="1.2.1.1" order="50" description="Kann Wörter mit ansteigender Komplexität (Konsonantenhäufung) recodieren und decodieren" userdescription="Ich kann einfache Wörter erkennen und lesen" example="" />
