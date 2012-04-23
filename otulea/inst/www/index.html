@@ -3,25 +3,32 @@
   <head>
     <title>OTULEA DEV</title>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<%
+## SETTINGS
+## directory which holds the sample tests taken:
+dir <- "/var/www/otulea/data/user/6CKBT";
+## there is a file in the above directory which is not a test file,
+## we can specify its name here:
+exclude <- "6CKBT.xml";
+## location of alphalist.XML
+alphalist <- "/var/www/otulea/data/item/alphalist/alphalist.XML"
+%>
   </head>
   <form action="index.html", method="POST">
       Select test:
 <%
-##require(XML) ## enabled on the server by default
-##require(otulea) ## enabled on the server by default
-## This code snippet is for dynamically creating the select form
-dir <- "/var/www/otulea/data/user/6CKBT";
-exclude <- "6CKBT.xml";
 opts <- list.files(dir);
 realopts <- setdiff(opts,exclude);
 ##realopts <- realopts[2];
+## creating form elements dinamically
 select <- newXMLNode("select", attrs=c(name="test"));
 realopts.XML <- lapply(realopts,function(x)
                        newXMLNode("option", attrs=c(id=x), x));
 addChildren(select, realopts.XML);
 cat(saveXML(select));
 %>
-	  <input type="submit" value="Ruckmeldung 1a" />
+	  <input type="submit" value="Rückmeldung 2a" name="r2a" />
+	  <input type="submit" value="Rückmeldung 2b" name="r2b" />
   </form>
 
 
@@ -29,36 +36,48 @@ cat(saveXML(select));
   <pre>
     <code>
 <%
-require(xtable)
-fName <- POST$test;
+fName <- POST$test
 ##fName <- realopts[1] ## only for debugging
-alphalist <- "/var/www/otulea/data/item/alphalist/alphalist.XML";
+## The whole thing is in an if clause because that content
+## of the variable fName is NULL when the page is loaded for the first time
+## a better fix for this might exists...
 if (!is.null(fName)) {
   ## writing out 'server side cookie' in order to remember which option was selected
+  ## there is a command setCookie in rApache, maybe I can replace this
+  ## part with this built-in function in the future
   cookie <- tempfile()
   write(fName,file=cookie)
-  ## mining out information from XML files
+  ## reading alphalist.XML and converting it to a data.frame 
+  alphalist.df.unordered <- alphalist2df(alphalist)
+  ## sorting by alphaID
+  reorder <- order(alphalist.df.unordered$alphaID)
+  alphalist.df <- alphalist.df.unordered[reorder,]
+  ## getting KB's from selected test file
   testfile <- file.path(dir,fName)
-  doc.test <- xmlInternalTreeParse(testfile)	      
-  ##x <- readLines(alphalist)
-  doc.alphalist <- xmlInternalTreeParse(alphalist)
-  ##doc.alphalist <- alphalist
+  doc.test <- xmlInternalTreeParse(testfile)
   abilities <- getNodeSet(doc.test,"//abilities")
   listOfAbilities <- abilities[[1]]
-  alphalevels <- xmlSApply(listOfAbilities,xmlGetAttr,"alphalevel")
+  alphalevels <- sort(xmlSApply(listOfAbilities,xmlGetAttr,"alphalevel"))
   names(alphalevels) <- NULL
-  ##print(xmlAttrs(xmlChildren(doc.alphalist)[[1]][[3]])["userdescription"])
-  ans <- as.data.frame(t(sapply(alphalevels,function(x) c(userdescription=getUserDescription(doc.alphalist,x),example=getExample(doc.alphalist,x)))),stringsAsFactors =F)
-tab <- xtable(ans)
-print(tab,type="html",include.rownames=F)
-## set selection based on the information stored in our cookie, using generated javascript
-getcookie <- readLines(cookie)
-cat("<script type='text/javascript'>\n")
-cat("document.getElementById('",getcookie,"').selected=true;\n",sep="")
-cat("</script>\n");
-## remove cookie
-file.remove(cookie);
-};
+  ## finding the corresponding row indices in alphalist.df
+  ind2a <- alphalist.df$alphaID %in% alphalevels
+  ## Are we reporting 2a or 2b?
+  if ("r2a" %in% names(POST)) {
+    ind <- ind2a
+  } else {
+    ind2b <- rev(rev(c(FALSE,ind2a))[-1])
+    ind <- as.logical((!ind2a)*(ind2a + ind2b))
+  }
+  tab <- xtable(alphalist.df[ind,c("userdescription","example")])
+  print(tab,type="html",include.rownames=F)
+  ## set selection based on the information stored in our cookie, using generated javascript
+  getcookie <- readLines(cookie)
+  cat("<script type='text/javascript'>\n")
+  cat("document.getElementById('",getcookie,"').selected=true;\n",sep="")
+  cat("</script>\n")
+  ## remove cookie
+  file.remove(cookie)
+}
 %>
 	 </code>
   </pre>

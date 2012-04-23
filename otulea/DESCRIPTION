@@ -2,7 +2,7 @@ Package: otulea
 Type: Package
 Title: A collection of R functions utilized by the OTULEA project. 
 Version: 0.1
-Date: 2009-05-21
+Date: 2012-04-22
 Author: Tam\'{a}s Nagy
 Maintainer: Tam\'{a}s Nagy <nagy@uni-bremen.de>
 Depends: XML
