@@ -1,1 +1,23 @@
 OTULEAR - The daRk side of OTULEA
+
+Downloading
+===========
+cd /tmp
+git clone git://github.com/nattomi/otulear.git
+
+Installing the R package
+========================
+cd otulear
+R CMD INSTALL otulea -l /usr/local/lib/R/site-library
+
+Installing the develompment version of the web application
+==========================================================
+We assume that our Apache root folder is /var/www
+cp -r otulea/inst/otulea.conf /etc/apache2/conf.d/
+(then restart Apache)
+mkdir /var/www/otulea
+cp -r otulea/inst/www/data /var/www/otulea/data
+mkdir /var/www/brew
+cp -r otulea/inst/www/otulea.html /var/www/brew/
+ 
+
