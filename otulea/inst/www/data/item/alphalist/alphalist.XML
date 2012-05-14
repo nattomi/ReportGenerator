@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="ISO-8859-15"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <alphalist lang="german">
 	<alphanode alphaID="1.2.1.2" order="60" description="Kann Zeitpläne sinnentnehmend lesen" userdescription="Ich kann Zeitpläne lesen" example="" />
 	<alphanode alphaID="1.2.1.1" order="50" description="Kann Wörter mit ansteigender Komplexität (Konsonantenhäufung) recodieren und decodieren" userdescription="Ich kann einfache Wörter erkennen und lesen" example="" />
@@ -15,7 +15,7 @@
 	<alphanode alphaID="1.5.4.1" order="200" description="Kann aus mittelschweren Texten mit erläuternden Bildern 1-3 indirekt enthaltene Informationen entnehmen" userdescription="Ich kann aus kurzen und einfachen Texten mit Bildern1- 3 Informationen heraussuchen, die nicht direkt im Text zu erkennen sind" example="" />
 	<alphanode alphaID="1.6.6.1" order="210" description="Kann aus mittelschweren und angrenzenden Texten 1-3 direkt enthaltene/wörtliche Informationen entnehmen" userdescription="Ich kann aus mittelschweren und unterschiedlichen Texten 1-3 Informationen heraussuchen." example="" />
 	<alphanode alphaID="1.6.6.2" order="220" description="Kann aus mittelschweren und angrenzenden Texten 1-3 indirekt enthaltene Informationen entnehmen" userdescription="Ich kann aus mittelschweren und unterschiedlichen Texten 1-3 Informationen heraussuchen, die im Text nicht direkt zu erkennen sind." example="" />
-	<alphanode alphaID="2.1.01"" order="620" description="Kann buchstabierte einzelne Laute verschriftlichen" userdescription="Ich kann einfache Buchstaben schreiben." example="m, l, s, r, f, w, sch, a, e, i, o, u" />
+	<alphanode alphaID="2.1.01" order="620" description="Kann buchstabierte einzelne Laute verschriftlichen" userdescription="Ich kann einfache Buchstaben schreiben." example="m, l, s, r, f, w, sch, a, e, i, o, u" />
 	<alphanode alphaID="2.1.02" order="630" description="Kann lautierte einzelne Laute verschriftlichen" userdescription="Ich kann vorgesprochene Buchstaben schreiben" example="m, l, s, r, f, w, sch, a, e, i, o, u" />
 	<alphanode alphaID="2.1.03" order="640" description="Kann Groß- und Kleinbuchstaben in Druckschrift unterscheiden" userdescription="Ich kann Großbuchstaben und Kleinbuchstaben unterscheiden." example="anA mnM" />
 	<alphanode alphaID="2.1.04" order="650" description="Kann Wörter mit Silben, die aus einem Vokal oder Diphthong bestehen schreiben (O-ma, Au-to)" userdescription="Ich kann Silben schreiben, die aus nur einem Laut bestehen." example="Ei, Au-to" />
@@ -39,10 +39,10 @@
 	<alphanode alphaID="2.2.08" order="830" description="Kann Konkreta großschreiben" userdescription="Ich schreibe groß, was ich sehen oder anfassen kann." example="das Kind, das Flugzeug" />
 	<alphanode alphaID="2.2.09" order="840" description="Kann Wörter mit Dauerkonsonaten (schm, schr, schl, schn) schreiben" userdescription="Ich kann Wörter mit zwei Mitlauten schnell, am Wortanfang schreiben. (schn..., schm..., schr..., schl...)" example="schnell, schreiben, schminken" />
 	<alphanode alphaID="2.2.10" order="850" description="Kann Wörter mit Hilfe von kurzen Wortlisten korrigieren" userdescription="Ich kann mit Hilfe von kurzen Wortlisten korrigieren." example="Schpigel ¨ Spiegel" />
-	<alphanode alphaID="2.2.11" order="860" description="Kann Wörter mit der Vorsilbe "vor” richtig schreiben" userdescription="Ich schreibe Wörter mit der Vor- silbe „vor-” mit v" example="Vorsorge, Vorteil" />
+	<alphanode alphaID="2.2.11" order="860" description="Kann Wörter mit der Vorsilbe 'vor' richtig schreiben" userdescription="Ich schreibe Wörter mit der Vor- silbe „vor-” mit v" example="Vorsorge, Vorteil" />
 	<alphanode alphaID="2.3.01" order="870" description="Kann kurze und geläufige Funktionswörter aufschreiben III (je, für, nur, ob)" userdescription="Ich kann kurze und geläufige Wörter schreiben. (Teil 3)" example="je, für, nur, ob" />
 	<alphanode alphaID="2.3.02" order="880" description="Kann Wörter mit Dauerkonsonanten (fr) schreiben" userdescription="Ich kann Wörter mit 2 Mitlauten am Wortanfang schreiben." example="frisch, Freitag" />
-	<alphanode alphaID="2.3.03" order="890" description="Kann §viel/viele" richtig schreiben (Item lässt sich nicht zu anderen gruppieren)" userdescription="Ich kann viel/viele richtig schreiben" example="viel / viele" />
+	<alphanode alphaID="2.3.03" order="890" description="Kann viel/viele richtig schreiben (Item lässt sich nicht zu anderen gruppieren)" userdescription="Ich kann viel/viele richtig schreiben" example="viel / viele" />
 	<alphanode alphaID="2.3.04" order="900" description="Kann Satzschlusszeichen anwenden (Fragezeichen)" userdescription="Ich kann das Fragezeichen anwenden." example="Was würden Sie tun?" />
 	<alphanode alphaID="2.3.05" order="910" description="Kann aggregierte Konkreta groß schreiben (Einzelhandel)" userdescription="Ich erkenne Hauptwörter, die abstrakter (nicht greifbar) sind und schreibe sie groß." example="Einzelhandel" />
 	<alphanode alphaID="2.3.06" order="920" description="Kann die Auslautverhärtung bei Substantiven beachten (Bund, Krieg)" userdescription="Ich kann die Auslautverhärtung bei Hauptwörtern beachten." example="Kind ¨ Kinder Flugzeug¨ Flugzeuge" />
@@ -52,7 +52,7 @@
 	<alphanode alphaID="2.4.01" order="960" description="Kann die Auslautverhärtung bei Adjektiven beachten (spannend)" userdescription="Ich kann die Auslautverhärtung bei Adjektiven beachten." example="gesund ¨ gesünder" />
 	<alphanode alphaID="2.4.02" order="970" description="Schreibung aufeinanderfolgender gleicher Buchstaben bei Wortzusammen- setzungen (Fahr-rad) bei höherer Gebräuchlichkeit können Wörter auch schon auf früheren Levels geschrieben werden" userdescription="Ich erkenne bei zusammengefügten Wörtern aufeinanderfolgende gleiche Buchstaben." example="Fahrrad, Auflaufform" />
 	<alphanode alphaID="2.4.03" order="980" description="Kann Längenzeichen verwenden I (Dehnungs-h + ie)" userdescription="Ich kann Längenzeichen verwenden (Dehnungs-h, ie)." example="L(ie)ferant, St(üh)le" />
-	<alphanode alphaID="2.4.04" order="990" description="Kann dei Vorsilbe "ver” richtig schreiben" userdescription="Ich kann die Vorsilbe „ver-” richtig mit v schreiben." example="(Ver)kehr, (Ver)such" />
+	<alphanode alphaID="2.4.04" order="990" description="Kann dei Vorsilbe 'ver' richtig schreiben" userdescription="Ich kann die Vorsilbe „ver-” richtig mit v schreiben." example="(Ver)kehr, (Ver)such" />
 	<alphanode alphaID="2.4.05" order="1000" description="Kann s-Laute richtig verwenden (ß, ss)" userdescription="Ich kann s-Laute (Zischlaute) richtig verwenden (ss, ß)." example="Grü(ß)e, Ka(ss)e" />
 	<alphanode alphaID="2.4.06" order="1010" description="Kann Kürzungszeichen verwenden (auch ck, tz)" userdescription="Ich kann Kürzungszeichen verwenden (ck, tz)." example="si(tz)en, auspa(ck)en" />
 	<alphanode alphaID="2.4.07" order="1020" description="Kann bei definitiv abstrakten Substantiven (Höflichkeit, Situation) Großschreibung beachten" userdescription="Ich erkenne abstrakte (nicht greifbare) Hauptwörter und schreibe sie groß." example="(H)öflichkeit, (S)ituation" />
