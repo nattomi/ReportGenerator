@@ -10,4 +10,3 @@ Description: A collection of R functions utilized by the OTULEA project.
 License: GPL-2
 LazyLoad: yes
 LazyData: yes
-Packaged: 2012-04-09 14:17:17 UTC; nattomi
