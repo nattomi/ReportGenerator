@@ -4,81 +4,66 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <%
 ## SETTINGS
-## directory which holds the sample tests taken:
-dir <- "/var/www/otulea/data/user/6CKBT";
-## there is a file in the above directory which is not a test file,
-## we can specify its name here:
-exclude <- "6CKBT.xml";
-## location of alphalist.XML
-alphalist <- "/var/www/otulea/data/item/alphalist/alphalist.XML"
 %>
   </head>
   <body>
-  <p><a href="data/user/6CKBT">Show me</a> the raw XML data of the tests taken!</p>
-  <form action="otulea", method="POST">
-      Select test:
+<!--  <p><a href="data/user/6CKBT">Show me</a> the raw XML data of the tests taken!</p>-->
+  <form action="" method="POST">
+      Select user:
 <%
-opts <- list.files(dir);
-realopts <- setdiff(opts,exclude);
-##realopts <- realopts[2];
-## creating form elements dinamically
-select <- newXMLNode("select", attrs=c(name="test"));
-realopts.XML <- lapply(realopts,function(x)
-                       newXMLNode("option", attrs=c(id=x), x));
-addChildren(select, realopts.XML);
-cat(saveXML(select));
+## option for selecting user
+opts <- list.files(usersDir)
+select <- newXMLNode("select", attrs=c(name="user"))
+opts.XML <- lapply(opts,function(x)
+            newXMLNode("option", attrs=c(id=x), x))
+addChildren(select, opts.XML)
+cat(saveXML(select),"<br>")
 %>
-	  <input type="submit" value="Rückmeldung 2a" name="r2a" />
-	  <input type="submit" value="Rückmeldung 2b" name="r2b" />
+  Select threshold:
+<%
+## option for selecting threshold
+thresh <- seq(0,100,10)
+select <- newXMLNode("select", attrs=c(name="threshold"))
+thresh.XML <- lapply(thresh,function(x)
+                         newXMLNode("option", attrs=c(id=paste("thresh",x,sep="_")), x))
+addChildren(select, thresh.XML)
+cat(saveXML(select),"<br>")
+%>
+  Limit result hits by:
+<%
+## option for limiting the number of results
+maxlist <- seq(0,10,1)
+select <- newXMLNode("select", attrs=c(name="maxlist"))
+maxlist.XML <- lapply(maxlist,function(x)
+                         newXMLNode("option", attrs=c(id=paste("maxlist",x,sep="_")), x))
+addChildren(select, maxlist.XML)
+cat(saveXML(select),"<br>")
+%>
+
+	  <input type="submit" value="Eval mode A" name="A" />
   </form>
 
-
+<hr>
 
   <pre>
     <code>
 <%
-fName <- POST$test
-##fName <- realopts[1] ## only for debugging
-## The whole thing is in an if clause because that content
-## of the variable fName is NULL when the page is loaded for the first time
-## a better fix for this might exists...
-if (!is.null(fName)) {
-  ## writing out 'server side cookie' in order to remember which option was selected
-  ## there is a command setCookie in rApache, maybe I can replace this
-  ## part with this built-in function in the future
-  cookie <- tempfile()
-  write(fName,file=cookie)
-  ## reading alphalist.XML and converting it to a data.frame 
-  alphalist.df.unordered <- alphalist2df(alphalist)
-  ## sorting by alphaID
-  reorder <- order(alphalist.df.unordered$alphaID)
-  alphalist.df <- alphalist.df.unordered[reorder,]
-  ## getting KB's from selected test file
-  testfile <- file.path(dir,fName)
-  doc.test <- xmlInternalTreeParse(testfile)
-  abilities <- getNodeSet(doc.test,"//abilities")
-  listOfAbilities <- abilities[[1]]
-  alphalevels <- sort(xmlSApply(listOfAbilities,xmlGetAttr,"alphalevel"))
-  names(alphalevels) <- NULL
-  ## finding the corresponding row indices in alphalist.df
-  ind2a <- alphalist.df$alphaID %in% alphalevels
-  ## Are we reporting 2a or 2b?
-  if ("r2a" %in% names(POST)) {
-    ind <- ind2a
-  } else {
-    ind2b <- rev(rev(c(FALSE,ind2a))[-1])
-    ind <- as.logical((!ind2a)*(ind2a + ind2b))
-  }
-  tab <- xtable(alphalist.df[ind,c("userdescription","example")])
-  print(tab,type="html",include.rownames=F)
-  ## set selection based on the information stored in our cookie, using generated javascript
-  getcookie <- readLines(cookie)
-  cat("<script type='text/javascript'>\n")
-  cat("document.getElementById('",getcookie,"').selected=true;\n",sep="")
-  cat("</script>\n")
-  ## remove cookie
-  file.remove(cookie)
+if (!is.null(POST)) { ## content of POST is NULL when the page is loaded for the first time and no eval button is pressed yet
+## passing parameters HTML >> R
+user <- as.character(POST$user)
+threshold <- as.numeric(POST$threshold)
+maxListings <- as.integer(POST$maxlist)
+## the actual calculation 
+ans <- getAlphalevels(user,threshold,maxListings)
+print(ans)
 }
+## set selection (instead of falling back to default)
+## using JavaScript here is a bit dirty, but I can't think of any better way
+cat("<script type='text/javascript'>\n")
+cat("document.getElementById('",POST$user,"').selected=true;\n",sep="")
+cat("document.getElementById('",paste('thresh',POST$threshold,sep='_'),"').selected=true;\n",sep="")
+cat("document.getElementById('",paste('maxlist',POST$maxlist,sep='_'),"').selected=true;\n",sep="")
+cat("</script>\n")
 %>
 	 </code>
   </pre>
