@@ -21,7 +21,8 @@ getAlphalevels <- function(user, threshold, maxListings) {
   tests <- list.tests(guf)
   ## getting the last test taken
   tests.last <- last(tests)
-  testresults <- file.path(userDir,test2df(tests.last)$data)
+  tests.last.df <- test2df(tests.last)
+  testresults <- file.path(userDir,tests.last.df$data)
   markings <- getMarkings(testresults)
   
   ## Derivation of results
@@ -52,5 +53,6 @@ getAlphalevels <- function(user, threshold, maxListings) {
   alphas <- list(A1=alphas.A1,A2=alphas.A2,A3=alphas.A3)
   ## limit the number of results
   alphas.limited <- lapply(alphas,function(x) head(x,maxListings))
+  attributes(alphas.limited) <- as.list(attributes(tests.last.df)$attrs[c("subject","level")])
   alphas.limited
 }
