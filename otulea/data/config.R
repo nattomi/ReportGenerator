@@ -5,3 +5,6 @@ usersDir <- file.path(packagePath,"www/data/user")
 alphalist <- file.path(packagePath,"www/data/item/alphalist/alphalist.XML")
 ## cleaning up
 rm(packagePath) ## not needed if paths are hard-coded
+## On my server, I need the following settings
+##usersDir <- "/var/www/otulea/data/user"
+##alphalist <- "/var/www/otulea/data/item/alphalist/alphalist.XML"
