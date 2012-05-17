@@ -8,8 +8,8 @@ threshold <- 50 ## percentage
 maxListings <- 3 ## maximal number of results listed
 alphalevels <- getAlphalevels(user,threshold,maxListings)
 file <- "20120504_14_13_X0AT2.pdf"
-subject <- attributes(alphalevels)$subject
-level <- attributes(alphalevels)$level
+subject <- attr(alphalevels,"subject")
+level <- attr(alphalevels,"level")
 result <- alphalevels2xml(alphalevels,file,subject, level)
 result
 ## saving it to a file
@@ -33,9 +33,9 @@ alphalevels2xml <- function(alphalevels,file,subject,level) {
   modes <- names(alphalevels)
   ##i <- 1
   for (i in 1:3) {
-    mode <- modes[i]
-    nodeName <- paste("mode",mode,sep=".")
-    assign(nodeName, newXMLNode("eval", parent = node, attrs=c("mode" = mode)))
+    mode.i <- modes[i]
+    nodeName <- paste("mode",mode.i,sep=".")
+    assign(nodeName, newXMLNode("eval", parent = node, attrs=c("mode" = mode.i)))
     text <- paste('sapply(alphalevels[[i]],function(y) newXMLNode("alphaid", parent=',nodeName,', attrs=c("value" = y)))',sep="")
     eval(parse(text=text))
   }
