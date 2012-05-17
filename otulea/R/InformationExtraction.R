@@ -2,9 +2,9 @@
 
 ## EXAMPLES
 if (FALSE) {
-require(XML)
+require(otulea)
 ## location of global user file
-guf <- "../otulea/data/user/6CKBT/6CKBT.xml" ## later on we rewrite this with system.file 
+guf <- "../inst/www/data/user/6CKBT/6CKBT.xml" ## later on we rewrite this with system.file 
 ## tests taken by the user (returned as an XMLNodeSet)
 tests <- list.tests(guf)
 ## selecting one test 
@@ -14,7 +14,7 @@ test.date(test)
 ## getting the last test taken
 last(tests)
 ## converting a test to a data.frame
-test.df <- testToDf(test)
+test.df <- test2df(test)
 attributes(test.df)$attrs
 ## getting all items of a test
 test.df$data
