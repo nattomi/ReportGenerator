@@ -12,7 +12,7 @@ cd otulear
 emacs -nw otulea/data/config.R
 ## f.i. 
 ## usersDir <- "/var/www/otulea/data/user/"
-## alphalist <- "/var/www/otulea/data/item/alphalaist/alphalist.XML"
+## alphalist <- "/var/www/otulea/data/item/alphalist/alphalist.XML"
 R CMD INSTALL otulea -l /usr/local/lib/R/site-library
 
 Installing the develompment version of the web application
