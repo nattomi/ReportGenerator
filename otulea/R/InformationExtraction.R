@@ -48,7 +48,7 @@ last <- function(tests) {
 }
   
 ## transforming a test to a data.frame
-testToDf <- function(test) {
+test2df <- function(test) {
   test.list <- xmlToList(test)
   attrs <- test.list$.attrs
   test.list <- test.list[names(test.list)=="item"] ## *2 possible place for improvement

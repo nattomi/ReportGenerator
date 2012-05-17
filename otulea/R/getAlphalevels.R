@@ -21,7 +21,7 @@ getAlphalevels <- function(user, threshold, maxListings) {
   tests <- list.tests(guf)
   ## getting the last test taken
   tests.last <- last(tests)
-  testresults <- file.path(userDir,testToDf(tests.last)$data)
+  testresults <- file.path(userDir,test2df(tests.last)$data)
   markings <- getMarkings(testresults)
   
   ## Derivation of results
