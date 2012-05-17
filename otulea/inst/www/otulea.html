@@ -32,7 +32,7 @@ cat(saveXML(select),"<br>")
   Limit result hits by:
 <%
 ## option for limiting the number of results
-maxlist <- seq(0,10,1)
+maxlist <- seq(10,0,-1)
 select <- newXMLNode("select", attrs=c(name="maxlist"))
 maxlist.XML <- lapply(maxlist,function(x)
                          newXMLNode("option", attrs=c(id=paste("maxlist",x,sep="_")), x))
@@ -54,8 +54,9 @@ user <- as.character(POST$user)
 threshold <- as.numeric(POST$threshold)
 maxListings <- as.integer(POST$maxlist)
 ## the actual calculation 
-ans <- getAlphalevels(user,threshold,maxListings)
-print(ans)
+alphalevels <- getAlphalevels(user,threshold,maxListings)
+ans <- alphalevels2xml(alphalevels,file="doesnt_work_yet",attr(alphalevels,"subject"),attr(alphalevels,"level"))
+cat(gsub("<","&lt;",saveXML(ans)))
 }
 ## set selection (instead of falling back to default)
 ## using JavaScript here is a bit dirty, but I can't think of any better way
