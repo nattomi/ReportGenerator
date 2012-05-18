@@ -55,7 +55,9 @@ threshold <- as.numeric(POST$threshold)
 maxListings <- as.integer(POST$maxlist)
 ## the actual calculation 
 alphalevels <- getAlphalevels(user,threshold,maxListings)
-ans <- alphalevels2xml(alphalevels,file="doesnt_work_yet",attr(alphalevels,"subject"),attr(alphalevels,"level"))
+subject <- unname(attr(alphalevels,"subject"))
+level <- unname(attr(alphalevels,"level"))
+ans <- alphalevels2xml(alphalevels,file="doesnt_work_yet",subject,level)
 cat(gsub("<","&lt;",saveXML(ans)))
 }
 ## set selection (instead of falling back to default)
