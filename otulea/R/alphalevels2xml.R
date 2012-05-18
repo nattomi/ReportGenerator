@@ -8,8 +8,8 @@ threshold <- 50 ## percentage
 maxListings <- 3 ## maximal number of results listed
 alphalevels <- getAlphalevels(user,threshold,maxListings)
 file <- "20120504_14_13_X0AT2.pdf"
-subject <- attr(alphalevels,"subject")
-level <- attr(alphalevels,"level")
+subject <- unname(attr(alphalevels,"subject"))
+level <- unname(attr(alphalevels,"level"))
 result <- alphalevels2xml(alphalevels,file,subject, level)
 result
 ## saving it to a file
