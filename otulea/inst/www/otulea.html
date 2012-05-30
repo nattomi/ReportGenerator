@@ -53,8 +53,10 @@ if (!is.null(POST)) { ## content of POST is NULL when the page is loaded for the
 user <- as.character(POST$user)
 threshold <- as.numeric(POST$threshold)
 maxListings <- as.integer(POST$maxlist)
-## the actual calculation 
-alphalevels <- getAlphalevels(user,threshold,maxListings)
+## the 4th argument is the alphalist data frame
+alphalist.df <- alphalist2df(alphalist)
+## the actual calculation
+alphalevels <- getAlphalevels(user,threshold,maxListings,alphalist.df)
 subject <- unname(attr(alphalevels,"subject"))
 level <- unname(attr(alphalevels,"level"))
 ans <- alphalevels2xml(alphalevels,file="doesnt_work_yet",subject,level)
