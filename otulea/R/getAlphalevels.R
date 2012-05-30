@@ -6,13 +6,15 @@ library(otulea)
 user <- "6CKBT" ## user id as character string
 threshold <- 50 ## percentage
 maxListings <- 3 ## maximal number of results listed
-getAlphalevels(user,threshold,maxListings)
-getAlphalevels(user,threshold,4)
+alphalist.df <- alphalist2df(alphalist)
+getAlphalevels(user,threshold,maxListings,alphalist.df)
+getAlphalevels(user,threshold,4,alphalist.df)
 }
 
 
 ## FUNCTION
-getAlphalevels <- function(user, threshold, maxListings) {
+getAlphalevels <- function(user, threshold, maxListings,
+                           alphalist.df) {
   ## Information extraction
   ## location of global user file
   userDir <- file.path(usersDir,user)
@@ -26,9 +28,7 @@ getAlphalevels <- function(user, threshold, maxListings) {
   markings <- getMarkings(testresults)
   
   ## Derivation of results
-  ## In all cases we need the alphalist file, so it's
-  ## a good idea to load it right in the beginning
-  alphalist.df <- alphalist2df(alphalist)
+  ## getting alphaID-s from the alphalist data frame
   alphaIDs <- sort(alphalist.df$alphaID)
   ## all tested alphalevels
   thresholds <- tapply(as.numeric(markings[,"mark"]),markings[,"alphalevel"],mean)
