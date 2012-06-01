@@ -1,4 +1,4 @@
-<html>
+<Html>
   <head>
     <title>OTULEA DEV</title>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
@@ -57,9 +57,35 @@ maxListings <- as.integer(POST$maxlist)
 alphalist.df <- alphalist2df(alphalist)
 ## the actual calculation
 alphalevels <- getAlphalevels(user,threshold,maxListings,alphalist.df)
-subject <- unname(attr(alphalevels,"subject"))
-level <- unname(attr(alphalevels,"level"))
-ans <- alphalevels2xml(alphalevels,file="doesnt_work_yet",subject,level)
+subject <- unname(attr(alphalevels,"subject")) ## FIXME! (should done by getAlphalevels)
+level <- unname(attr(alphalevels,"level")) ## FIXME!
+## directory where feedback pdfs are stored
+dir.feedback <- "/var/www/feedback"
+## this is for the file download
+dir.show <- "../feedback"
+if (!file.exists(dir.feedback)) dir.create(dir.feedback)
+## I must query for sys date here
+systime <- Sys.time()
+## basename of pdf file to be genarated
+pdfName <- paste(format(systime,format="%Y%m%d_%H_%M_"),user,".pdf",sep="")
+texName <- sub("\\.pdf","\\.tex",pdfName)
+uncprsd <- uncompress(alphalevels,alphalist.df,c("userdescription","example"))
+texPath <- file.path(dir.feedback,texName)
+## creating tex file
+sink(texPath)
+uncprsd2tex(uncprsd)
+sink()
+## creating pdf file
+currentWD <- getwd()
+setwd(dir.feedback)
+texi2dvi(texPath,pdf=TRUE)
+## cleaning up feedback dir
+## It doesn't matter that much because I'm going to setup a crontab task anyways
+## changing back to original working directory
+setwd(currentWD)
+cat("<a href=",file.path(dir.show,pdfName),">Show PDF</a>\n",sep="")
+cat("<hr>\n")
+ans <- alphalevels2xml(alphalevels,file=pdfName,subject,level)
 cat(gsub("<","&lt;",saveXML(ans)))
 }
 ## set selection (instead of falling back to default)
