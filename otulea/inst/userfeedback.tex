@@ -1,0 +1,54 @@
+\documentclass[landscape]{slides}
+\usepackage[utf8]{inputenc}
+\usepackage[top=0.5cm, bottom=0.5cm, left=0.5cm, right=0.5cm]{geometry}
+\usepackage{fancybox}
+\usepackage{background}
+\usepackage{xcolor}
+\usepackage{tabularx}
+\usepackage{colortbl}
+\usepackage{multirow}
+\usepackage{verbatim}
+
+%\definecolor{bgFrom}{rgb}{1,0.5,0}
+%\definecolor{bgTo}{rgb}{1,0.5,0}
+%\newcolumntype{K}{\columncolor[gray]{0.8}\raggedright}
+
+
+\begin{document}
+%\hpagecolor[cyan!10]{Cyan!40} 
+\pagecolor{gray!10}
+\thisfancypage{\Ovalbox}{}
+
+{\small
+\begin{center}
+\begin{tabularx}{\linewidth}{c|p{1cm}|X|X}
+\rowcolor{green!10}
+\multicolumn{2}{c|}{} & Schreiben & Beispiel\\
+\hline
+\rowcolor{blue!10}
+\multirow{3}{*}{\cellcolor{green!10} Das kann ich!} & & Ich kann einfache Buchstaben schreiben &
+m, l, s, r, f, w, sch, a, e, i, o, u\\
+%\cline{2-4}
+\rowcolor{green!10}
+& & Ich kann Großbuchstaben und Kleinbuchstaben unterscheiden. & A - a,
+M -m\\
+%\cline{2-4}
+%\hline
+\rowcolor{blue!10}
+\cellcolor{green!10} & & Silben schreiben, die aus nur einem Laut bestehen. & A-larm
+\end{tabularx}
+\end{center}
+}
+
+% buttons at the bottom of the page
+
+\begin{center}
+\begin{minipage}{0.47\textwidth}
+\flushleft{$<$Zurück}
+\end{minipage}
+\begin{minipage}{0.47\textwidth}
+\flushright{Weiter$>$}
+\end{minipage}
+\end{center}
+
+\end{document}
