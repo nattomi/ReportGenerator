@@ -55,7 +55,7 @@ getAlphalevels <- function(user, threshold, maxListings,
   alphas.limited <- lapply(alphas,function(x) head(x,maxListings))
   ## passing 'subject' and 'level' as attribute
   attrs <- attributes(tests.last.df)$attrs
-  attr(alphas.limited,"subject") <- attrs["subject"]
-  attr(alphas.limited,"level") <- attrs["level"]
+  attr(alphas.limited,"subject") <- attrs[["subject"]]
+  attr(alphas.limited,"level") <- attrs[["level"]]
   alphas.limited
 }
