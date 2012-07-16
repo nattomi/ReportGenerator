@@ -19,7 +19,9 @@ feedback2tex(x)
 sink("../inst/feedback/tabular.tex")
 feedback2tex(x)
 sink()
-texi2dvi("../inst/feedback/userfeedback.tex",pdf=TRUE)
+setwd("../inst/feedback/")
+Sys.setenv(TEXINPUTS="/usr/local/texlive/2012/texmf-dist/tex/latex/background")
+texi2pdf("userfeedback.tex")
 }
 
 ## FUNCTION DEFINITION
@@ -35,10 +37,14 @@ feedback2tex <- function(x) {
   tbl <- xtable(x.sub)
   align(tbl) <- "cm{30pt}|m{310pt}|m{310pt}"
   ## commands to add and their position
-  command <- rep(c("\\rowcolor{green!10}","\\rowcolor{blue!10}"),length.out=rownum+1)
+  command1 <- rep(c("\\rowcolor{green!10}","\\rowcolor{blue!10}"),length.out=rownum+1)
+  command2 <- rep("",length.out=rownum+1)
+  command2[2] <- "\\hline"
+  command <- paste(command2,command1)
   pos <- as.list(seq(-1,rownum-1))
   print(tbl,floating=FALSE,sanitize.text.function = function(x){x},
-        include.rownames=FALSE,hline.after=0,
+        include.rownames=FALSE,
+        hline.after=NULL,
         add.to.row=list(pos=pos,command=command))
   options(op)
 }
