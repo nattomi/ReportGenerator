@@ -5,8 +5,8 @@
 ## EXAMPLE
 if (FALSE) {
 library(otulea)
-library(xtable)
-library(tools)
+##library(xtable)
+##library(tools)
 user <- "6CKBT" ## user id as character string
 threshold <- 50 ## percentage
 maxListings <- 3 ## maximal number of results listed
@@ -18,6 +18,7 @@ feedback2tex(x)
 
 ## FUNCTION DEFINITION
 feedback2tex <- function(x) {
+  op <- options(warn=-1)
   ## number of rows
   rownum <- dim(x)[1]
   ## subsetting just to make sure that the input is correct
@@ -33,7 +34,5 @@ feedback2tex <- function(x) {
   print(tbl,floating=FALSE,sanitize.text.function = function(x){x},
         include.rownames=FALSE,hline.after=0,
         add.to.row=list(pos=pos,command=command))
+  options(op)
 }
-
-
-attributes(tbl)
