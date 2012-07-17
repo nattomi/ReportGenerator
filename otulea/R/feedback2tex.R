@@ -20,7 +20,7 @@ sink("../inst/feedback/tabular.tex")
 feedback2tex(x)
 sink()
 setwd("../inst/feedback/")
-Sys.setenv(TEXINPUTS="/usr/local/texlive/2012/texmf-dist/tex/latex/background")
+## Sys.setenv(TEXINPUTS="/usr/local/texlive/2012/texmf-dist/tex/latex/background")
 texi2pdf("userfeedback.tex")
 }
 
