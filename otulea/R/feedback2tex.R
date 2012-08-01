@@ -14,6 +14,7 @@ alphalist.df <- alphalist2df(alphalist)
 y <- getAlphalevels(user,threshold,maxListings,alphalist.df)
 x <- uncompress(y)$A1
 ## this one just prints it to screen
+setwd("/tmp/otulear/otulea/R")
 feedback2tex(x)
 ## this one overwrites template.tex
 sink("../inst/feedback/tabular.tex")
@@ -25,7 +26,10 @@ texi2pdf("userfeedback.tex")
 }
 
 ## FUNCTION DEFINITION
-feedback2tex <- function(x) {
+feedback2tex <- function(x,bgcols=c("d8f2f1","ddf4dd")) {
+  ## declaring colors
+  cat("\\definecolor{bgcol1}{HTML}{",toupper(bgcols[1]),"}\n",sep="")
+  cat("\\definecolor{bgcol2}{HTML}{",toupper(bgcols[2]),"}\n",sep="")
   op <- options(warn=-1)
   ## number of rows
   rownum <- dim(x)[1]
@@ -37,7 +41,7 @@ feedback2tex <- function(x) {
   tbl <- xtable(x.sub)
   align(tbl) <- "cm{30pt}|m{310pt}|m{310pt}"
   ## commands to add and their position
-  command1 <- rep(c("\\rowcolor{green!10}","\\rowcolor{blue!10}"),length.out=rownum+1)
+  command1 <- rep(c("\\rowcolor{bgcol1}","\\rowcolor{bgcol2}"),length.out=rownum+1)
   command2 <- rep("",length.out=rownum+1)
   command2[2] <- "\\hline"
   command <- paste(command2,command1)
