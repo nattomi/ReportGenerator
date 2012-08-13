@@ -57,36 +57,43 @@ maxListings <- as.integer(POST$maxlist)
 alphalist.df <- alphalist2df(alphalist)
 ## the actual calculation
 alphalevels <- getAlphalevels(user,threshold,maxListings,alphalist.df)
-subject <- unname(attr(alphalevels,"subject")) ## FIXME! (should done by getAlphalevels)
-level <- unname(attr(alphalevels,"level")) ## FIXME!
+subject <- attr(alphalevels,"subject")
+level <- attr(alphalevels,"level")
 ## directory where feedback pdfs are stored
 dir.feedback <- "/var/www/feedback"
 ## this is for the file download
-dir.show <- "../feedback"
+dir.show <- "../feedback/pdf"
 if (!file.exists(dir.feedback)) dir.create(dir.feedback)
 ## I must query for sys date here
 systime <- Sys.time()
-## basename of pdf file to be genarated
+## basename of pdf file to be generated
 pdfName <- paste(format(systime,format="%Y%m%d_%H_%M_"),user,".pdf",sep="")
 texName <- sub("\\.pdf","\\.tex",pdfName)
 uncprsd <- uncompress(alphalevels,alphalist.df,c("userdescription","example"))
-texPath <- file.path(dir.feedback,texName)
+##print(uncprsd)
+##if (FALSE) {
+texPath <- file.path(dir.feedback,"userfeedback.tex")
+texIncludePath <- file.path(dir.feedback,"tabular.tex")
 ## creating tex file
-sink(texPath)
-uncprsd2tex(uncprsd)
+sink(texIncludePath)
+feedback2tex(uncprsd$A1)
 sink()
 ## creating pdf file
 currentWD <- getwd()
 setwd(dir.feedback)
 texi2dvi(texPath,pdf=TRUE)
+##cat(Sys.getenv("PATH"),"\n")
+## copyiing result to a separate folder
+file.rename(sub("\\.tex","\\.pdf",texPath),file.path(dir.feedback,"pdf",pdfName))
 ## cleaning up feedback dir
-## It doesn't matter that much because I'm going to setup a crontab task anyways
+## It doesn't matter that much because I'm going to setup a crontab task anyway
 ## changing back to original working directory
 setwd(currentWD)
-cat("<a href=",file.path(dir.show,pdfName),">Show PDF</a>\n",sep="")
+cat("<a href=",file.path(dir.show,pdfName),">Show PDF</a> (file will be deleted after 10 minutes)\n",sep="")
 cat("<hr>\n")
 ans <- alphalevels2xml(alphalevels,file=pdfName,subject,level)
 cat(gsub("<","&lt;",saveXML(ans)))
+##}
 }
 ## set selection (instead of falling back to default)
 ## using JavaScript here is a bit dirty, but I can't think of any better way
