@@ -276,7 +276,9 @@ even odd rule]
 
 
 \begin{document}
-%\hpagecolor[cyan!10]{Cyan!40} 
+
+% mode A1
+ 
 \pagecolor{gray!10}
 \thisfancypage{\Ovalbox}{}
 
@@ -285,7 +287,7 @@ even odd rule]
 \input{thumbs.pdf_tex}
 \end{minipage}
 \begin{minipage}{0.47\textwidth}
-{\Huge Das kann ich!}
+{\Huge What do I already know?}
 \end{minipage}
 
 
@@ -293,19 +295,56 @@ even odd rule]
 
 {\small
 \begin{center}
-\input{tabular}
+\input{tabular_A1}
 \end{center}
 }
 
-% buttons at the bottom of the page
+\newpage
 
+% mode A2 
+
+\pagecolor{gray!10}
+\thisfancypage{\Ovalbox}{}
+
+\begin{minipage}{0.1\textwidth}
+\def\svgwidth{\columnwidth}
+\input{thumbs.pdf_tex}
+\end{minipage}
+\begin{minipage}{0.47\textwidth}
+{\Huge What can be improved?}
+\end{minipage}
+
+
+%\thumbsup
+
+{\small
 \begin{center}
-\begin{minipage}{0.47\textwidth}
-\flushleft{$<$Zurück}
-\end{minipage}
-\begin{minipage}{0.47\textwidth}
-\flushright{Weiter$>$}
-\end{minipage}
+\input{tabular_A2}
 \end{center}
+}
+
+\newpage
+
+% mode A3 
+
+\pagecolor{gray!10}
+\thisfancypage{\Ovalbox}{}
+
+\begin{minipage}{0.1\textwidth}
+\def\svgwidth{\columnwidth}
+\input{thumbs.pdf_tex}
+\end{minipage}
+\begin{minipage}{0.47\textwidth}
+{\Huge What will I be able of, if I do some more?}
+\end{minipage}
+
+
+%\thumbsup
+
+{\small
+\begin{center}
+\input{tabular_A3}
+\end{center}
+}
 
 \end{document}
