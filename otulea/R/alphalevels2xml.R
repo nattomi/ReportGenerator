@@ -7,7 +7,10 @@ user <- "6CKBT" ## user id as character string
 threshold <- 50 ## percentage
 maxListings <- 3 ## maximal number of results listed
 alphalist.df <- alphalist2df(alphalist)
-alphalevels <- getAlphalevels(user,threshold,maxListings,alphalist.df)
+x <- getAlphalevels(user,threshold,maxListings,alphalist.df)
+uncprsd <- uncompress(x,alphalist.df,c("userdescription","example","sound","alphaID"))
+
+
 file <- "20120504_14_13_X0AT2.pdf"
 subject <- unname(attr(alphalevels,"subject"))
 level <- unname(attr(alphalevels,"level"))
@@ -19,7 +22,7 @@ write(saveXML(result),file=tempfile())
 
 
 ## FUNCTION
-alphalevels2xml <- function(alphalevels,file,subject,level) {
+alphalevels2xml <- function(uncprsd,file,subject,level) {
   node <- newXMLNode("results")
   ## adding 'print' node
   newXMLNode("print",parent = node, attrs=c("file" = file))
@@ -32,12 +35,17 @@ alphalevels2xml <- function(alphalevels,file,subject,level) {
   newXMLNode("level", parent = node, attrs=c("value" = level))
   ## adding 'eval' nodes
   modes <- names(alphalevels)
-  ##i <- 1
+  i <- 1
   for (i in 1:3) {
     mode.i <- modes[i]
     nodeName <- paste("mode",mode.i,sep=".")
     assign(nodeName, newXMLNode("eval", parent = node, attrs=c("mode" = mode.i)))
-    text <- paste('sapply(alphalevels[[i]],function(y) newXMLNode("alphaid", parent=',nodeName,', attrs=c("value" = y)))',sep="")
+    ## innen kell módosítani
+    uncprsd[[mode.i]]
+    trans <- function(x,y) pastenewXMLNode("alphannode", parent=',nodeName,', attrs=c("alphaID" = y)))',sep="")
+
+    (uncprsd[[mode.i]],function(x) paste())
+    text <- paste('sapply(uncprsd[[mode.i]],function(y) newXMLNode("alphannode", parent=',nodeName,', attrs=c("alphaID" = y)))',sep="")
     eval(parse(text=text))
   }
   node
