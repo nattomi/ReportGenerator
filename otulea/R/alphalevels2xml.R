@@ -6,7 +6,8 @@ library(otulea)
 user <- "6CKBT" ## user id as character string
 threshold <- 50 ## percentage
 maxListings <- 3 ## maximal number of results listed
-alphalevels <- getAlphalevels(user,threshold,maxListings)
+alphalist.df <- alphalist2df(alphalist)
+alphalevels <- getAlphalevels(user,threshold,maxListings,alphalist.df)
 file <- "20120504_14_13_X0AT2.pdf"
 subject <- unname(attr(alphalevels,"subject"))
 level <- unname(attr(alphalevels,"level"))
