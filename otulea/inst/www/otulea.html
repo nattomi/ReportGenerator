@@ -69,9 +69,8 @@ systime <- Sys.time()
 ## basename of pdf file to be generated
 pdfName <- paste(format(systime,format="%Y%m%d_%H_%M_"),user,".pdf",sep="")
 texName <- sub("\\.pdf","\\.tex",pdfName)
-uncprsd <- uncompress(alphalevels,alphalist.df,c("userdescription","example"))
+uncprsd <- uncompress(x=alphalevels,alphalist.df=alphalist.df,subset=c("userdescription","example", "alphaID","sound"))
 ##print(uncprsd)
-##if (FALSE) {
 texPath <- file.path(dir.feedback,"userfeedback.tex")
 ## creating tex files
 for (mode in 1:3) {
@@ -91,9 +90,8 @@ file.rename(sub("\\.tex","\\.pdf",texPath),file.path(dir.feedback,"pdf",pdfName)
 setwd(currentWD)
 cat("<a href=",file.path(dir.show,pdfName),">Show PDF</a> (file will be deleted after 10 minutes)\n",sep="")
 cat("<hr>\n")
-ans <- alphalevels2xml(alphalevels,file=pdfName,subject,level)
+ans <- alphalevels2xml(uncprsd,file=pdfName,subject,level)
 cat(gsub("<","&lt;",saveXML(ans)))
-##}
 }
 ## set selection (instead of falling back to default)
 ## using JavaScript here is a bit dirty, but I can't think of any better way
