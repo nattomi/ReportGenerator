@@ -12,9 +12,9 @@ uncprsd <- uncompress(x,alphalist.df,c("userdescription","example","sound","alph
 
 
 file <- "20120504_14_13_X0AT2.pdf"
-subject <- unname(attr(alphalevels,"subject"))
-level <- unname(attr(alphalevels,"level"))
-result <- alphalevels2xml(alphalevels,file,subject, level)
+subject <- attr(x,"subject")
+level <- attr(x,"level")
+result <- alphalevels2xml(uncprsd,file,subject, level)
 result
 ## saving it to a file
 write(saveXML(result),file=tempfile())
@@ -34,18 +34,20 @@ alphalevels2xml <- function(uncprsd,file,subject,level) {
   ## adding 'level' node
   newXMLNode("level", parent = node, attrs=c("value" = level))
   ## adding 'eval' nodes
-  modes <- names(alphalevels)
-  i <- 1
-  for (i in 1:3) {
-    mode.i <- modes[i]
-    nodeName <- paste("mode",mode.i,sep=".")
-    assign(nodeName, newXMLNode("eval", parent = node, attrs=c("mode" = mode.i)))
+  modes <- names(uncprsd)
+  mode <- modes[[1]]
+  for (mode in modes) {
+    nodeName <- paste("mode",mode,sep=".")
+    assign(nodeName, newXMLNode("eval", parent = node, attrs=c("mode" = mode)))
     ## innen kell módosítani
-    uncprsd[[mode.i]]
-    trans <- function(x,y) pastenewXMLNode("alphannode", parent=',nodeName,', attrs=c("alphaID" = y)))',sep="")
+    ##uncprsd[[mode.i]]
+    ##trans <- function(x,y) pastenewXMLNode("alphannode", parent=',nodeName,', attrs=c("alphaID" = y)))',sep="")
 
-    (uncprsd[[mode.i]],function(x) paste())
-    text <- paste('sapply(uncprsd[[mode.i]],function(y) newXMLNode("alphannode", parent=',nodeName,', attrs=c("alphaID" = y)))',sep="")
+    ##(uncprsd[[mode.i]],function(x) paste())
+    dat <- uncprsd[[mode]]
+    length(t(dat))
+    as.data.frame(t(dat))
+    text <- paste('lapply(as.data.frame(t(dat)),function(x) newXMLNode("alphanode", parent=',nodeName,', attrs=c("alphaID" = as.character(x[["alphaID"]]),"sound" = as.character(x[["alphaID"]]))))',sep="")
     eval(parse(text=text))
   }
   node
