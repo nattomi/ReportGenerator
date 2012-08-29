@@ -10,7 +10,6 @@ alphalist.df <- alphalist2df(alphalist)
 x <- getAlphalevels(user,threshold,maxListings,alphalist.df)
 uncprsd <- uncompress(x,alphalist.df,c("userdescription","example","sound","alphaID"))
 
-
 file <- "20120504_14_13_X0AT2.pdf"
 subject <- attr(x,"subject")
 level <- attr(x,"level")
@@ -47,7 +46,7 @@ alphalevels2xml <- function(uncprsd,file,subject,level) {
     dat <- uncprsd[[mode]]
     length(t(dat))
     as.data.frame(t(dat))
-    text <- paste('lapply(as.data.frame(t(dat)),function(x) newXMLNode("alphanode", parent=',nodeName,', attrs=c("alphaID" = as.character(x[["alphaID"]]),"sound" = as.character(x[["alphaID"]]))))',sep="")
+    text <- paste('lapply(as.data.frame(t(dat)),function(x) newXMLNode("alphanode", parent=',nodeName,', attrs=c("alphaID" = as.character(x[["alphaID"]]),"sound" = as.character(x[["sound"]]))))',sep="")
     eval(parse(text=text))
   }
   node
