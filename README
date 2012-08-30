@@ -21,8 +21,7 @@ We assume that our Apache root folder is /var/www
 cp -r otulea/inst/otulea.conf /etc/apache2/conf.d/
 (then restart Apache)
 mkdir /var/www/otulea
-cp -r otulea/inst/www/data /var/www/otulea/data
-mkdir /var/www/brew
-cp -r otulea/inst/www/otulea.html /var/www/brew/
- 
+cp -r -T otulea/inst/www /var/www/otulea/
+Remember that the 'feedback' subfolder must be writeable
+by user www-data
 
