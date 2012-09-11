@@ -65,7 +65,7 @@ level <- attr(alphalevels,"level")
 dir.feedback <- file.path(wwwDir,subDir.feedback)
 ## this is for the file download
 systime <- Sys.time()
-baseName <- paste(user,format(systime,format="%Y%m%d_%H_%M"),sep="_")
+baseName <- paste(user,format(systime,format="%Y%m%d_%H_%M_%S"),sep="_")
 dir.show <- file.path(dir.feedback, baseName)
 subDir.pdf <- file.path(subDir.feedback,baseName)
 ## create directories if necessary
