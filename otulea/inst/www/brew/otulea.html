@@ -4,6 +4,8 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <%
 ## SETTINGS
+wwwDir <- "/var/www"
+subDir.feedback <- "feedback"
 %>
   </head>
   <body>
@@ -60,35 +62,50 @@ alphalevels <- getAlphalevels(user,threshold,maxListings,alphalist.df)
 subject <- attr(alphalevels,"subject")
 level <- attr(alphalevels,"level")
 ## directory where feedback pdfs are stored
-dir.feedback <- "/var/www/feedback"
+dir.feedback <- file.path(wwwDir,subDir.feedback)
 ## this is for the file download
-dir.show <- "../feedback/pdf"
-if (!file.exists(dir.feedback)) dir.create(dir.feedback)
-## I must query for sys date here
 systime <- Sys.time()
+baseName <- paste(user,format(systime,format="%Y%m%d_%H_%M"),sep="_")
+dir.show <- file.path(dir.feedback, baseName)
+subDir.pdf <- file.path(subDir.feedback,baseName)
+## create directories if necessary
+if (!file.exists(dir.feedback)) dir.create(dir.feedback)
+if (!file.exists(dir.show)) dir.create(dir.show)
+
 ## basename of pdf file to be generated
-pdfName <- paste(format(systime,format="%Y%m%d_%H_%M_"),user,".pdf",sep="")
-texName <- sub("\\.pdf","\\.tex",pdfName)
-uncprsd <- uncompress(x=alphalevels,alphalist.df=alphalist.df,subset=c("userdescription","example", "alphaID","sound"))
+texName <- paste(baseName,"tex",sep=".")
+pdfName <- paste(baseName,"pdf",sep=".")
+uncprsd <- uncompress(x=alphalevels,alphalist.df=alphalist.df,subset=c("userdescription","example",
+                                                                "alphaID","sound"))
 ##print(uncprsd)
-texPath <- file.path(dir.feedback,"userfeedback.tex")
+templateFiles <- c(userfeedback="userfeedback.tex",
+                   thumbs.pdf="thumbs.pdf",
+                   thumbs.tex="thumbs.pdf_tex")
+## copying template files
+for (f in templateFiles) {
+  file.copy(file.path(dir.feedback,"template",f),
+            file.path(dir.show,f))
+}
 ## creating tex files
 for (mode in 1:3) {
-  texIncludePath <- file.path(dir.feedback,paste("tabular_A",mode,".tex",sep=""))
+  texIncludePath <- file.path(dir.show,paste("tabular_A",mode,".tex",sep=""))
   sink(texIncludePath)
   feedback2tex(uncprsd[[paste("A",mode,sep="")]])
   sink()
 }
+## renaming main tex file
+file.rename(file.path(dir.show,templateFiles[["userfeedback"]]),
+            file.path(dir.show,texName))
 ## creating pdf file
 currentWD <- getwd()
-setwd(dir.feedback)
-texi2dvi(texPath,pdf=TRUE)
+setwd(dir.show)
+##cat("after setwd\n")
+texi2dvi(texName,pdf=TRUE)
+##cat("after texi\n")
 ##cat(Sys.getenv("PATH"),"\n")
-## copyiing result to a separate folder
-file.rename(sub("\\.tex","\\.pdf",texPath),file.path(dir.feedback,"pdf",pdfName))
 ## changing back to original working directory
 setwd(currentWD)
-cat("<a href=",file.path(dir.show,pdfName),">Show PDF</a> (file will be deleted after 10 minutes)\n",sep="")
+cat("<a href=",file.path(subDir.pdf,pdfName),">Show PDF</a> (file will be deleted after 10 minutes)\n",sep="")
 cat("<hr>\n")
 ans <- alphalevels2xml(uncprsd,file=pdfName,subject,level)
 cat(gsub("<","&lt;",saveXML(ans)))
