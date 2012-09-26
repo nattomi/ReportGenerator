@@ -12,14 +12,27 @@ threshold <- 50 ## percentage
 maxListings <- 3 ## maximal number of results listed
 alphalist.df <- alphalist2df(alphalist)
 y <- getAlphalevels(user,threshold,maxListings,alphalist.df)
-x <- uncompress(y)$A1
+x <- uncompress(y)
+sj <- attr(x,"subject")
+sj <- "grammatik"
+ind.col <- match(tolower(sj),tolower(cellcolors$subject))
+cellcol <- as.character(cellcolors$color[ind.col])
+##x <- uncompress(y)$A1
+##y
 ## this one just prints it to screen
 setwd("/tmp/otulear/otulea/R")
 feedback2tex(x)
 ## this one overwrites template.tex
-sink("../inst/feedback/tabular.tex")
-feedback2tex(x)
+sink("../inst/www/feedback/template/tabular_A1.tex")
+feedback2tex(x$A1)
 sink()
+sink("../inst/www/feedback/template/tabular_A2.tex")
+feedback2tex(x$A2,rep(cellcol,2))
+sink()
+sink("../inst/www/feedback/template/tabular_A3.tex")
+feedback2tex(x$A3,rep(cellcol,2))
+sink()
+
 setwd("../inst/feedback/")
 ## Sys.setenv(TEXINPUTS="/usr/local/texlive/2012/texmf-dist/tex/latex/background")
 texi2pdf("userfeedback.tex")
