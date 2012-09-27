@@ -14,6 +14,7 @@
 \usepackage{tikz}
 
 % color definitions
+\definecolor{bg}{RGB}{242,242,203}% background color
 \definecolor{c111111}{RGB}{17,17,17} % for drawing a speaker
 \definecolor{cffffff}{RGB}{255,255,255} % for drawing a notepad
 \definecolor{c303e4f}{RGB}{48,62,79}
@@ -49,7 +50,7 @@
 
 % for creating a particular type of feedback
 \newcommand{\feedback}[2]{
-\pagecolor{gray!10}
+\pagecolor{bg}
 \thisfancypage{\Ovalbox}{}
 
 \begin{minipage}{0.1\textwidth}
