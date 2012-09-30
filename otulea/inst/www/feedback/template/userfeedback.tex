@@ -2,7 +2,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[top=0.5cm, bottom=0.5cm, left=0.5cm, right=0.5cm]{geometry}
 \usepackage{fancybox}
-\usepackage{background}
+%\usepackage{background}
 \usepackage{xcolor}
 %\usepackage{tabularx}
 %\usepackage{tabu}
@@ -12,6 +12,7 @@
 \usepackage{graphicx}
 \usepackage{array}
 \usepackage{tikz}
+\usepackage{pstricks}
 
 % color definitions
 \definecolor{bg}{RGB}{242,242,203}% background color
@@ -29,34 +30,19 @@
 
 % for drawing a speaker
 \newcommand{\speaker}{
-\scalebox{0.5}{
-\begin{tikzpicture}[y=0.80pt,x=0.80pt,yscale=-1, inner sep=0pt, outer
-    sep=0pt] % originally y=0.80pt, x=0.80pt
-  \path[draw=c111111,fill=c111111,line join=round,line width=4.000pt]
-    (39.3890,13.7690) -- (22.2350,28.6060) -- (6.0000,28.6060) -- (6.0000,47.6990)
-    -- (21.9890,47.6990) -- (39.3890,62.7500) -- (39.3890,13.7690) -- cycle;
-  \path[draw=c111111,line cap=round,line width=4.000pt] (48.1280,49.0300) ..
-    controls (50.0570,45.9340) and (51.1900,42.2910) .. (51.1900,38.3770) ..
-    controls (51.1900,34.3990) and (50.0260,30.7030) .. (48.0430,27.5770);
-  \path[draw=c111111,line cap=round,line width=4.000pt] (55.0820,20.5370) ..
-    controls (58.7770,25.5230) and (60.9660,31.6940) .. (60.9660,38.3770) ..
-    controls (60.9660,44.9980) and (58.8150,51.1150) .. (55.1780,56.0760);
-  \path[draw=c111111,line cap=round,line width=4.000pt] (61.7100,62.6110) ..
-    controls (66.9770,55.9450) and (70.1280,47.5310) .. (70.1280,38.3780) ..
-    controls (70.1280,29.1610) and (66.9360,20.6960) .. (61.6090,14.0100);
-\end{tikzpicture}
+\includegraphics{haken}
 }
-} 
+
 
 % for creating a particular type of feedback
 \newcommand{\feedback}[2]{
 \pagecolor{bg}
-\thisfancypage{\Ovalbox}{}
+%\thisfancypage{\Ovalbox}{}
 
-\begin{minipage}{0.1\textwidth}
-\def\svgwidth{\columnwidth}
-\input{thumbs.pdf_tex}
-\end{minipage}
+%\begin{minipage}{0.1\textwidth}
+%\def\svgwidth{\columnwidth}
+%\input{thumbs.pdf_tex}
+%\end{minipage}
 \begin{minipage}{0.47\textwidth}
 {\Huge #1}
 \end{minipage}
