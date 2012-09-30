@@ -60,15 +60,17 @@ feedback2tex <- function(x,bgcols=c("d8f2f1","ddf4dd")) {
       ## subsetting just to make sure that the input is correct
       ## plus adding 'speaker' column
       x.sub <- cbind("\\speaker",x[,c("userdescription","example")])
-      colnames(x.sub) <- c("",sj,"Beispiel")
+      ##colnames(x.sub) <- c("",sj,"Beispiel")
+      colnames(x.sub) <- NULL
       ## xtable commands
       tbl <- xtable(x.sub)
       align(tbl) <- "c|m{90pt}|m{290pt}|m{290pt}|"
       ## commands to add and their position
       command1 <- rep(c("\\rowcolor{bgcol1}","\\rowcolor{bgcol2}"),length.out=rownum+1)
       command2 <- rep("\\hline",length.out=rownum+1)
-      #command2[2] <- "\\hline"
-      command2[1] <- ""
+      command1[1] <- ""
+      command2[1] <- "\\multicolumn{2}{l}{\\Large{Das kann ich!}} & \\multicolumn{1}{l}{\\Large{Beispiel}}\\\\" 
+      command2[2] <- ""
       command1
       command2
       command <- paste(command1,command2)
@@ -77,8 +79,8 @@ feedback2tex <- function(x,bgcols=c("d8f2f1","ddf4dd")) {
       pos <- as.list(seq(-1,rownum-1))
       rownum
       print(tbl,floating=FALSE,sanitize.text.function = function(x){x},
-            include.rownames=FALSE,
-            hline.after=c(unlist(pos),rownum),
+            include.rownames=FALSE,include.colnames=FALSE,
+            hline.after=c(unlist(pos),rownum)[-1],
             add.to.row=list(pos=pos,command=command))
       options(op)
     } else {
