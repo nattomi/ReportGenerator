@@ -59,12 +59,12 @@ feedback2tex <- function(x,bgcols=c("d8f2f1","ddf4dd")) {
       op <- options(warn=-1)
       ## subsetting just to make sure that the input is correct
       ## plus adding 'speaker' column
-      x.sub <- cbind("\\speaker",x[,c("userdescription","example")])
+      x.sub <- cbind("\\scalebox{0.8}{\\speaker}",x[,c("userdescription","example")])
       ##colnames(x.sub) <- c("",sj,"Beispiel")
       colnames(x.sub) <- NULL
       ## xtable commands
       tbl <- xtable(x.sub)
-      align(tbl) <- "c|m{90pt}|m{290pt}|m{290pt}|"
+      align(tbl) <- "c|m{80pt}|m{300pt}|m{300pt}|"
       ## commands to add and their position
       command1 <- rep(c("\\rowcolor{bgcol1}","\\rowcolor{bgcol2}"),length.out=rownum+1)
       command2 <- rep("\\hline",length.out=rownum+1)
