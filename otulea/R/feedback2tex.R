@@ -90,9 +90,7 @@ feedback2tex <- function(x,subject, mode.string, graphics.command, cellcol) {
       command1 <- rep("\\rowcolor{cellcol}",length.out=rownum+1)
       command2 <- rep("\\hline",length.out=rownum+1)
       command1[1] <- ""
-      ## Title associated to selected mode
-      mode.title <- as.character(titles$title[match(mode.string,titles$mode)])
-      command2[1] <- paste("\\multicolumn{2}{l}{\\Large{",mode.title,"}} & \\multicolumn{1}{l}{\\Large{Beispiel}}\\\\",sep="")
+      command2[1] <- paste("\\multicolumn{2}{l}{\\Large{",mode.string,"}} & \\multicolumn{1}{l}{\\Large{Beispiel}}\\\\",sep="")
       command2[2] <- ""
       command <- paste(command1,command2)
       pos <- as.list(seq(-1,rownum-1))
