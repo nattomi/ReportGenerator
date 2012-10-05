@@ -78,10 +78,16 @@ feedback2tex <- function(x,subject, mode.string, graphics.command, cellcol) {
       command2[2] <- ""
       command <- paste(command1,command2)
       pos <- as.list(seq(-1,rownum-1))
+      ## this one goes to the title row
+      cat("{\\Huge \\textbf{\\underline{",subject,"}}\n",sep="")
+      cat("\\vspace{2em}\n")
+      ## setting font size to small
+      cat("{\\small\n")
       print(tbl,floating=FALSE,sanitize.text.function = function(x){x},
             include.rownames=FALSE,include.colnames=FALSE,
             hline.after=c(unlist(pos),rownum)[-1],
             add.to.row=list(pos=pos,command=command))
+      cat("}\n")
       options(op)
     } else {
       cat("Nothing to display\n")

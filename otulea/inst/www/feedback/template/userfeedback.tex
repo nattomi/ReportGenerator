@@ -29,35 +29,31 @@
 }
 
 % for creating a particular type of feedback
-\newcommand{\feedback}[2]{
+\newcommand{\feedback}[1]{
 \pagecolor{bg}
 
 \begin{center}
-{\Huge \textbf{\underline{#1}}}
-\vspace{2em}
-{\small \input{#2}}
+%{\Huge \textbf{\underline{#1}}}
+%\vspace{2em}
+\input{#1}
 \end{center}
+\null
+\vfill
 }
 
 \begin{document}
 
 % mode A1
 \begin{slide}
-\feedback{Sprache}{A1}
-\null
-\vfill 
+\feedback{A1} 
 \end{slide}
 % mode A2
 \begin{slide}
-\feedback{Sprache}{A2}
-\null
-\vfill
+\feedback{A2}
 \end{slide}
 % mode A3
 \begin{slide}
-\feedback{Sprache}{A3}
-\null
-\vfill
+\feedback{A3}
 \end{slide}
 
 \end{document}
