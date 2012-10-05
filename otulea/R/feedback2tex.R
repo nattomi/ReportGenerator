@@ -43,26 +43,8 @@ for (n in names(z)) {
 }
 ## END: MAIN TEST
 
-##ind.col <- match(tolower(sj),tolower(cellcolors$subject))
-##cellcol <- as.character(cellcolors$color[ind.col])
-##x <- uncompress(y)$A1
-##y
 ## this one just prints it to screen
 ##setwd("/tmp/otulear/otulea/R")
-##feedback2tex(x)
-## this one overwrites template.tex
-##sink("../inst/www/feedback/template/tabular_A1.tex")
-##feedback2tex(x$A1)
-##sink()
-##sink("../inst/www/feedback/template/tabular_A2.tex")
-##feedback2tex(x$A2,rep(cellcol,2))
-##sink()
-##sink("../inst/www/feedback/template/tabular_A3.tex")
-##feedback2tex(x$A3,rep(cellcol,2))
-##sink()
-##3+3
-##feedback2tex()
-
 ##setwd("../inst/feedback/")
 ## Sys.setenv(TEXINPUTS="/usr/local/texlive/2012/texmf-dist/tex/latex/background")
 ##texi2pdf("userfeedback.tex")
@@ -90,7 +72,7 @@ feedback2tex <- function(x,subject, mode.string, graphics.command, cellcol) {
       command1 <- rep("\\rowcolor{cellcol}",length.out=rownum+1)
       command2 <- rep("\\hline",length.out=rownum+1)
       command1[1] <- ""
-      command2[1] <- paste("\\multicolumn{2}{l}{\\Large{",mode.string,"}} & \\multicolumn{1}{l}{\\Large{Beispiel}}\\\\",sep="")
+      command2[1] <- paste("\\multicolumn{2}{m{380pt}}{\\Large{",mode.string,"}} & \\multicolumn{1}{l}{\\Large{Beispiel}}\\\\",sep="")
       command2[2] <- ""
       command <- paste(command1,command2)
       pos <- as.list(seq(-1,rownum-1))
