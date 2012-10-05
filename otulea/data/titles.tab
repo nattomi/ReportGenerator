@@ -1,4 +1,4 @@
-mode title
-A1 "Das kann ich!"
-A2 "What can be improved?"
-A3 "An diesen Dingen muss ich arbeiten"
+mode mode.string graphics
+A1 "Das kann ich!" haken
+A2 "What can be improved?" NA
+A3 "An diesen Dingen muss ich arbeiten" leiter
