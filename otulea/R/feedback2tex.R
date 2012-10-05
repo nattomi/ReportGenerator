@@ -28,7 +28,7 @@ cellcol <- "f2f2cb"
 ## BEGIN: TEST RUNS
 feedback2tex(x,subject, mode.string, graphics.command, cellcol)
 ## changing mode string and graphics
-feedback2tex(x,subject, as.character(titles$title[3]), "\\leiter", cellcol)
+feedback2tex(x,subject, as.character(modes$mode.string[3]), "\\leiter", cellcol)
 ## END: TEST RUNS
 
 ## BEGIN: MAIN TEST
@@ -36,9 +36,11 @@ feedback2tex(x,subject, as.character(titles$title[3]), "\\leiter", cellcol)
 subject2 <- attr(z,"subject")
 cellcolor2 <- as.character(cellcolors$color[match(subject,cellcolors$subject)])
 for (n in names(z)) {
-  mode.string2 <- as.character(titles$title[match(n,titles$mode)])
+  row.of.mode <- match(n,modes$mode)
+  mode.string2 <- as.character(modes$mode.string[row.of.mode])
+  graphics.command2 <- as.character(modes$graphics[row.of.mode])
   sink(paste("../inst/www/feedback/template/",n,".tex",sep=""))
-  feedback2tex(z[[n]],subject2,mode.string2,"\\haken",cellcolor2)
+  feedback2tex(z[[n]],subject2,mode.string2,paste("\\",graphics.command2,sep=""),cellcolor2)
   sink()
 }
 ## END: MAIN TEST
