@@ -79,7 +79,7 @@ feedback2tex <- function(x,subject, mode.string, graphics.command, cellcol) {
       command <- paste(command1,command2)
       pos <- as.list(seq(-1,rownum-1))
       ## this one goes to the title row
-      cat("{\\Huge \\textbf{\\underline{",subject,"}}\n",sep="")
+      cat("{\\Huge \\textbf{\\underline{",subject,"}}}\n",sep="")
       cat("\\vspace{2em}\n")
       ## setting font size to small
       cat("{\\small\n")
