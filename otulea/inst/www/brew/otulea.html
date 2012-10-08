@@ -61,6 +61,7 @@ alphalist.df <- alphalist2df(alphalist)
 alphalevels <- getAlphalevels(user,threshold,maxListings,alphalist.df)
 subject <- attr(alphalevels,"subject")
 level <- attr(alphalevels,"level")
+cellcolor <- as.character(cellcolors$color[match(subject,cellcolors$subject)])
 ## directory where feedback pdfs are stored
 dir.feedback <- file.path(wwwDir,subDir.feedback)
 ## this is for the file download
@@ -79,18 +80,22 @@ uncprsd <- uncompress(x=alphalevels,alphalist.df=alphalist.df,subset=c("userdesc
                                                                 "alphaID","sound"))
 ##print(uncprsd)
 templateFiles <- c(userfeedback="userfeedback.tex",
-                   thumbs.pdf="thumbs.pdf",
-                   thumbs.tex="thumbs.pdf_tex")
+                   haken="haken.pdf",
+                   leiter="leiter.pdf")
 ## copying template files
 for (f in templateFiles) {
   file.copy(file.path(dir.feedback,"template",f),
             file.path(dir.show,f))
 }
 ## creating tex files
-for (mode in 1:3) {
-  texIncludePath <- file.path(dir.show,paste("tabular_A",mode,".tex",sep=""))
+for (mode in paste("A",1:3,sep="")) {
+  row.of.mode <- match(mode,modes$mode)
+  mode.string <- as.character(modes$mode.string[row.of.mode])
+  graphics.command <- as.character(modes$graphics[row.of.mode])
+  texIncludePath <- file.path(dir.show,paste("A",mode,".tex",sep=""))
   sink(texIncludePath)
-  feedback2tex(uncprsd[[paste("A",mode,sep="")]])
+  feedback2tex(uncprsd[[paste("A",mode,sep="")]],subject,mode.string,
+               graphics.command,cellcolor)
   sink()
 }
 ## renaming main tex file
