@@ -5,14 +5,23 @@ Downloading
 cd /tmp
 git clone git://github.com/nattomi/otulear.git
 
+Configuration
+=============
+cd otulear
+## At the moment there are 3 configuration files:
+## * config.R -- user directory and location of alphalist XML. Important!
+## * modes.tab -- strings and graphics related to different feedback modes. Optional.
+## * cellcolors.tab -- table cell color related to different subjects. Optional  
+
 Installing the R package
 ========================
-cd otulear
-## before installing the package, edit the config file!
+## before installing the package it is neccessary to edit at least the config.R file!
 emacs -nw otulea/data/config.R
 ## f.i. 
 ## usersDir <- "/var/www/otulea/data/user/"
 ## alphalist <- "/var/www/otulea/data/item/alphalist/alphalist.XML"
+## 
+
 R CMD INSTALL otulea -l /usr/local/lib/R/site-library
 
 Installing the develompment version of the web application
