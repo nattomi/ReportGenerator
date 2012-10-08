@@ -43,6 +43,11 @@ for (n in names(z)) {
   feedback2tex(z[[n]],subject2,mode.string2,paste("\\",graphics.command2,sep=""),cellcolor2)
   sink()
 }
+## running pdflatex
+getwd() -> wd
+setwd("../inst/www/feedback/template")
+texi2pdf("userfeedback.tex")
+setwd(wd)
 ## END: MAIN TEST
 
 ## this one just prints it to screen
@@ -79,7 +84,7 @@ feedback2tex <- function(x,subject, mode.string, graphics.command, cellcol) {
       command <- paste(command1,command2)
       pos <- as.list(seq(-1,rownum-1))
       ## this one goes to the title row
-      cat("{\\Huge \\textbf{\\underline{",subject,"}}}\n",sep="")
+      cat("{\\Huge \\textbf{\\underline{",subject,"}}}\\\\\n",sep="")
       cat("\\vspace{2em}\n")
       ## setting font size to small
       cat("{\\small\n")
