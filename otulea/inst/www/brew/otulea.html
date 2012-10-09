@@ -87,14 +87,18 @@ for (f in templateFiles) {
   file.copy(file.path(dir.feedback,"template",f),
             file.path(dir.show,f))
 }
+
+##if (FALSE) {## commenting out begins
+
 ## creating tex files
 for (mode in paste("A",1:3,sep="")) {
   row.of.mode <- match(mode,modes$mode)
   mode.string <- as.character(modes$mode.string[row.of.mode])
-  graphics.command <- as.character(modes$graphics[row.of.mode])
-  texIncludePath <- file.path(dir.show,paste("A",mode,".tex",sep=""))
+  graphics.command <- paste("\\",as.character(modes$graphics[row.of.mode]),
+                            sep="")
+  texIncludePath <- file.path(dir.show,mode)
   sink(texIncludePath)
-  feedback2tex(uncprsd[[paste("A",mode,sep="")]],subject,mode.string,
+  feedback2tex(uncprsd[[mode]],subject,mode.string,
                graphics.command,cellcolor)
   sink()
 }
@@ -115,6 +119,9 @@ cat("<hr>\n")
 ans <- alphalevels2xml(uncprsd,file=pdfName,subject,level)
 cat(gsub("<","&lt;",saveXML(ans)))
 }
+
+##} ## COMMENTING OUT ENDS
+
 ## set selection (instead of falling back to default)
 ## using JavaScript here is a bit dirty, but I can't think of any better way
 cat("<script type='text/javascript'>\n")
