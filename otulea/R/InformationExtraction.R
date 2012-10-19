@@ -19,10 +19,10 @@ attributes(test.df)$attrs
 ## getting all items of a test
 test.df$data
 ## getting the full path of test-result files
-userDir <- "../otulea/data/user/6CKBT"
+userDir <- "../inst/www/data/user/6CKBT"
 testresults <- file.path(userDir,test.df$data)
 testresults
-
+getMarkings(testresults)
 }
 ## list all tests taken by a user
 list.tests <- function(guf) {
