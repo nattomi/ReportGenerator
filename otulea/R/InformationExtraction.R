@@ -25,6 +25,10 @@ test.df
 userDir <- "../inst/www/data/user/6CKBT"
 testresults <- file.path(userDir,test.df$data)
 testresults
+## getting testresults from all tests
+testresults.all <- lapply(tests.df,function(x) file.path(userDir,x$data))
+## we can convert it to other forms
+unlist(testresults.all)
 getMarkings(testresults)
 }
 ## list all tests taken by a user
