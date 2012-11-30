@@ -16,15 +16,9 @@ getAlphalevels(user,threshold,4,alphalist.df)
 getAlphalevels <- function(user, threshold, maxListings,
                            alphalist.df) {
   ## Information extraction
-  ## location of global user file
-  userDir <- file.path(usersDir,user)
-  guf <- file.path(userDir,paste(user,"xml",sep=".")) ## later on we rewrite this with system.file
-  ## tests taken by the user (returned as an XMLNodeSet)
-  tests <- list.tests(guf)
-  ## getting the last test taken
-  tests.last <- last(tests)
-  tests.last.df <- test2df(tests.last)
-  testresults <- file.path(userDir,tests.last.df$data)
+  ## getting testresults - FIXME: adding a mode argument?
+  testresults <- testResults(user,TRUE)
+  ## marking
   markings <- getMarkings(testresults)
   
   ## Derivation of results
