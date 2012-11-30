@@ -3,38 +3,35 @@ if (FALSE) {
 library(otulea)
 library(tools)
 ## redefining configuration settings
+## you don't need to edit these 2 lines if you already set this in config.R
+## prior to installing the package
 usersDir <- "../inst/www/data/user" # directory containing user folders
-alphalist <- "../inst/www/data/item/alphalist/alphalist.xml"; alphalist.df <- alphalist2df(alphalist) # path to alphalist xml 
+alphalist <- "../inst/www/data/item/alphalist/alphalist.XML"; alphalist.df <- alphalist2df(alphalist) # path to alphalist xml
 ## arguments
 user <- "6CKBT" # user id
 threshold <- 10 # threshold in %
 maxListings <- 3 # maximum number of results
 dir.template <- "../inst/www/feedback/template" # directory contaning latex template
-dir.feedback <- "/tmp/feedback" # directory containing feedback folders
+file.out <- "/tmp/feedback/reportA.pdf" # name of output pdf file. Be aware that if the containing folder already exists then any other files in this folder than the output file will be deleted
 ## function call
 genReportA(user,threshold,maxListings,alphalist.df,
-           dir.template,dir.feedback)
+           dir.template,file.out)
 }
-
-getwd()
 ## FUNCTION
 genReportA <- function(user,threshold,maxListings,alphalist.df,
-                       dir.template,dir.feedback) {
+                       dir.template,file.out) {
   ## the actual calculation
   alphalevels <- getAlphalevels(user,threshold,maxListings,alphalist.df)
   subject <- attr(alphalevels,"subject")
   level <- attr(alphalevels,"level")
   cellcolor <- as.character(cellcolors$color[match(subject,cellcolors$subject)])
-  ## this is for the file download
-  systime <- Sys.time()
-  baseName <- paste(user,format(systime,format="%Y%m%d_%H_%M_%S"),sep="_")
-  dir.show <- file.path(dir.feedback, baseName)
+  pdfName <- basename(file.out)
+  baseName <- strsplit(pdfName,"\\.")[[1]][1]
+  dir.show <- dirname(file.out)
   ## create directories if necessary
   if (!file.exists(dir.show)) dir.create(dir.show)
-
   ## basename of pdf file to be generated
   texName <- paste(baseName,"tex",sep=".")
-  pdfName <- paste(baseName,"pdf",sep=".")
   uncprsd <- uncompress(x=alphalevels,alphalist.df=alphalist.df,subset=c("userdescription","example",
                                                                   "alphaID","sound"))
   ##print(uncprsd)
@@ -67,9 +64,8 @@ genReportA <- function(user,threshold,maxListings,alphalist.df,
   setwd(dir.show)
   texi2dvi(texName,pdf=TRUE)
   ## cleaning up
-  unlink(x=file.path(dir.show,
-           c(paste(baseName,c(".log",".aux",".tex"),sep=""),
-             "A1","A2","A3","haken.pdf","leiter.pdf")))
+  allfiles <- list.files(dir.show)
+  unlink(x=allfiles[-match(pdfName,allfiles)]) 
   ## changing back to original working directory
   setwd(currentWD)
   ans <- alphalevels2xml(uncprsd,file=pdfName,subject,level)
