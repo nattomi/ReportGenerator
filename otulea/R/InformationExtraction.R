@@ -16,8 +16,11 @@ last(tests)
 ## converting a test to a data.frame
 test.df <- test2df(test)
 attributes(test.df)$attrs
+## converting all tests to a data frame
+tests.df <- lapply(tests,test2df)
+attributes(tests.df[[1]]) # attributes are still preserved
 ## getting all items of a test
-test.df$data
+test.df
 ## getting the full path of test-result files
 userDir <- "../inst/www/data/user/6CKBT"
 testresults <- file.path(userDir,test.df$data)
