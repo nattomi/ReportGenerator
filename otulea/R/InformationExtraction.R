@@ -30,6 +30,9 @@ testresults.all <- lapply(tests.df,function(x) file.path(userDir,x$data))
 ## we can convert it to other forms
 unlist(testresults.all)
 getMarkings(testresults)
+## testresults
+testResults("6CKBT")
+testResults("6CKBT",TRUE)
 }
 ## list all tests taken by a user
 list.tests <- function(guf) {
@@ -51,7 +54,7 @@ test.date <- function(test) {
 last <- function(tests) {
   tests.date <- do.call("c",lapply(tests,test.date))
   ## finding the index of the last test taken
-  tests[[which.max(order(tests.date))]]
+  tests[which.max(order(tests.date))]
 }
   
 ## transforming a test to a data.frame
@@ -63,6 +66,21 @@ test2df <- function(test) {
   rownames(test.df) <- NULL
   attributes(test.df)$attrs <- attrs
   test.df
+}
+
+## getting testresults
+testResults <- function(user,last=FALSE) {
+  ## location of global user file
+  userDir <- file.path(usersDir,user)
+  guf <- file.path(userDir,paste(user,"xml",sep=".")) ## later on we rewrite this with system.file
+  ## tests taken by the user (returned as an XMLNodeSet)
+  tests <- list.tests(guf)
+  ## apply 'last' filter if requested
+  if (last) tests <- last(tests)
+  ## getting the last test taken
+  tests.df <- lapply(tests,test2df)
+  testresults <- lapply(tests.df, function(x) file.path(userDir,x$data))
+  unlist(testresults)
 }
 
 ## getting the marking sections of various testresult files
