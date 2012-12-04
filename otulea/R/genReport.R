@@ -16,12 +16,14 @@ file.out <- "/tmp/feedback/reportA.pdf" # name of output pdf file. Be aware that
 ## function call
 genReportA(user,threshold,maxListings,alphalist.df,
            dir.template,file.out)
+
+genReportB("huha")
 }
 ## FUNCTION
 genReportA <- function(user,threshold,maxListings,alphalist.df,
                        dir.template,file.out) {
   ## the actual calculation
-  alphalevels <- getAlphalevels(user,threshold,maxListings,alphalist.df)
+  alphalevels <- getAlphalevelsA(user,threshold,maxListings,alphalist.df)
   subject <- attr(alphalevels,"subject")
   level <- attr(alphalevels,"level")
   cellcolor <- as.character(cellcolors$color[match(subject,cellcolors$subject)])
@@ -70,4 +72,8 @@ genReportA <- function(user,threshold,maxListings,alphalist.df,
   setwd(currentWD)
   ans <- alphalevels2xml(uncprsd,file=pdfName,subject,level)
   cat(saveXML(ans))
+}
+
+genReportB <- function(someargs) {
+  cat("someresults:",someargs,"\n")
 }

@@ -32,7 +32,7 @@ unlist(testresults.all)
 getMarkings(testresults)
 ## testresults
 testResults("6CKBT")
-testResults("6CKBT",TRUE)
+lapply(testResults("6CKBT",TRUE),attributes)
 }
 ## list all tests taken by a user
 list.tests <- function(guf) {
@@ -79,9 +79,14 @@ testResults <- function(user,last=FALSE) {
   if (last) tests <- last(tests)
   ## getting the last test taken
   tests.df <- lapply(tests,test2df)
-  testresults <- lapply(tests.df, function(x) file.path(userDir,x$data))
-  unlist(testresults)
+  attributes(tests.df[[1]])
+  testresults <- lapply(tests.df, function(x) {
+    ans <- file.path(userDir,x$data)
+    attributes(ans) <- list(attrs=attributes(x)$attrs)
+    ans})
+  testresults
 }
+  
 
 ## getting the marking sections of various testresult files
 ## and merge them into a data frame containing character strings 
