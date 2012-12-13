@@ -21,6 +21,8 @@ tests.df <- lapply(tests,test2df)
 attributes(tests.df[[1]]) # attributes are still preserved
 ## getting all items of a test
 test.df
+## converting all tests to one data frame
+guf2df(guf)
 ## getting the full path of test-result files
 userDir <- "../inst/www/data/user/6CKBT"
 testresults <- file.path(userDir,test.df$data)
@@ -67,6 +69,23 @@ test2df <- function(test) {
   attributes(test.df)$attrs <- attrs
   test.df
 }
+
+## Presenting the content of a global user file in the
+## form of a data frame, preserving all of its content
+guf2df <- function(guf) {
+  tests <- list.tests(guf)
+  tests.df <- lapply(tests,test2df)
+  tests.df.attrs <- lapply(tests.df,function(x) {
+    y <- attributes(x)$attrs
+    rownum <- dim(x)[2]
+    ext <- t(matrix(rep(y,rownum),ncol=rownum))
+    colnames(ext) <- names(y)
+    cbind(x,ext)
+  })
+  ## next step is to rbind members of the list. How?
+  do.call("rbind",tests.df.attrs)
+}
+
 
 ## getting testresults
 testResults <- function(user,last=FALSE) {
