@@ -82,8 +82,9 @@ guf2df <- function(guf) {
     colnames(ext) <- names(y)
     cbind(x,ext)
   })
-  ## next step is to rbind members of the list. How?
-  do.call("rbind",tests.df.attrs)
+  ans <- do.call("rbind",tests.df.attrs)
+  class(ans) <- c(class(ans),"guf")
+  ans
 }
 
 
