@@ -1,0 +1,4 @@
+%\VignetteIndexEntry{teacherreport}
+\documentclass{article}
+\begin{document}
+\end{document}
