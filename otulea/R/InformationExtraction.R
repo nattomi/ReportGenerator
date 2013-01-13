@@ -27,6 +27,7 @@ guf2df(guf)
 userDir <- "../inst/www/data/user/6CKBT"
 testresults <- file.path(userDir,test.df$data)
 testresults
+getMarking(testresults[1])
 ## getting testresults from all tests
 testresults.all <- lapply(tests.df,function(x) file.path(userDir,x$data))
 ## we can convert it to other forms
@@ -117,6 +118,16 @@ getMarkings <- function(testresults) {
     getNodeSet(x.marking[[1]],"//mark")
   })
   markings.df <- t(as.data.frame(lapply(do.call("c",markings),function(x) c(xmlAttrs(x),mark=xmlValue(x)))))
+  rownames(markings.df) <- NULL
+  markings.df
+}
+
+
+getMarking <- function(x) {
+  x.parse <- xmlParse(x)
+  x.marking <- getNodeSet(x.parse, "//marking")
+  marking <- getNodeSet(x.marking[[1]],"//mark")
+  markings.df <- t(as.data.frame(lapply(do.call("c",marking),function(x) c(xmlAttrs(x),mark=xmlValue(x)))))
   rownames(markings.df) <- NULL
   markings.df
 }
