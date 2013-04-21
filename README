@@ -23,14 +23,16 @@ emacs -nw otulea/data/config.R
 ## 
 
 R CMD INSTALL otulea -l /usr/local/lib/R/site-library
+(the -l switch determines where the R package is going to be installed)
 
 Installing the develompment version of the web application
 ==========================================================
-We assume that our Apache root folder is /var/www
-cp -r otulea/inst/otulea.conf /etc/apache2/conf.d/
-(then restart Apache)
-mkdir /var/www/otulea
-cp -r -T otulea/inst/www /var/www/otulea/
-Remember that the 'feedback' subfolder must be writeable
-by user www-data
+The web application is discontinued! Currently my focus is only on
+generating the pdfs, see below.
+
+Generating feedback files
+=========================
+student report - run inst/studentReport.R without parameters for
+usage instructions
+teacher report - coming soon
 
