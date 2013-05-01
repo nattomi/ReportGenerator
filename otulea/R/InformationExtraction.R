@@ -66,6 +66,7 @@ last <- function(tests) {
 test2df <- function(test) {
   test.list <- xmlToList(test)
   attrs <- test.list$.attrs
+  names(attrs) <- paste(names(attrs),"string",sep=".")
   test.list <- test.list[names(test.list)=="item"] ## *2 possible place for improvement
   test.df <- data.frame(t(as.data.frame(test.list)),stringsAsFactors=FALSE)
   rownames(test.df) <- NULL
@@ -92,9 +93,6 @@ guf2df <- function(guf) {
 
 
 ## getting testresults
-user <- "6CKBT"
-last <- FALSE
-testResults("6CKBT",last=TRUE)
 testResults <- function(user,last=FALSE) {
   ## location of global user file
   userDir <- file.path(usersDir,user)
