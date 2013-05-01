@@ -4,7 +4,7 @@
 if (FALSE) {
 require(otulea)
 ## location of global user file
-guf <- "../inst/www/data/user/6CKBT/6CKBT.xml" ## later on we rewrite this with system.file 
+guf <- "../inst/data/user/6CKBT/6CKBT.xml" ## later on we rewrite this with system.file 
 ## tests taken by the user (returned as an XMLNodeSet)
 tests <- list.tests(guf)
 ## selecting one test 
@@ -24,7 +24,7 @@ test.df
 ## converting all tests to one data frame
 guf2df(guf)
 ## getting the full path of test-result files
-userDir <- "../inst/www/data/user/6CKBT"
+userDir <- "../inst/data/user/6CKBT"
 testresults <- file.path(userDir,test.df$data)
 testresults
 getMarking(testresults[1])
@@ -34,8 +34,10 @@ testresults.all <- lapply(tests.df,function(x) file.path(userDir,x$data))
 unlist(testresults.all)
 getMarkings(testresults)
 ## testresults
-testResults("6CKBT")
+testresults <- testResults("6CKBT")
 lapply(testResults("6CKBT",TRUE),attributes)
+testresults
+lapply(testresults,getMarkings)
 }
 ## list all tests taken by a user
 list.tests <- function(guf) {
@@ -90,6 +92,9 @@ guf2df <- function(guf) {
 
 
 ## getting testresults
+user <- "6CKBT"
+last <- FALSE
+testResults("6CKBT",last=TRUE)
 testResults <- function(user,last=FALSE) {
   ## location of global user file
   userDir <- file.path(usersDir,user)
@@ -100,7 +105,6 @@ testResults <- function(user,last=FALSE) {
   if (last) tests <- last(tests)
   ## getting the last test taken
   tests.df <- lapply(tests,test2df)
-  attributes(tests.df[[1]])
   testresults <- lapply(tests.df, function(x) {
     ans <- file.path(userDir,x$data)
     attributes(ans) <- list(attrs=attributes(x)$attrs)
@@ -117,17 +121,10 @@ getMarkings <- function(testresults) {
     x.marking <- getNodeSet(x.parse, "//marking")
     getNodeSet(x.marking[[1]],"//mark")
   })
-  markings.df <- t(as.data.frame(lapply(do.call("c",markings),function(x) c(xmlAttrs(x),mark=xmlValue(x)))))
-  rownames(markings.df) <- NULL
+  markings.all <- do.call("c",markings)
+  markings.all2 <- lapply(markings.all,function(x) c(xmlAttrs(x),mark=xmlValue(x)))
+  markings.df <- as.data.frame(do.call("rbind",markings.all2))
+  attributes(markings.df)<- c(attributes(markings.df),attributes(testresults))
   markings.df
 }
 
-
-getMarking <- function(x) {
-  x.parse <- xmlParse(x)
-  x.marking <- getNodeSet(x.parse, "//marking")
-  marking <- getNodeSet(x.marking[[1]],"//mark")
-  markings.df <- t(as.data.frame(lapply(do.call("c",marking),function(x) c(xmlAttrs(x),mark=xmlValue(x)))))
-  rownames(markings.df) <- NULL
-  markings.df
-}
