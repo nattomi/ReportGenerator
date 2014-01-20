@@ -22,13 +22,24 @@ if (length(args)==0) {
   subject <- attr(alphalevels_pro_mode,"subject")
   level <- attr(alphalevels_pro_mode,"level")
   cellcolor <- as.character(cellcolors$color[match(subject,cellcolors$subject)])
-  tables_pro_mode <- uncompress(alphalevels_pro_mode,alphalist.df,c("userdescription","example","alphaID","sound")) ## does a lookup in alphalist df and reports tabular information
+  tables_pro_mode <- uncompress(alphalevels_pro_mode,alphalist.df,c("userdescription","example","alphaID")) ## does a lookup in alphalist df and reports tabular information
+  ##x <- tables_pro_mode$A2
+  ##print(colnames(x))
+  ##print(dim(x))
+  ##y <- cbind(x,sound=rep(0,dim(x)[1]))
+  ##print(colnames(y))
+  ##x <- tables_pro_mode[[1]]
+  ##x$sound <- "sound.ogg"
+  ##print(x)
+  tables_pro_mode2 <- lapply(tables_pro_mode,function(x) {
+    y <- cbind(x,sound=rep("sound.ogg",dim(x)[1]))
+    y})
   systime <- Sys.time()
   baseName <- paste(user,format(systime,format="%Y%m%d_%H_%M_%S"),sep="_")
   texName <- paste(baseName,"tex",sep=".")
   pdfName <- paste(baseName,"pdf",sep=".")
   xmlName <- paste(baseName,"xml",sep=".")
-  xml_output <- alphalevels2xml(tables_pro_mode,file=pdfName,
+  xml_output <- alphalevels2xml(tables_pro_mode2,file=pdfName,
                                 subject=subject,level=level)
   ## creating tex files
   dir.create(baseName)

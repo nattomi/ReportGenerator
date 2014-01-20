@@ -44,8 +44,8 @@ alphalevels2xml <- function(uncprsd,file,subject,level) {
 
     ##(uncprsd[[mode.i]],function(x) paste())
     dat <- uncprsd[[mode]]
-    length(t(dat))
-    as.data.frame(t(dat))
+    ##length(t(dat))
+    ##as.data.frame(t(dat))
     text <- paste('lapply(as.data.frame(t(dat)),function(x) newXMLNode("alphanode", parent=',nodeName,', attrs=c("alphaID" = as.character(x[["alphaID"]]),"sound" = as.character(x[["sound"]]))))',sep="")
     eval(parse(text=text))
   }
