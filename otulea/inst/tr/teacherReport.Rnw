@@ -1,0 +1,85 @@
+\documentclass{beamer}
+\usepackage[utf8]{inputenc}
+%\usepackage{array}
+\usepackage{tabularx}
+%\usepackage[top=0.5cm, bottom=0.5cm, left=0.5cm, right=0.5cm]{geometry}
+\usetheme{Warsaw}
+\usepackage{multirow}
+\usepackage{color,colortbl}
+\definecolor{A}{RGB}{193,255,193}
+\definecolor{B}{RGB}{255,246,143}
+\definecolor{C}{RGB}{135,216,255}
+%\setbeamercolor{section in head/foot}{fg=white, bg=black}
+\setbeamertemplate{headline}
+{
+  
+  \leavevmode%
+  \hbox{%
+  \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.25ex,dp=1ex,left]{author in head/foot}%
+    \usebeamerfont{author in head/foot}\insertshortauthor
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.25ex,dp=1ex,right]{title in head/foot}%
+    \usebeamerfont{title in head/foot}\insertshorttitle\hspace*{3em}
+  \end{beamercolorbox}}%
+  \vskip0pt%
+}
+\setbeamertemplate{footline}{}
+\setbeamertemplate{navigation symbols}{}%remove navigation symbols
+\setbeamersize{text margin left=3mm,text margin right=3mm}
+\newcommand\supertiny{\fontsize{4}{5.2}\selectfont}
+%\setbeamertemplate{itemize item}{\scriptsize\raise1.25pt\hbox{\donotcoloroutermaths$\bullet$}}
+%\setlength{\tabcolsep}{5pt}
+
+% Data coming from R
+<<tr,echo=false>>=
+source("tr.R")
+attrib <- attributes(tr)
+headline.left <- paste("Teilnehmer/Teilnehmerin: ",attrib$participant,sep="")
+headline.right <- paste("Datum: ",attrib$date,sep="")
+@
+
+
+\author{\Sexpr{headline.left}}
+\title{\Sexpr{headline.right}}
+
+\begin{document}
+
+
+\begin{frame}
+  \begin{center}
+  \begin{minipage}{0.22\textwidth}
+    \begin{block}{Lesen}
+      \vbox to .82\textheight{
+        {\supertiny
+          \input{Lesen}
+          \vfill}}
+    \end{block}
+  \end{minipage}\hspace{2.5mm}
+  \begin{minipage}{0.22\textwidth}
+    \begin{block}{Schreiben}
+      \vbox to .82\textheight{
+        {\supertiny
+          \input{Schreiben}
+          \vfill}}
+    \end{block}
+  \end{minipage}\hspace{2.5mm}
+  \begin{minipage}{0.22\textwidth}
+    \begin{block}{Sprache}
+      \vbox to .82\textheight{
+      {\supertiny
+        \input{Sprache}
+        \vfill}}
+    \end{block}
+  \end{minipage}\hspace{2.5mm}
+  \begin{minipage}{0.22\textwidth}
+    \begin{block}{Mathe}
+      \vbox to .82\textheight{
+        {\supertiny
+          \input{Mathe}
+          \vfill}}
+    \end{block}
+  \end{minipage}
+  \end{center}
+\end{frame}
+\end{document}
+
