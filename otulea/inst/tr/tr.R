@@ -1,7 +1,7 @@
 #!/usr/bin/Rscript
 ## SETTINGS
 X <- c("Lesen","Schreiben","Sprache","Mathe")
-Y <- c("0")
+Y <- c("10","5","0")
 ## ROUTINES
 multirow <- function(x) {
   l <- length(x)
@@ -27,8 +27,7 @@ cl <- function(x) {
   num <- seq_along(x)[x]
   paste("\\cline{",num,"-",num,"}",sep="",collapse="")
 }
-##CLINE
-##cline(CLINE[4,])
+
 ## MAIN
 dat0 <- read.csv("tr.csv")
 dat <- transform(dat0,ast=paste(aufgabe,score,sep="_"),nch=nchar(as.character(description)))
@@ -49,9 +48,9 @@ for (y in Y) {
   })
   M <- sapply(dimension.list,function(x) dim(x)[1])
   K <- max(M)-M
-  TABL.list <- lapply(X,function(y) {
-    tabl <- dimension.list[[y]]
-    repl <- K[[y]]
+  TABL.list <- lapply(X,function(x) {
+    tabl <- dimension.list[[x]]
+    repl <- K[[x]]
     if (repl > 0) {
       i <- which.max(tabl$nch)
       tabl.i <- tabl[i,]
@@ -60,25 +59,33 @@ for (y in Y) {
       }
     }
     tabl <- tabl[order(tabl$ast,tabl$description),]
-    tabl[,c("ast","description")]
+    tabl <- tabl[,c("ast","description")]
+    attributes(tabl) <- c(attributes(tabl),list(color=paste(x,y,sep="-")))
+    tabl
   })
   TABL <- do.call("cbind",TABL.list)
-  TABL.multirow <- as.data.frame(lapply(TABL,multirow))
+  TABL.multirow <- as.data.frame(lapply(TABL,multirow.rev))
+  COLOR.list <- lapply(TABL.list,function(x) {
+    d <- dim(x)
+    matrix(attributes(x)$color,nrow=d[1],ncol=d[2])
+  })
+  COLOR <- do.call("cbind",COLOR.list)
   d <- dim(TABL)
   CLINE <- matrix(FALSE,nrow=d[1],ncol=d[2])
   for (i in 1:d[1]) {
     cline <- "\\..."
     for (j in 1:d[2]) {
-      cellcontent <- " "
+      cellcontent.base <- paste("\\cellcolor{",COLOR[i,j],"}\n",sep="")
+      cellcontent <- cellcontent.base
       nrows <- TABL.multirow[i,j]
-      if (nrows>0) CLINE[nrows+i-1,j] <- TRUE
       cellcontent.ij <- as.character(TABL[i,j])
       cellcontent.ij <- strsplit(cellcontent.ij,"_")[[1]][1]
-      if (nrows > 0) {
+      if (abs(nrows) > 0) {
+        CLINE[nrows+i-1,j] <- TRUE
         pwidth <- ifelse(j %% 2==0,0.2,0.02)
-        cellcontent <- paste("\\parbox{",pwidth,"\\textwidth}{",cellcontent.ij,"}",sep="")
-        if (nrows > 1) {
-          cellcontent <- paste("\\multirow{",nrows,"}{*}{",cellcontent,"}",sep="")
+        cellcontent <- paste(cellcontent.base,"\\parbox{",pwidth,"\\textwidth}{",cellcontent.ij,"}",sep="")
+        if (abs(nrows) > 1) {
+          cellcontent <- paste(cellcontent.base,"\\multirow{",nrows,"}{*}{",cellcontent,"}",sep="")
         }
       }
       cat(cellcontent)
