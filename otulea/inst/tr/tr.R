@@ -35,10 +35,13 @@ dat <- transform(dat0,ast=paste(aufgabe,score,sep="_"),nch=nchar(as.character(de
 
 state.list <- by(dat,dat$state,function(x) x)
 ## printing table
-cat("\\begin{tabular}{|p{.02\\textwidth}|p{.2\\textwidth}|p{.02\\textwidth}|p{.2\\textwidth}|p{.02\\textwidth}|p{.2\\textwidth}|p{.02\\textwidth}|p{.2\\textwidth}|}\n")
-##cat("\\hline\n")
+cat("\\begin{tabular}{|c|c|p{.17\\textwidth}|c|p{.17\\textwidth}|c|p{.17\\textwidth}|c|p{.17\\textwidth}|}\n")
+cat("\\hline\n")
 ##state <- state.list[[1]]
 ##y <- Y[1]
+thead1 <- paste("\\cellcolor{frame}",rep("Aufgabe",3),sep="")
+thead2 <- paste("\\cellcolor{frame}",X,sep="")
+cat("&",paste(thead1,thead2,sep=" & ", collapse=" & "),"\\\\\n")
 for (y in Y) {
   state <- state.list[[y]]
   cat("\\hline\n")
@@ -74,6 +77,12 @@ for (y in Y) {
   CLINE <- matrix(FALSE,nrow=d[1],ncol=d[2])
   for (i in 1:d[1]) {
     cline <- "\\..."
+    cellcontent.base <- "\\cellcolor{frame} "
+    cellcontent <- cellcontent.base
+    if (i==d[1]) {
+      cellcontent <- paste(cellcontent.base,"\\multirow{",-d[1],"}{*}{\\rotatebox{90}{Kannbeschreibungen ",y,"}}",sep="")
+    }
+    cat(cellcontent,"& ")
     for (j in 1:d[2]) {
       cellcontent.base <- paste("\\cellcolor{",COLOR[i,j],"}\n",sep="")
       cellcontent <- cellcontent.base
@@ -82,7 +91,7 @@ for (y in Y) {
       cellcontent.ij <- strsplit(cellcontent.ij,"_")[[1]][1]
       if (abs(nrows) > 0) {
         CLINE[nrows+i-1,j] <- TRUE
-        pwidth <- ifelse(j %% 2==0,0.2,0.02)
+        pwidth <- ifelse(j %% 2==0,0.17,0.02)
         cellcontent <- paste(cellcontent.base,"\\parbox{",pwidth,"\\textwidth}{",cellcontent.ij,"}",sep="")
         if (abs(nrows) > 1) {
           cellcontent <- paste(cellcontent.base,"\\multirow{",nrows,"}{*}{",cellcontent,"}",sep="")
@@ -92,7 +101,7 @@ for (y in Y) {
       separator <- ifelse(j < d[2]," & "," \\\\\n")
       cat(separator)
     }
-    cat(cl(CLINE[i,]),"\n")
+    cat(cl(c(FALSE,CLINE[i,])),"\n")
   }
   cat("\\hline\n")
 }
