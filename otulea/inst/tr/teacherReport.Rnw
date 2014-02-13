@@ -3,6 +3,11 @@
 \usepackage{multirow}
 \usepackage[utf8]{inputenc}
 \usepackage[table]{xcolor}
+\usepackage{hhline}
+\usepackage{rotating}
+\usepackage{array}
+\usepackage{tikz}\usetikzlibrary{shapes,decorations}
+\usepackage{dingbat} % for pointing finger symbol
 % color definitions
 \definecolor{Lesen-10}{RGB}{199,237,226}
 \definecolor{Lesen-5}{RGB}{134,199,190}
@@ -17,13 +22,31 @@
 \definecolor{Mathe-5}{RGB}{230,188,125}
 \definecolor{Mathe-0}{RGB}{180,136,86}
 \definecolor{frame}{RGB}{185,186,150}
+% commands
+\newcommand{\specialcell}[1]{% for being able to break lines within tabular cells
+  \begin{tabular}{@{}c@{}}#1\end{tabular}}
+\newcommand{\doboz}[2]{% drawing my fancy boxes
+\begin{tikzpicture}
+  \node [mybox] (box){%
+    \parbox{.2\textwidth}{
+      \vspace{5pt}
+      #2
+    }
+};
+\node[fancytitle, right=10pt] at (box.north west) {#1};
+\end{tikzpicture}
+}
 
 \begin{document}
+% Define box and box title style
+\tikzstyle{mybox} = [draw=black,rectangle, rounded corners, inner sep=5pt, inner ysep=5pt]
+\tikzstyle{fancytitle} =[fill=white, text=black,draw=black]
+
+\thispagestyle{empty}
+
 \begin{center}
 <<table,echo=false,results=tex>>=
 source("tr.R")
 @
 \end{center}
-<<mr,echo=false>>=
-@ 
 \end{document}

@@ -2,6 +2,10 @@
 ## SETTINGS
 X <- c("Lesen","Schreiben","Sprache","Mathe")
 Y <- c("10","5","0")
+Y.string <- c("Kannbeschreibungen erfüllt","Kannbeschreibungen teilweise erfüllt","Kannbeschreibungen nicht erfüllt")
+user <- "X0AT2"
+datum <- "14.2.2012."
+
 ## ROUTINES
 multirow <- function(x) {
   l <- length(x)
@@ -28,23 +32,49 @@ cl <- function(x) {
   paste("\\cline{",num,"-",num,"}",sep="",collapse="")
 }
 
+
+
+
+
 ## MAIN
 dat0 <- read.csv("tr.csv")
 dat <- transform(dat0,ast=paste(aufgabe,score,sep="_"),nch=nchar(as.character(description)))
-##head(dat)
+head(dat)
 
 state.list <- by(dat,dat$state,function(x) x)
+#state.list
 ## printing table
-cat("\\begin{tabular}{|c|c|p{.17\\textwidth}|c|p{.17\\textwidth}|c|p{.17\\textwidth}|c|p{.17\\textwidth}|}\n")
+cat("\\begin{tabular}{|m{6mm}|l|l|l|l|}\n")
+cat("\\multicolumn{1}{l}{} & \\multicolumn{3}{l}{Teilnehmer/Teilnehmerin: \\textbf{",user,"}} & \\multicolumn{1}{r}{Datum: ",datum,"}\\\\\n",sep="")
+cat("\\hhline{~|----}\n")
+cat("\\multicolumn{1}{l|}{} &", paste("\\cellcolor{frame}",X,sep="",collapse=" & "),"\\\\\n")
 cat("\\hline\n")
-##state <- state.list[[1]]
-##y <- Y[1]
+for (j in seq_along(Y)) {
+  y <- Y[j]; y.string <- Y.string[j]
+  cat("\\cellcolor{frame}\n")
+  cat("\\vspace{.5em}\n")
+  cat("\\begin{sideways}\\parbox{9em}{\\centering ",y.string,"}\\end{sideways} &\n",sep="")
+  cat(paste("\\cellcolor{",X,"-",y,"}valami",sep="",collapse=" & "),"\\\\\n")
+  cat("\\hline\n")
+}
+cat("\\end{tabular}\n")
+
+
+if (FALSE) {
+  
+cat("\\begin{tabular}{c|c|p{.17\\textwidth}|c|p{.17\\textwidth}|c|p{.17\\textwidth}|c|p{.17\\textwidth}|}\n")
+cat("\\hhline{~|*{8}{-}}\n")
+cat("% First line of header\n")
+cat("& \\multicolumn{4}{l}{\\cellcolor{frame}Teilnehmer/Teilnehmerin: \\textbf{X0AT2}} & \\multicolumn{4}{r}{\\cellcolor{frame}Datum: 14.2.2012}\\\\\n")
+cat("\\hhline{~|*{8}{-}}\n")
+cat("% Second line of header\n")
 thead1 <- paste("\\cellcolor{frame}",rep("Aufgabe",3),sep="")
 thead2 <- paste("\\cellcolor{frame}",X,sep="")
 cat("&",paste(thead1,thead2,sep=" & ", collapse=" & "),"\\\\\n")
 for (y in Y) {
   state <- state.list[[y]]
   cat("\\hline\n")
+  cat("% Ability level",y,"\n")
   dimension.list <- by(state,state$type,function(x) {
     y <- x[,-match(c("type","aufgabe","score","state"),names(x))]
     y
@@ -76,15 +106,14 @@ for (y in Y) {
   d <- dim(TABL)
   CLINE <- matrix(FALSE,nrow=d[1],ncol=d[2])
   for (i in 1:d[1]) {
-    cline <- "\\..."
     cellcontent.base <- "\\cellcolor{frame} "
     cellcontent <- cellcontent.base
     if (i==d[1]) {
-      cellcontent <- paste(cellcontent.base,"\\multirow{",-d[1],"}{*}{\\rotatebox{90}{Kannbeschreibungen ",y,"}}",sep="")
+      cellcontent <- paste(cellcontent.base,"\\multirow{",-d[1],"}{*}{\\rotatebox[origin=c]{90}{\\parbox{8cm}{",Y.string[match(y,Y)],"}}}",sep="")
     }
     cat(cellcontent,"& ")
     for (j in 1:d[2]) {
-      cellcontent.base <- paste("\\cellcolor{",COLOR[i,j],"}\n",sep="")
+      cellcontent.base <- paste("\\cellcolor{",COLOR[i,j],"}",sep="")
       cellcontent <- cellcontent.base
       nrows <- TABL.multirow[i,j]
       cellcontent.ij <- as.character(TABL[i,j])
@@ -106,3 +135,4 @@ for (y in Y) {
   cat("\\hline\n")
 }
 cat("\\end{tabular}\n")
+}
