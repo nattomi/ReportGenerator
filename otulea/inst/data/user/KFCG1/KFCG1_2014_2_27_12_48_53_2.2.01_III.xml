@@ -1,0 +1,167 @@
+<item>
+  <itemnumber>2.2.01_III</itemnumber>
+  <meta_item>cloze</meta_item>
+  <Item_creation>
+    <version>1</version>
+    <date>4.5.2011</date>
+    <person>Kai Schwedes</person>
+  </Item_creation>
+  <presets/>
+  <instruction>
+    <in_text sound="2.2.01_III_question_instruct.mp3">Klicken Sie bitte auf das leuchtende Lautsprechersymbol, hören Sie zu und ergänzen Sie den Text. Sie können sich einzelne Wörter wiederholen lassen, indem Sie in der entsprechenden Lücke auf den Lautsprecher klicken.</in_text>
+    <media file="2.2.01_III_premedia_1.png"/>
+  </instruction>
+  <questions>
+    <questionpage>
+      <question>
+        <answertext sound="2.2.01_III_question_instruct_part_I.mp3"/>
+        <answertext>
+          <a_text>Leschek setzt sich in den</a_text>
+          <gap answerid="2.2.01_III_1" style="TextInput_blue" length="11" sound="2.2.01_III_question_1.mp3"/>
+          <a_text>. Er nimmt sich eine Zeitung und beginnt zu lesen.</a_text>
+        </answertext>
+        <answertext>
+          <a_text>Der Sprecher der regierenden</a_text>
+          <gap answerid="2.2.01_III_2" style="TextInput_blue" length="10" sound="2.2.01_III_question_2.mp3"/>
+          <a_text>hat</a_text>
+          <gap answerid="2.2.01_III_3" style="TextInput_blue" length="10" sound="2.2.01_III_question_3.mp3"/>
+          <a_text>bekannt gemacht, dass die</a_text>
+          <gap answerid="2.2.01_III_4" style="TextInput_blue" length="10" sound="2.2.01_III_question_4.mp3"/>
+          <a_text>von Telefon- und Mailverbindungen von allen</a_text>
+          <gap answerid="2.2.01_III_5" style="TextInput_blue" length="10" sound="2.2.01_III_question_5.mp3"/>
+          <a_text>für eine</a_text>
+          <gap answerid="2.2.01_III_6" style="TextInput_blue" length="10" sound="2.2.01_III_question_6.mp3"/>
+          <a_text>von mehreren</a_text>
+          <gap answerid="2.2.01_III_7" style="TextInput_blue" length="9" sound="2.2.01_III_question_7.mp3"/>
+          <a_text>gespeichert</a_text>
+          <gap answerid="2.2.01_III_8" style="TextInput_blue" length="9" sound="2.2.01_III_question_8.mp3"/>
+          <a_text>.</a_text>
+        </answertext>
+        <answertext>
+          <a_text>Das dient angeblich der Sicherheit.</a_text>
+        </answertext>
+      </question>
+    </questionpage>
+    <questionpage>
+      <question>
+        <answertext sound="2.2.01_III_question_instruct_part_II.mp3"/>
+        <answertext>
+          <a_text>Einige</a_text>
+          <gap answerid="2.2.01_III_9" style="TextInput_blue" length="10" sound="2.2.01_III_question_9.mp3"/>
+          <a_text>der Opposition sehen das anders. Sie sind überzeugt, dass</a_text>
+          <gap answerid="2.2.01_III_10" style="TextInput_blue" length="10" sound="2.2.01_III_question_10.mp3"/>
+          <a_text>Freiheit</a_text>
+          <gap answerid="2.2.01_III_11" style="TextInput_blue" length="10" sound="2.2.01_III_question_11.mp3"/>
+          <a_text>Sicherheit getauscht wird und dass ein Überwachungsstaat</a_text>
+          <gap answerid="2.2.01_III_12" style="TextInput_blue" length="10" sound="2.2.01_III_question_12.mp3"/>
+          <a_text>alle gefährlich ist. Was</a_text>
+          <gap answerid="2.2.01_III_13" style="TextInput_blue" length="10" sound="2.2.01_III_question_13.mp3"/>
+          <a_text>Sie?</a_text>
+        </answertext>
+      </question>
+    </questionpage>
+  </questions>
+  <answers>
+    <answer answerid="2.2.01_III_1" question="1">Bauwagen</answer>
+    <answer answerid="2.2.01_III_2" question="1">Partei</answer>
+    <answer answerid="2.2.01_III_3" question="1">Heute</answer>
+    <answer answerid="2.2.01_III_4" question="1">Daten</answer>
+    <answer answerid="2.2.01_III_5" question="1">Menschen</answer>
+    <answer answerid="2.2.01_III_6" question="1">Zeit</answer>
+    <answer answerid="2.2.01_III_7" question="1">Monaten</answer>
+    <answer answerid="2.2.01_III_8" question="1">werden</answer>
+    <answer answerid="2.2.01_III_9" question="1">von</answer>
+    <answer answerid="2.2.01_III_10" question="1">hier</answer>
+    <answer answerid="2.2.01_III_11" question="1">gegen</answer>
+    <answer answerid="2.2.01_III_12" question="1">für</answer>
+    <answer answerid="2.2.01_III_13" question="1">denken</answer>
+  </answers>
+  <correctResponse>
+    <value itemnumber="2.2.01_III_1a" answerid="2.2.01_III_1" casesensitiv="no" match="levenshtein" matchlength="1" points="0.5">Bauwagen</value>
+    <value itemnumber="2.2.01_III_1a" answerid="2.2.01_III_1" casesensitiv="no" match="last" matchlength="2" points="0.5">en</value>
+    <value itemnumber="2.2.01_III_1b" answerid="2.2.01_III_1" casesensitiv="no" match="levenshtein" matchlength="1" points="0.5">Bauwagen</value>
+    <value itemnumber="2.2.01_III_1b" answerid="2.2.01_III_1" casesensitiv="no" match="first" matchlength="3" points="0.5">Bau</value>
+    <value itemnumber="2.2.01_III_1c" answerid="2.2.01_III_1" casesensitiv="no" match="levenshtein" matchlength="1" points="0.5">Bauwagen</value>
+    <value itemnumber="2.2.01_III_1c" answerid="2.2.01_III_1" casesensitiv="no" match="last" matchlength="3" points="0.5">gen</value>
+    <value itemnumber="2.2.01_III_1d" answerid="2.2.01_III_1" casesensitiv="yes" match="levenshtein" matchlength="1" points="0.5">Bauwagen</value>
+    <value itemnumber="2.2.01_III_1d" answerid="2.2.01_III_1" casesensitiv="yes" match="first" matchlength="1" points="0.5">B</value>
+    <value itemnumber="2.2.01_III_2a" answerid="2.2.01_III_2" casesensitiv="no" match="levenshtein" matchlength="1" points="0.5">Partei</value>
+    <value itemnumber="2.2.01_III_2a" answerid="2.2.01_III_2" casesensitiv="no" match="first" matchlength="3" points="0.5">Par</value>
+    <value itemnumber="2.2.01_III_2b" answerid="2.2.01_III_2" casesensitiv="no" match="levenshtein" matchlength="1" points="0.5">Partei</value>
+    <value itemnumber="2.2.01_III_2b" answerid="2.2.01_III_2" casesensitiv="no" match="last" matchlength="3" points="0.5">tei</value>
+    <value itemnumber="2.2.01_III_3" answerid="2.2.01_III_3" casesensitiv="no" match="full" points="1">heute</value>
+    <value itemnumber="2.2.01_III_4a" answerid="2.2.01_III_4" casesensitiv="no" match="last" matchlength="2" points="1">en</value>
+    <value itemnumber="2.2.01_III_4b" answerid="2.2.01_III_4" casesensitiv="no" match="first" matchlength="2" points="1">Da</value>
+    <value itemnumber="2.2.01_III_4c" answerid="2.2.01_III_4" casesensitiv="no" match="last" matchlength="3" points="1">ten</value>
+    <value itemnumber="2.2.01_III_5a" answerid="2.2.01_III_5" casesensitiv="no" match="full" points="1">Menschen</value>
+    <value itemnumber="2.2.01_III_5b" answerid="2.2.01_III_5" casesensitiv="no" match="last" matchlength="2" points="1">en</value>
+    <value itemnumber="2.2.01_III_6" answerid="2.2.01_III_6" casesensitiv="no" match="first" matchlength="1" points="1">Z</value>
+    <value itemnumber="2.2.01_III_7a" answerid="2.2.01_III_7" casesensitiv="no" match="last" matchlength="2" points="1">en</value>
+    <value itemnumber="2.2.01_III_7b" answerid="2.2.01_III_7" casesensitiv="no" match="last" matchlength="3" points="1">ten</value>
+    <value itemnumber="2.2.01_III_8a" answerid="2.2.01_III_8" casesensitiv="no" match="full" points="1">werden</value>
+    <value itemnumber="2.2.01_III_8b" answerid="2.2.01_III_8" casesensitiv="no" match="last" matchlength="2" points="1">en</value>
+    <value itemnumber="2.2.01_III_8c" answerid="2.2.01_III_8" casesensitiv="no" match="last" matchlength="3" points="1">den</value>
+    <value itemnumber="2.2.01_III_9" answerid="2.2.01_III_9" casesensitiv="no" match="full" points="1">von</value>
+    <value itemnumber="2.2.01_III_10a" answerid="2.2.01_III_10" casesensitiv="no" match="full" points="1">hier</value>
+    <value itemnumber="2.2.01_III_10b" answerid="2.2.01_III_10" casesensitiv="no" match="first" matchlength="1" points="1">h</value>
+    <value itemnumber="2.2.01_III_11a" answerid="2.2.01_III_11" casesensitiv="no" match="full" points="1">gegen</value>
+    <value itemnumber="2.2.01_III_11b" answerid="2.2.01_III_11" casesensitiv="no" match="last" matchlength="2" points="1">en</value>
+    <value itemnumber="2.2.01_III_11c" answerid="2.2.01_III_11" casesensitiv="no" match="first" matchlength="2" points="1">ge</value>
+    <value itemnumber="2.2.01_III_11d" answerid="2.2.01_III_11" casesensitiv="no" match="last" matchlength="3" points="1">gen</value>
+    <value itemnumber="2.2.01_III_12" answerid="2.2.01_III_12" casesensitiv="no" match="full" points="1">für</value>
+    <value itemnumber="2.2.01_III_13a" answerid="2.2.01_III_13" casesensitiv="no" match="last" matchlength="2" points="1">en</value>
+    <value itemnumber="2.2.01_III_13b" answerid="2.2.01_III_13" casesensitiv="no" match="first" matchlength="3" points="1">den</value>
+    <value itemnumber="2.2.01_III_13c" answerid="2.2.01_III_13" casesensitiv="no" match="last" matchlength="3" points="1">ken</value>
+    <value itemnumber="2.2.01_III_13d" answerid="2.2.01_III_13" casesensitiv="no" match="full" points="1">denken</value>
+  </correctResponse>
+  <abilities>
+    <ability number="1" alphalevel="2.1.07">Funktionswörter I</ability>
+    <ability number="2" alphalevel="2.1.08">Wortendungen mit kurzem 'e'</ability>
+    <ability number="3" alphalevel="2.1.09">Weiche Stoppkonsonanten I</ability>
+    <ability number="4" alphalevel="2.1.13">Weiche Stoppkonsonanten II</ability>
+    <ability number="5" alphalevel="2.2.05">Schwierige Dauerkonsonanten</ability>
+    <ability number="6" alphalevel="2.2.07">harte Stoppkonsonanten</ability>
+    <ability number="7" alphalevel="2.2.08">Konkreta I</ability>
+    <ability number="8" alphalevel="2.3.01">Funktionswörter III</ability>
+    <ability number="9" alphalevel="2.3.08">Geschlossene Silben</ability>
+  </abilities>
+  <marking>
+    <pointuse maxpoint="1"/>
+    <mark itemnumber="2.2.01_III_1a" alphalevel="2.1.08">1</mark>
+    <mark itemnumber="2.2.01_III_1b" alphalevel="2.1.09">1</mark>
+    <mark itemnumber="2.2.01_III_1c" alphalevel="2.1.13">1</mark>
+    <mark itemnumber="2.2.01_III_1d" alphalevel="2.2.08">1</mark>
+    <mark itemnumber="2.2.01_III_2a" alphalevel="2.2.07">1</mark>
+    <mark itemnumber="2.2.01_III_2b" alphalevel="2.2.07">1</mark>
+    <mark itemnumber="2.2.01_III_3" alphalevel="2.3.01">1</mark>
+    <mark itemnumber="2.2.01_III_4a" alphalevel="2.1.08">1</mark>
+    <mark itemnumber="2.2.01_III_4b" alphalevel="2.1.09">1</mark>
+    <mark itemnumber="2.2.01_III_4c" alphalevel="2.2.07">1</mark>
+    <mark itemnumber="2.2.01_III_5a" alphalevel="2.3.08">1</mark>
+    <mark itemnumber="2.2.01_III_5b" alphalevel="2.1.08">1</mark>
+    <mark itemnumber="2.2.01_III_6" alphalevel="2.2.05">1</mark>
+    <mark itemnumber="2.2.01_III_7a" alphalevel="2.1.08">1</mark>
+    <mark itemnumber="2.2.01_III_7b" alphalevel="2.2.07">1</mark>
+    <mark itemnumber="2.2.01_III_8a" alphalevel="2.3.08">1</mark>
+    <mark itemnumber="2.2.01_III_8b" alphalevel="2.1.08">1</mark>
+    <mark itemnumber="2.2.01_III_8c" alphalevel="2.1.13">1</mark>
+    <mark itemnumber="2.2.01_III_9" alphalevel="2.3.01">1</mark>
+    <mark itemnumber="2.2.01_III_10a" alphalevel="2.3.01">1</mark>
+    <mark itemnumber="2.2.01_III_10b" alphalevel="2.2.05">1</mark>
+    <mark itemnumber="2.2.01_III_11a" alphalevel="2.1.07">1</mark>
+    <mark itemnumber="2.2.01_III_11b" alphalevel="2.1.08">1</mark>
+    <mark itemnumber="2.2.01_III_11c" alphalevel="2.1.09">1</mark>
+    <mark itemnumber="2.2.01_III_11d" alphalevel="2.1.13">1</mark>
+    <mark itemnumber="2.2.01_III_12" alphalevel="2.3.01">1</mark>
+    <mark itemnumber="2.2.01_III_13a" alphalevel="2.1.08">1</mark>
+    <mark itemnumber="2.2.01_III_13b" alphalevel="2.1.09">1</mark>
+    <mark itemnumber="2.2.01_III_13c" alphalevel="2.2.07">1</mark>
+    <mark itemnumber="2.2.01_III_13d" alphalevel="2.3.08">1</mark>
+  </marking>
+  <time>
+    <start_time>2014_2_27_12_48_53</start_time>
+    <end_time>2014_2_27_12_52_10</end_time>
+    <time_consumption>193</time_consumption>
+  </time>
+  <usernumber>KFCG1</usernumber>
+</item>

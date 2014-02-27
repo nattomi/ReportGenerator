@@ -1,0 +1,70 @@
+<item>
+  <itemnumber>2.2.02</itemnumber>
+  <meta_item>cloze</meta_item>
+  <Item_creation>
+    <version>1</version>
+    <date>5.02.2012</date>
+    <person>Inga Brehm</person>
+  </Item_creation>
+  <presets/>
+  <prescreen>
+    <pre_text sound="2.2.02_I_pretext_1.mp3">Lukas Romanek ist Küchengehilfe in Lena Schmitts Restaurant. Lena ist noch auf dem Großmarkt, um den Wocheneinkauf zu erledigen. Daher erledigt Lukas die Vorbereitungen heute allein.</pre_text>
+    <pre_text sound="2.2.02_I_pretext_2.mp3">Lukas Romanek ist bei der Arbeit. Gleich ist es 17 Uhr und Lenas Restaurant wird für den Abendbetrieb geöffnet. Es sind noch einige Dinge vorzubereiten.</pre_text>
+    <pre_media file="2.2.02_I_premedia_1.png"/>
+  </prescreen>
+  <instruction>
+    <in_text sound="2.2.02_I_question_instruct_1.mp3">Lukas kommt bei seiner Arbeit mit folgenden Dingen in Kontakt. Klicken Sie mit der linken Maustaste auf das Lautsprechersymbol und tippen Sie den jeweils gesuchten Buchstaben mit der Tastatur in das freie Feld.</in_text>
+    <media file="2.2.02_I_instruction_1.png"/>
+  </instruction>
+  <questions>
+    <questionpage>
+      <question>
+        <answertext sound="2.2.02_I_question_1.mp3">
+          <gap answerid="2.2.02_I_1" style="TextInput_blue" length="3"/>
+        </answertext>
+      </question>
+      <question>
+        <answertext sound="2.2.02_I_question_2.mp3">
+          <gap answerid="2.2.02_I_2" style="TextInput_blue" length="3"/>
+        </answertext>
+      </question>
+      <question>
+        <answertext sound="2.2.02_I_question_3.mp3">
+          <gap answerid="2.2.02_I_3" style="TextInput_blue" length="3"/>
+        </answertext>
+      </question>
+    </questionpage>
+  </questions>
+  <answers>
+    <answer answerid="2.2.02_I_1" question="1">B</answer>
+    <answer answerid="2.2.02_I_2" question="1">Q</answer>
+    <answer answerid="2.2.02_I_3" question="1">x</answer>
+  </answers>
+  <correctResponse>
+    <value itemnumber="2.2.02_I_1a" answerid="2.2.02_I_1" casesensitiv="no" match="full" points="1">b</value>
+    <value itemnumber="2.2.02_I_1b" answerid="2.2.02_I_1" casesensitiv="yes" match="full" points="1">B</value>
+    <value itemnumber="2.2.02_I_2a" answerid="2.2.02_I_2" casesensitiv="no" match="full" points="1">q</value>
+    <value itemnumber="2.2.02_I_2a" answerid="2.2.02_I_2" casesensitiv="no" match="full" points="1">qu</value>
+    <value itemnumber="2.2.02_I_2b" answerid="2.2.02_I_2" casesensitiv="yes" match="full" points="1">Q</value>
+    <value itemnumber="2.2.02_I_2b" answerid="2.2.02_I_2" casesensitiv="yes" match="full" points="1">Qu</value>
+    <value itemnumber="2.2.02_I_3" answerid="2.2.02_I_3" casesensitiv="no" match="full" points="1">x</value>
+  </correctResponse>
+  <abilities>
+    <ability number="1" alphalevel="2.1.01">Buchstabierte Laute</ability>
+    <ability number="2" alphalevel="2.2.08">Konkreta I</ability>
+  </abilities>
+  <marking>
+    <pointuse maxpoint="1"/>
+    <mark itemnumber="2.2.02_I_1a" alphalevel="2.1.01">1</mark>
+    <mark itemnumber="2.2.02_I_1b" alphalevel="2.2.08">1</mark>
+    <mark itemnumber="2.2.02_I_2a" alphalevel="2.1.01">1</mark>
+    <mark itemnumber="2.2.02_I_2b" alphalevel="2.2.08">1</mark>
+    <mark itemnumber="2.2.02_I_3" alphalevel="2.1.01">1</mark>
+  </marking>
+  <time>
+    <start_time>2014_2_27_12_52_11</start_time>
+    <end_time>2014_2_27_12_53_26</end_time>
+    <time_consumption>74</time_consumption>
+  </time>
+  <usernumber>KFCG1</usernumber>
+</item>

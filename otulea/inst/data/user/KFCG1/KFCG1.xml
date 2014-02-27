@@ -1,0 +1,47 @@
+<performedtests>
+  <test timestamp="2014_2_27_12_40_49" subject="Schreiben" level="Einfach">
+    <item iname="2.1.01" data="KFCG1_2014_2_27_12_40_49_2.1.01.xml"/>
+    <item iname="2.1.02_I" data="KFCG1_2014_2_27_12_43_37_2.1.02_I.xml"/>
+    <item iname="2.1.02_II" data="KFCG1_2014_2_27_12_47_9_2.1.02_II.xml"/>
+    <item iname="2.2.01_III" data="KFCG1_2014_2_27_12_48_53_2.2.01_III.xml"/>
+    <item iname="2.2.02_I" data="KFCG1_2014_2_27_12_52_11_2.2.02_I.xml"/>
+  </test>
+  <test timestamp="2014_2_27_18_37_23" subject="Lesen" level="Mittel">
+    <item iname="1.3.2" data="KFCG1_2014_2_27_18_37_23_1.3.2.xml"/>
+    <item iname="1.3.3" data="KFCG1_2014_2_27_18_40_45_1.3.3.xml"/>
+    <item iname="1.3.4" data="KFCG1_2014_2_27_18_42_27_1.3.4.xml"/>
+    <item iname="1.3.6" data="KFCG1_2014_2_27_18_43_53_1.3.6.xml"/>
+    <item iname="1.4.1" data="KFCG1_2014_2_27_19_11_28_1.4.1.xml"/>
+    <item iname="1.4.2" data="KFCG1_2014_2_27_19_14_19_1.4.2.xml"/>
+    <item iname="1.4.4" data="KFCG1_2014_2_27_19_18_7_1.4.4.xml"/>
+    <item iname="1.4.5" data="KFCG1_2014_2_27_19_22_52_1.4.5.xml"/>
+    <item iname="1.4.6" data="KFCG1_2014_2_27_19_25_18_1.4.6.xml"/>
+    <item iname="1.4.7" data="KFCG1_2014_2_27_19_27_16_1.4.7.xml"/>
+    <item iname="1.4.8" data="KFCG1_2014_2_27_19_29_40_1.4.8.xml"/>
+  </test>
+  <test timestamp="2014_2_27_19_35_5" subject="Rechnen" level="Einfach">
+    <item iname="4.1.1" data="KFCG1_2014_2_27_19_35_5_4.1.1.xml"/>
+    <item iname="4.1.3" data="KFCG1_2014_2_27_19_36_4_4.1.3.xml"/>
+    <item iname="4.2.1" data="KFCG1_2014_2_27_19_36_52_4.2.1.xml"/>
+    <item iname="4.2.4" data="KFCG1_2014_2_27_19_37_29_4.2.4.xml"/>
+    <item iname="4.2.6" data="KFCG1_2014_2_27_19_38_12_4.2.6.xml"/>
+    <item iname="4.2.8" data="KFCG1_2014_2_27_19_38_48_4.2.8.xml"/>
+    <item iname="4.2.9" data="KFCG1_2014_2_27_19_39_32_4.2.9.xml"/>
+    <item iname="4.2.10" data="KFCG1_2014_2_27_19_41_23_4.2.10.xml"/>
+    <item iname="4.2.13" data="KFCG1_2014_2_27_19_42_12_4.2.13.xml"/>
+  </test>
+  <test timestamp="2014_2_27_19_44_31" subject="Sprache" level="Mittel">
+    <item iname="3.3.1" data="KFCG1_2014_2_27_19_44_31_3.3.1.xml"/>
+    <item iname="3.3.2" data="KFCG1_2014_2_27_19_47_39_3.3.2.xml"/>
+    <item iname="3.3.3" data="KFCG1_2014_2_27_19_49_20_3.3.3.xml"/>
+    <item iname="3.4.1" data="KFCG1_2014_2_27_19_50_52_3.4.1.xml"/>
+    <item iname="3.4.2" data="KFCG1_2014_2_27_19_53_45_3.4.2.xml"/>
+  </test>
+  <test timestamp="2014_2_27_19_56_28" subject="Schreiben" level="Einfach">
+    <item iname="2.1.01" data="KFCG1_2014_2_27_19_56_28_2.1.01.xml"/>
+    <item iname="2.1.02_I" data="KFCG1_2014_2_27_19_58_19_2.1.02_I.xml"/>
+    <item iname="2.1.02_II" data="KFCG1_2014_2_27_20_1_31_2.1.02_II.xml"/>
+    <item iname="2.2.01_III" data="KFCG1_2014_2_27_20_3_9_2.2.01_III.xml"/>
+    <item iname="2.2.02_I" data="KFCG1_2014_2_27_20_5_29_2.2.02_I.xml"/>
+  </test>
+</performedtests>

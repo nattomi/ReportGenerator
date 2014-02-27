@@ -1,0 +1,52 @@
+<item>
+  <itemnumber>4.2.1</itemnumber>
+  <meta_item>mchoice</meta_item>
+  <Item_creation>
+    <version>1</version>
+    <date>28.6.2010</date>
+    <person>Ilka Koppel</person>
+  </Item_creation>
+  <presets/>
+  <instruction>
+    <in_text sound="4.2.1_instruct_1.mp3" style="">Lena Schmitt benötigt für ihr Menü noch einige Zutaten. Sie geht in den Supermarkt und kauft Obst und Gemüse für ihr Essen. Das Obst kostet vier und das Gemüse fünf Euro. Wie viel muss Lena bezahlen?</in_text>
+    <media file="4.2.1_premedia_1.png"/>
+  </instruction>
+  <questions>
+    <questionpage>
+      <q_text sound="4.2.1_question_instuct_1.mp3">Bitte rechnen Sie vier plus fünf im Kopf aus und klicken Sie das richtige Ergebnis an.</q_text>
+      <question>
+        <answertext>
+          <a_text>4 + 5 =</a_text>
+        </answertext>
+        <choices>
+          <choice answerid="4.2.1_1_1">8</choice>
+          <choice answerid="4.2.1_1_2">6</choice>
+          <choice answerid="4.2.1_1_3">7</choice>
+          <choice answerid="4.2.1_1_4">9</choice>
+        </choices>
+      </question>
+    </questionpage>
+  </questions>
+  <answers>
+    <answer answerid="4.2.1_1_1" question="1">0</answer>
+    <answer answerid="4.2.1_1_2" question="1">0</answer>
+    <answer answerid="4.2.1_1_3" question="1">0</answer>
+    <answer answerid="4.2.1_1_4" question="1">1</answer>
+  </answers>
+  <correctResponse>
+    <value itemnumber="4.2.1_1" answerid="4.2.1_1_4" casesensitiv="yes" match="full" points="1">1</value>
+  </correctResponse>
+  <abilities>
+    <ability number="1" alphalevel="4.2.1.1">Kann Einer-Ziffern im Kopf addieren.</ability>
+  </abilities>
+  <marking>
+    <pointuse maxpoint="1"/>
+    <mark itemnumber="4.2.1_1" alphalevel="4.2.1.1">1</mark>
+  </marking>
+  <time>
+    <start_time>2014_2_27_19_36_52</start_time>
+    <end_time>2014_2_27_19_37_28</end_time>
+    <time_consumption>35</time_consumption>
+  </time>
+  <usernumber>KFCG1</usernumber>
+</item>

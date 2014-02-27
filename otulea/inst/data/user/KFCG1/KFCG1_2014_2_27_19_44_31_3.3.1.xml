@@ -1,0 +1,133 @@
+<item>
+  <itemnumber>3.3.1</itemnumber>
+  <meta_item>mchoice</meta_item>
+  <Item_creation>
+    <version>1</version>
+    <date>28.6.2010</date>
+    <person>Ilka Koppel</person>
+  </Item_creation>
+  <presets/>
+  <instruction>
+    <in_text style="Text-22" sound="3.3.1_instruct_1.mp3">Hören Sie sich bitte die folgenden Sätze an. Entscheiden Sie bitte anschließend, ob sich die Sätze für Sie sprachlich richtig anhören. Sie können mit der linken Maustaste "Ja", "Nein" oder "Weiß nicht" anklicken.</in_text>
+  </instruction>
+  <questions>
+    <questionpage>
+      <question>
+        <answertext>
+          <a_text sound="3.3.1_question_1.mp3">...</a_text>
+        </answertext>
+        <choices>
+          <choice answerid="3.3.1_1_1" sound="ja.mp3">Ja</choice>
+          <choice answerid="3.3.1_1_3" sound="nein.mp3">Nein</choice>
+          <choice answerid="3.3.1_1_2" sound="weissnicht.mp3">Weiß nicht</choice>
+        </choices>
+      </question>
+    </questionpage>
+    <questionpage>
+      <question>
+        <answertext>
+          <a_text sound="3.3.1_question_2.mp3">...</a_text>
+        </answertext>
+        <choices>
+          <choice answerid="3.3.1_2_1" sound="ja.mp3">Ja</choice>
+          <choice answerid="3.3.1_2_3" sound="nein.mp3">Nein</choice>
+          <choice answerid="3.3.1_2_2" sound="weissnicht.mp3">Weiß nicht</choice>
+        </choices>
+      </question>
+    </questionpage>
+    <questionpage>
+      <question>
+        <answertext>
+          <a_text sound="3.3.1_question_3.mp3">...</a_text>
+        </answertext>
+        <choices>
+          <choice answerid="3.3.1_3_1" sound="ja.mp3">Ja</choice>
+          <choice answerid="3.3.1_3_3" sound="nein.mp3">Nein</choice>
+          <choice answerid="3.3.1_3_2" sound="weissnicht.mp3">Weiß nicht</choice>
+        </choices>
+      </question>
+    </questionpage>
+    <questionpage>
+      <question>
+        <answertext>
+          <a_text sound="3.3.1_question_4.mp3">...</a_text>
+        </answertext>
+        <choices>
+          <choice answerid="3.3.1_4_1" sound="ja.mp3">Ja</choice>
+          <choice answerid="3.3.1_4_3" sound="nein.mp3">Nein</choice>
+          <choice answerid="3.3.1_4_2" sound="weissnicht.mp3">Weiß nicht</choice>
+        </choices>
+      </question>
+    </questionpage>
+    <questionpage>
+      <question>
+        <answertext>
+          <a_text sound="3.3.1_question_5.mp3">...</a_text>
+        </answertext>
+        <choices>
+          <choice answerid="3.3.1_5_1" sound="ja.mp3">Ja</choice>
+          <choice answerid="3.3.1_5_3" sound="nein.mp3">Nein</choice>
+          <choice answerid="3.3.1_5_2" sound="weissnicht.mp3">Weiß nicht</choice>
+        </choices>
+      </question>
+    </questionpage>
+    <questionpage>
+      <question>
+        <answertext>
+          <a_text sound="3.3.1_question_6.mp3">...</a_text>
+        </answertext>
+        <choices>
+          <choice answerid="3.3.1_6_1" sound="ja.mp3">Ja</choice>
+          <choice answerid="3.3.1_6_3" sound="nein.mp3">Nein</choice>
+          <choice answerid="3.3.1_6_2" sound="weissnicht.mp3">Weiß nicht</choice>
+        </choices>
+      </question>
+    </questionpage>
+  </questions>
+  <answers>
+    <answer answerid="3.3.1_1_1" question="1">0</answer>
+    <answer answerid="3.3.1_1_2" question="1">0</answer>
+    <answer answerid="3.3.1_1_3" question="1">1</answer>
+    <answer answerid="3.3.1_2_1" question="2">0</answer>
+    <answer answerid="3.3.1_2_2" question="2">1</answer>
+    <answer answerid="3.3.1_2_3" question="2">0</answer>
+    <answer answerid="3.3.1_3_1" question="3">0</answer>
+    <answer answerid="3.3.1_3_2" question="3">1</answer>
+    <answer answerid="3.3.1_3_3" question="3">0</answer>
+    <answer answerid="3.3.1_4_1" question="4">0</answer>
+    <answer answerid="3.3.1_4_2" question="4">1</answer>
+    <answer answerid="3.3.1_4_3" question="4">0</answer>
+    <answer answerid="3.3.1_5_1" question="5">0</answer>
+    <answer answerid="3.3.1_5_2" question="5">1</answer>
+    <answer answerid="3.3.1_5_3" question="5">0</answer>
+    <answer answerid="3.3.1_6_1" question="6">0</answer>
+    <answer answerid="3.3.1_6_2" question="6">1</answer>
+    <answer answerid="3.3.1_6_3" question="6">0</answer>
+  </answers>
+  <correctResponse>
+    <value itemnumber="3.3.1_1" answerid="3.3.1_1_3" casesensitiv="yes" match="full" points="1">1</value>
+    <value itemnumber="3.3.1_2" answerid="3.3.1_2_1" casesensitiv="yes" match="full" points="1">1</value>
+    <value itemnumber="3.3.1_3" answerid="3.3.1_3_1" casesensitiv="yes" match="full" points="1">1</value>
+    <value itemnumber="3.3.1_4" answerid="3.3.1_4_1" casesensitiv="yes" match="full" points="1">1</value>
+    <value itemnumber="3.3.1_5" answerid="3.3.1_5_3" casesensitiv="yes" match="full" points="1">1</value>
+    <value itemnumber="3.3.1_6" answerid="3.3.1_6_3" casesensitiv="yes" match="full" points="1">1</value>
+  </correctResponse>
+  <abilities>
+    <ability number="1" alphalevel="3.3.1.1">Kann prädikative Kongruenz im Präteritum in einem mäßig kurzen Satz erkennen</ability>
+  </abilities>
+  <marking>
+    <pointuse maxpoint="1"/>
+    <mark itemnumber="3.3.1_1" alphalevel="3.3.1.1">1</mark>
+    <mark itemnumber="3.3.1_2" alphalevel="3.3.1.1">0</mark>
+    <mark itemnumber="3.3.1_3" alphalevel="3.3.1.1">0</mark>
+    <mark itemnumber="3.3.1_4" alphalevel="3.3.1.1">0</mark>
+    <mark itemnumber="3.3.1_5" alphalevel="3.3.1.1">0</mark>
+    <mark itemnumber="3.3.1_6" alphalevel="3.3.1.1">0</mark>
+  </marking>
+  <time>
+    <start_time>2014_2_27_19_44_31</start_time>
+    <end_time>2014_2_27_19_47_39</end_time>
+    <time_consumption>184</time_consumption>
+  </time>
+  <usernumber>KFCG1</usernumber>
+</item>

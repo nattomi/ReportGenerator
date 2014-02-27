@@ -1,0 +1,17 @@
+<results>
+  <print file="KFCG1_20140227_12_54_49_result.pdf"/>
+  <timestamp order="YMDhms" value="20140227125451"/>
+  <subject value="Schreiben"/>
+  <level value="Einfach"/>
+  <eval mode="A1">
+    <alphanode alphaID="2.3.08" userdescription="Ich kann Wörter mit geschlossenen Silben schreiben" example="Men-schen">
+    <alphanode alphaID="2.3.01" userdescription="Ich kann kurze und geläufige Wörter schreiben. (Teil 3)" example="je, für, nur, ob">
+    <alphanode alphaID="2.2.08" userdescription="Ich schreibe groß, was ich sehen oder anfassen kann." example="das Kind, das Flugzeug">
+  </eval>
+  <eval mode="A2"/>
+  <eval mode="A3">
+    <alphanode alphaID="2.1.06" userdescription="Ich kann einfache Anreden schreiben." example="Hallo Anne! Lieber Udo, ...">
+    <alphanode alphaID="2.1.10" userdescription="Ich kann ein Datum schreiben." example="1. August 2001 01.08.2001">
+    <alphanode alphaID="2.2.01" userdescription="Ich kann seltene Namen groß schreiben." example="Anil Patel">
+  </eval>
+</results>

@@ -1,0 +1,101 @@
+<item>
+  <itemnumber>1.4.4</itemnumber>
+  <meta_item>mchoice</meta_item>
+  <Item_creation>
+    <version>1</version>
+    <date>28.6.2010</date>
+    <person>Ilka Koppel</person>
+  </Item_creation>
+  <presets>
+    <preset purpose="text" style="normal" font="Ideal-0" size="12" color="black"/>
+  </presets>
+  <prescreen>
+    <pre_text style="" sound="1.4.4_I_pretext_1.mp3">Olaf Martens hat einen neuen Auftrag bekommen. Er freut sich schon darauf, bald wieder "auf einem Bock" sitzen zu können. Zuerst aber sucht er Helga, um sich zu verabschieden.</pre_text>
+    <pre_media file="1.4.4_I_premedia_1.png"/>
+  </prescreen>
+  <instruction>
+    <in_text style="" sound="1.4.4_instruct_1.mp3">Bitte lesen Sie sich folgenden Text zu Olaf und Helga durch.</in_text>
+    <in_text style="">Olaf fährt los. Olaf hat in Helgas Betrieb Waren abgeholt. Er hat alles in seinem LKW verstaut. Helga gibt ihm einen Kuss und winkt ihm. Olaf und Helga sind nämlich befreundet. Olaf muss mit seinem LKW nach München und Basel. Er wird erst in drei Tagen zurück sein. Manchmal sehen Olaf und Helga sich nur selten. Helga gefällt das gar nicht.</in_text>
+    <media file="1.4.4_I_instruction_2.png"/>
+  </instruction>
+  <questions>
+    <questionpage>
+      <q_text sound="1.4.4_question_instuct_1.mp3">Vervollständigen Sie nun bitte folgenden Satz, indem Sie mit der linken Maustaste a), b) oder c) anklicken.</q_text>
+      <question>
+        <answertext>
+          <a_text>Helga und Olaf...</a_text>
+        </answertext>
+        <choices>
+          <choice answerid="1.4.4_1_1">a) wollen sich nur selten sehen.</choice>
+          <choice answerid="1.4.4_1_2">b) sind miteinander befreundet.</choice>
+          <choice answerid="1.4.4_1_3">c) haben nur beruflich miteinander zu tun.</choice>
+        </choices>
+      </question>
+    </questionpage>
+    <questionpage>
+      <q_text sound="1.4.4_question_instuct_1.mp3">Vervollständigen Sie nun bitte folgenden Satz, indem Sie mit der linken Maustaste a), b) oder c) anklicken.</q_text>
+      <question>
+        <answertext>
+          <a_text>Olaf fährt mit seinem LKW...</a_text>
+        </answertext>
+        <choices>
+          <choice answerid="1.4.4_2_1">a) die Waren in drei Tagen nach Basel und München.</choice>
+          <choice answerid="1.4.4_2_2">b) für drei Tage nach München und Basel.</choice>
+          <choice answerid="1.4.4_2_3">c) nach Basel und München durch einen Stau.</choice>
+        </choices>
+      </question>
+    </questionpage>
+    <questionpage>
+      <q_text sound="1.4.4_question_instuct_1.mp3">Vervollständigen Sie nun bitte folgenden Satz, indem Sie mit der linken Maustaste a), b) oder c) anklicken.</q_text>
+      <question>
+        <answertext>
+          <a_text>Wenn Olaf lange fort ist...</a_text>
+        </answertext>
+        <choices>
+          <choice answerid="1.4.4_3_1">a) freut sich Helga.</choice>
+          <choice answerid="1.4.4_3_2">b) ist es Helga egal.</choice>
+          <choice answerid="1.4.4_3_3">c) gefällt es Helga nicht.</choice>
+        </choices>
+      </question>
+    </questionpage>
+  </questions>
+  <answers>
+    <answer answerid="1.4.4_1_1" question="1">0</answer>
+    <answer answerid="1.4.4_1_2" question="1">1</answer>
+    <answer answerid="1.4.4_1_3" question="1">0</answer>
+    <answer answerid="1.4.4_2_1" question="2">1</answer>
+    <answer answerid="1.4.4_2_2" question="2">0</answer>
+    <answer answerid="1.4.4_2_3" question="2">0</answer>
+    <answer answerid="1.4.4_3_1" question="3">0</answer>
+    <answer answerid="1.4.4_3_2" question="3">0</answer>
+    <answer answerid="1.4.4_3_3" question="3">1</answer>
+  </answers>
+  <correctResponse>
+    <value itemnumber="1.4.4_1" answerid="1.4.4_1_2" casesensitiv="yes" match="full" points="1">1</value>
+    <value itemnumber="1.4.4_2" answerid="1.4.4_2_2" casesensitiv="yes" match="full" points="1">1</value>
+    <value itemnumber="1.4.4_3" answerid="1.4.4_3_3" casesensitiv="yes" match="full" points="1">1</value>
+  </correctResponse>
+  <abilities>
+    <ability number="1" alphalevel="1.4.1.1">Kann einzelne Wörter aus einem Text heraussuchen.</ability>
+    <ability number="2" alphalevel="1.4.1.2">Kann kurzen und einfachen Texten mit erläuternden Bildern und Illustrationen eine direkte/wörtliche Information entnehmen.</ability>
+    <ability number="3" alphalevel="1.4.1.3">Kann kurzen und einfachen Texten mit erläuternden Bildern und Illustrationen indirekte Informationen entnehmen.</ability>
+  </abilities>
+  <marking>
+    <pointuse maxpoint="1"/>
+    <mark itemnumber="1.4.4_1" alphalevel="1.4.1.1" dimension="1" level="4" counter="4">1</mark>
+    <mark itemnumber="1.4.4_1" alphalevel="1.4.1.2" dimension="1" level="4" counter="4">1</mark>
+    <mark itemnumber="1.4.4_1" alphalevel="1.4.1.3" dimension="1" level="4" counter="4">1</mark>
+    <mark itemnumber="1.4.4_2" alphalevel="1.4.1.1" dimension="1" level="4" counter="4">0</mark>
+    <mark itemnumber="1.4.4_2" alphalevel="1.4.1.2" dimension="1" level="4" counter="4">0</mark>
+    <mark itemnumber="1.4.4_2" alphalevel="1.4.1.3" dimension="1" level="4" counter="4">0</mark>
+    <mark itemnumber="1.4.4_3" alphalevel="1.4.1.1" dimension="1" level="4" counter="4">1</mark>
+    <mark itemnumber="1.4.4_3" alphalevel="1.4.1.2" dimension="1" level="4" counter="4">1</mark>
+    <mark itemnumber="1.4.4_3" alphalevel="1.4.1.3" dimension="1" level="4" counter="4">1</mark>
+  </marking>
+  <time>
+    <start_time>2014_2_27_19_18_7</start_time>
+    <end_time>2014_2_27_19_22_51</end_time>
+    <time_consumption>278</time_consumption>
+  </time>
+  <usernumber>KFCG1</usernumber>
+</item>

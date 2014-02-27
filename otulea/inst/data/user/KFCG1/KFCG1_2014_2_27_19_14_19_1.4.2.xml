@@ -1,0 +1,112 @@
+<item>
+  <itemnumber>1.4.2</itemnumber>
+  <meta_item>mchoice</meta_item>
+  <Item_creation>
+    <version>1</version>
+    <date>28.6.2010</date>
+    <person>Ilka Koppel</person>
+  </Item_creation>
+  <presets>
+    <preset purpose="text" style="normal" font="Ideal-0" size="12" color="black"/>
+  </presets>
+  <prescreen>
+    <pre_text style="" sound="1.4.2_I_pretext_1.mp3">Lena hat einen anstrengenden Tag hinter sich. Als sie nach Hause kommt, öffnet sie zunächst ihren Postkasten. "Schon wieder eine Rechnung", denkt Lena und steigt die Treppen hinauf in ihre Wohnung.</pre_text>
+    <pre_media file="1.4.2_I_premedia_1.png"/>
+  </prescreen>
+  <instruction>
+    <in_text style="" sound="1.4.2_instruct_1.mp3">Lena Schmitt hat ihre Telefonrechnung erhalten. Bitte lesen Sie sich den Zahlschein durch.</in_text>
+    <media file="rechnung.png"/>
+  </instruction>
+  <questions>
+    <questionpage>
+      <q_text sound="1.4.2_I_question_instruct_1.mp3">Lesen Sie nun die folgende Frage und klicken Sie mit der linken Maustaste die richtige Antwort an.</q_text>
+      <question>
+        <answertext>
+          <a_text>Lena Schmitt erhält einen Zahlschein.</a_text>
+        </answertext>
+        <choices>
+          <choice answerid="1.4.2_1_1">richtig</choice>
+          <choice answerid="1.4.2_1_2">falsch</choice>
+        </choices>
+      </question>
+    </questionpage>
+    <questionpage>
+      <q_text sound="1.4.2_I_question_instruct_1.mp3">Lesen Sie nun die folgende Frage und klicken Sie mit der linken Maustaste die richtige Antwort an.</q_text>
+      <question>
+        <answertext>
+          <a_text>Der Betrag wird an die Postbank Hannover überwiesen.</a_text>
+        </answertext>
+        <choices>
+          <choice answerid="1.4.2_2_1">richtig</choice>
+          <choice answerid="1.4.2_2_2">falsch</choice>
+        </choices>
+      </question>
+    </questionpage>
+    <questionpage>
+      <q_text sound="1.4.2_I_question_instruct_1.mp3">Lesen Sie nun die folgende Frage und klicken Sie mit der linken Maustaste die richtige Antwort an.</q_text>
+      <question>
+        <answertext>
+          <a_text>Der Kontoinhaber ist bereits eingetragen.</a_text>
+        </answertext>
+        <choices>
+          <choice answerid="1.4.2_3_1">richtig</choice>
+          <choice answerid="1.4.2_3_2">falsch</choice>
+        </choices>
+      </question>
+    </questionpage>
+    <questionpage>
+      <q_text sound="1.4.2_I_question_instruct_1.mp3">Lesen Sie nun die folgende Frage und klicken Sie mit der linken Maustaste die richtige Antwort an.</q_text>
+      <question>
+        <answertext>
+          <a_text>Vorgedruckte Daten können geändert werden.</a_text>
+        </answertext>
+        <choices>
+          <choice answerid="1.4.2_4_1">richtig</choice>
+          <choice answerid="1.4.2_4_2">falsch</choice>
+        </choices>
+      </question>
+    </questionpage>
+  </questions>
+  <answers>
+    <answer answerid="1.4.2_1_1" question="1">1</answer>
+    <answer answerid="1.4.2_1_2" question="1">0</answer>
+    <answer answerid="1.4.2_2_1" question="2">0</answer>
+    <answer answerid="1.4.2_2_2" question="2">1</answer>
+    <answer answerid="1.4.2_3_1" question="3">0</answer>
+    <answer answerid="1.4.2_3_2" question="3">1</answer>
+    <answer answerid="1.4.2_4_1" question="4">0</answer>
+    <answer answerid="1.4.2_4_2" question="4">1</answer>
+  </answers>
+  <correctResponse>
+    <value itemnumber="1.4.2_1" answerid="1.4.2_1_1" casesensitiv="yes" match="full" points="1">1</value>
+    <value itemnumber="1.4.2_2" answerid="1.4.2_2_2" casesensitiv="yes" match="full" points="1">1</value>
+    <value itemnumber="1.4.2_3" answerid="1.4.2_3_2" casesensitiv="yes" match="full" points="1">1</value>
+    <value itemnumber="1.4.2_4" answerid="1.4.2_4_2" casesensitiv="yes" match="full" points="1">1</value>
+  </correctResponse>
+  <abilities>
+    <ability number="1" alphalevel="1.4.1.1">Kann einzelne Wörter aus einem text heraussuchen.</ability>
+    <ability number="2" alphalevel="1.4.1.2">Kann kurzen und einfachen Texten mit bekannten Formaten zwei direkte Informationen entnehmen.</ability>
+    <ability number="3" alphalevel="1.4.1.3">Kann kurzen und einfachen Texten mit bekannten Formaten zwei indirekte Informationen entnehmen.</ability>
+  </abilities>
+  <marking>
+    <pointuse maxpoint="1"/>
+    <mark itemnumber="1.4.2_1" alphalevel="1.4.1.1">1</mark>
+    <mark itemnumber="1.4.2_1" alphalevel="1.4.1.2">1</mark>
+    <mark itemnumber="1.4.2_1" alphalevel="1.4.1.3">1</mark>
+    <mark itemnumber="1.4.2_2" alphalevel="1.4.1.1">1</mark>
+    <mark itemnumber="1.4.2_2" alphalevel="1.4.1.2">1</mark>
+    <mark itemnumber="1.4.2_2" alphalevel="1.4.1.3">1</mark>
+    <mark itemnumber="1.4.2_3" alphalevel="1.4.1.1">1</mark>
+    <mark itemnumber="1.4.2_3" alphalevel="1.4.1.2">1</mark>
+    <mark itemnumber="1.4.2_3" alphalevel="1.4.1.3">1</mark>
+    <mark itemnumber="1.4.2_4" alphalevel="1.4.1.1">1</mark>
+    <mark itemnumber="1.4.2_4" alphalevel="1.4.1.2">1</mark>
+    <mark itemnumber="1.4.2_4" alphalevel="1.4.1.3">1</mark>
+  </marking>
+  <time>
+    <start_time>2014_2_27_19_14_19</start_time>
+    <end_time>2014_2_27_19_18_7</end_time>
+    <time_consumption>223</time_consumption>
+  </time>
+  <usernumber>KFCG1</usernumber>
+</item>

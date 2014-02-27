@@ -1,0 +1,116 @@
+<item>
+  <itemnumber>1.4.7</itemnumber>
+  <meta_item>mchoice</meta_item>
+  <Item_creation>
+    <version>1</version>
+    <date>28.6.2010</date>
+    <person>Ilka Koppel</person>
+  </Item_creation>
+  <presets>
+    <preset purpose="text" style="normal" font="Ideal-0" size="12" color="black"/>
+  </presets>
+  <prescreen>
+    <pre_text style="" sound="1.4.7_I_pretext_1.mp3">Martina Tossini ist eine recht zierliche, hübsche Malerin aus Italien. Sie trinkt nach der Arbeit gerne einen Kaffee bei Lena und unterhält sich mit ihr. Heute liegt Martina etwas auf dem Herzen.</pre_text>
+    <pre_media file="1.4.7_I_premedia_1.png"/>
+  </prescreen>
+  <instruction>
+    <in_text style="Text-20" sound="1.4.7_instruct_1.mp3">Bitte lesen Sie sich folgenden Text zu Martina durch.</in_text>
+    <in_text style="Text-20">Martina hat gerade eine Wand gestrichen. Ihr Chef ist entsetzt. Er schreit: "Du hast die falsche Farbe genommen!" Martina bleibt cool. Sie zeigt dem Chef den Auftrag. Hier steht es: Wohnzimmerwände hellgelb. Sie sagt: "Das haben Sie unterschrieben, Chef!" Der Chef geht wütend weg.</in_text>
+    <media file="1.4.7_I_instruction_1.png"/>
+  </instruction>
+  <questions>
+    <questionpage>
+      <q_text sound="1.4.7_question_instruct_1.mp3">Lesen Sie bitte folgende Frage zum Text. Klicken Sie mit der linken Maustaste bitte nur a), b) oder c) an.</q_text>
+      <question>
+        <answertext>
+          <a_text>Was macht der Chef?</a_text>
+        </answertext>
+        <choices>
+          <choice answerid="1.4.7_1_1">a) Er zeigt ihr den Auftrag.</choice>
+          <choice answerid="1.4.7_1_2">b) Er schreit sie an.</choice>
+          <choice answerid="1.4.7_1_3">c) Er nimmt die falsche Farbe.</choice>
+        </choices>
+      </question>
+    </questionpage>
+    <questionpage>
+      <q_text sound="1.4.7_question_instruct_1.mp3">Lesen Sie bitte folgende Frage zum Text. Klicken Sie mit der linken Maustaste bitte nur a), b) oder c) an.</q_text>
+      <question>
+        <answertext>
+          <a_text>Wie reagiert Martina?</a_text>
+        </answertext>
+        <choices>
+          <choice answerid="1.4.7_2_1">a) Sie schreit ihren Chef an.</choice>
+          <choice answerid="1.4.7_2_2">b) Sie bleibt gelassen.</choice>
+          <choice answerid="1.4.7_2_3">c) Sie arbeitet wütend weiter.</choice>
+        </choices>
+      </question>
+    </questionpage>
+    <questionpage>
+      <q_text sound="1.4.7_question_instruct_1.mp3">Lesen Sie bitte folgende Frage zum Text. Klicken Sie mit der linken Maustaste bitte nur a), b) oder c) an.</q_text>
+      <question>
+        <answertext>
+          <a_text>Was meint ihr Chef?</a_text>
+        </answertext>
+        <choices>
+          <choice answerid="1.4.7_3_1">a) "Du hast die falsche Farbe genommen."</choice>
+          <choice answerid="1.4.7_3_2">b) "Du hast die falsche Wand gestrichen."</choice>
+          <choice answerid="1.4.7_3_3">c) "Du hast das gut gemacht."</choice>
+        </choices>
+      </question>
+    </questionpage>
+    <questionpage>
+      <q_text sound="1.4.7_question_instruct_1.mp3">Lesen Sie bitte folgende Frage zum Text. Klicken Sie mit der linken Maustaste bitte nur a), b) oder c) an.</q_text>
+      <question>
+        <answertext>
+          <a_text>Wie reagiert der Chef zum Schluss?</a_text>
+        </answertext>
+        <choices>
+          <choice answerid="1.4.7_4_1">a) Er läuft wütend weg.</choice>
+          <choice answerid="1.4.7_4_2">b) Er unterschreibt den Auftrag.</choice>
+          <choice answerid="1.4.7_4_3">c) Er zeigt ihr die richtige Farbe.</choice>
+        </choices>
+      </question>
+    </questionpage>
+  </questions>
+  <answers>
+    <answer answerid="1.4.7_1_1" question="1">0</answer>
+    <answer answerid="1.4.7_1_2" question="1">1</answer>
+    <answer answerid="1.4.7_1_3" question="1">0</answer>
+    <answer answerid="1.4.7_2_1" question="2">0</answer>
+    <answer answerid="1.4.7_2_2" question="2">1</answer>
+    <answer answerid="1.4.7_2_3" question="2">0</answer>
+    <answer answerid="1.4.7_3_1" question="3">1</answer>
+    <answer answerid="1.4.7_3_2" question="3">0</answer>
+    <answer answerid="1.4.7_3_3" question="3">0</answer>
+    <answer answerid="1.4.7_4_1" question="4">1</answer>
+    <answer answerid="1.4.7_4_2" question="4">0</answer>
+    <answer answerid="1.4.7_4_3" question="4">0</answer>
+  </answers>
+  <correctResponse>
+    <value itemnumber="1.4.7_1" answerid="1.4.7_1_2" casesensitiv="yes" match="full" points="1">1</value>
+    <value itemnumber="1.4.7_2" answerid="1.4.7_2_2" casesensitiv="yes" match="full" points="1">1</value>
+    <value itemnumber="1.4.7_3" answerid="1.4.7_3_1" casesensitiv="yes" match="full" points="1">1</value>
+    <value itemnumber="1.4.7_4" answerid="1.4.7_4_1" casesensitiv="yes" match="full" points="1">1</value>
+  </correctResponse>
+  <abilities>
+    <ability number="1" alphalevel="1.4.1.2">Kann kurzen und einfachen Texten (mit erläuternden Bildern) zwei direkt enthaltene Informationen entnehmen.</ability>
+    <ability number="2" alphalevel="1.4.1.3">Kann kurzen und einfachen Texten (mit erläuternden Bildern) zwei indirekte Information entnehmen.</ability>
+  </abilities>
+  <marking>
+    <pointuse maxpoint="1"/>
+    <mark itemnumber="1.4.7_1" alphalevel="1.4.1.2" dimension="1" level="4" counter="7">1</mark>
+    <mark itemnumber="1.4.7_1" alphalevel="1.4.1.3" dimension="1" level="4" counter="7">1</mark>
+    <mark itemnumber="1.4.7_2" alphalevel="1.4.1.2" dimension="1" level="4" counter="7">1</mark>
+    <mark itemnumber="1.4.7_2" alphalevel="1.4.1.3" dimension="1" level="4" counter="7">1</mark>
+    <mark itemnumber="1.4.7_3" alphalevel="1.4.1.2" dimension="1" level="4" counter="7">1</mark>
+    <mark itemnumber="1.4.7_3" alphalevel="1.4.1.3" dimension="1" level="4" counter="7">1</mark>
+    <mark itemnumber="1.4.7_4" alphalevel="1.4.1.2" dimension="1" level="4" counter="7">1</mark>
+    <mark itemnumber="1.4.7_4" alphalevel="1.4.1.3" dimension="1" level="4" counter="7">1</mark>
+  </marking>
+  <time>
+    <start_time>2014_2_27_19_27_16</start_time>
+    <end_time>2014_2_27_19_29_39</end_time>
+    <time_consumption>140</time_consumption>
+  </time>
+  <usernumber>KFCG1</usernumber>
+</item>

@@ -1,0 +1,59 @@
+<item>
+  <itemnumber>4.1.1</itemnumber>
+  <meta_item>mchoice</meta_item>
+  <Item_creation>
+    <version>1</version>
+    <date>28.6.2010</date>
+    <person>Ilka Koppel</person>
+  </Item_creation>
+  <presets/>
+  <instruction>
+    <in_text sound="4.1.1_instruct_1.mp3">Helga arbeitet in einem Warenlager. Der Lagerbestand sieht so aus, wie auf diesem Bild.</in_text>
+    <media file="4.1.1_premedia_1.png"/>
+  </instruction>
+  <questions>
+    <questionpage>
+      <q_text sound="4.1.1_question_instruct_1.mp3">Schätzen Sie bitte die Anzahl der Kartons und Pakete, die auf dem Bild zu sehen sind und klicken Sie mit der linken Maustaste die ungefähre Zahl der Pakete und Kartons auf dem Bild an.</q_text>
+      <question>
+        <choices>
+          <choice answerid="4.1.1_1_1" audio="4.1.1_1_1_coice_audio_1.mp3">ca. 250</choice>
+          <choice answerid="4.1.1_1_2" audio="4.1.1_1_2_coice_audio_1.mp3">ca. 1000</choice>
+          <choice answerid="4.1.1_1_3" audio="4.1.1_1_3_coice_audio_1.mp3">ca. 50</choice>
+          <choice answerid="4.1.1_1_4" audio="4.1.1_1_4_coice_audio_1.mp3">ca. 15</choice>
+        </choices>
+      </question>
+    </questionpage>
+  </questions>
+  <answers>
+    <answer answerid="4.1.1_1_1" question="1">0</answer>
+    <answer answerid="4.1.1_1_2" question="1">0</answer>
+    <answer answerid="4.1.1_1_3" question="1">1</answer>
+    <answer answerid="4.1.1_1_4" question="1">0</answer>
+  </answers>
+  <correctResponse>
+    <value itemnumber="4.1.1_1" answerid="4.1.1_1_3" casesensitiv="yes" match="full" points="1">1</value>
+  </correctResponse>
+  <abilities>
+    <ability number="1" alphalevel="4.1.1.1">Kann Mengen im Zehner-Bereich erfassen.</ability>
+    <ability number="2" alphalevel="4.1.1.2">Kann Mengen im Hunderter-Bereich erfassen.</ability>
+    <ability number="3" alphalevel="4.1.1.3">Kann Mengen im Tausender-Bereich erfassen.</ability>
+    <ability number="4" alphalevel="4.1.1.4">kleinere Mengen.</ability>
+    <ability number="5" alphalevel="4.1.1.5">Größere Mengen</ability>
+    <ability number="6" alphalevel="4.1.1.6">größere Mengen II</ability>
+  </abilities>
+  <marking>
+    <pointuse maxpoint="1"/>
+    <mark itemnumber="4.1.1_1" alphalevel="4.1.1.1">1</mark>
+    <mark itemnumber="4.1.1_1" alphalevel="4.1.1.2">1</mark>
+    <mark itemnumber="4.1.1_1" alphalevel="4.1.1.3">1</mark>
+    <mark itemnumber="4.1.1_1" alphalevel="4.1.1.4">1</mark>
+    <mark itemnumber="4.1.1_1" alphalevel="4.1.1.5">1</mark>
+    <mark itemnumber="4.1.1_1" alphalevel="4.1.1.6">1</mark>
+  </marking>
+  <time>
+    <start_time>2014_2_27_19_35_5</start_time>
+    <end_time>2014_2_27_19_36_4</end_time>
+    <time_consumption>57</time_consumption>
+  </time>
+  <usernumber>KFCG1</usernumber>
+</item>
