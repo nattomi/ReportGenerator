@@ -43,7 +43,7 @@ alphalevels2xml <- function(uncprsd,file,subject,level) {
       for (r in 1:nr) {
         cat(TAB,TAB,'<alphanode alphaID="',dat[r,"alphaID"],'" userdescription="',dat[r,"userdescription"],'" example="',dat[r,"example"],'">\n',sep="")
       }
-      cat('</eval>\n')   
+      cat(TAB,'</eval>\n',sep="")   
     } else cat('/>\n')
   }
   cat("</results>\n")
