@@ -8,42 +8,43 @@ threshold <- 50 ## percentage
 maxListings <- 3 ## maximal number of results listed
 alphalist.df <- alphalist2df(alphalist)
 x <- getAlphalevelsA(user,threshold,maxListings,alphalist.df)
-x
 uncprsd <- uncompress(x,alphalist.df,c("userdescription","example","sound","alphaID"))
 
 file <- "20120504_14_13_X0AT2.pdf"
 subject <- attr(x,"subject")
 level <- attr(x,"level")
-uncprsd
-result <- alphalevels2xml(uncprsd,file,subject, level)
-result
-## saving it to a file
-write(saveXML(result),file=tempfile())
+alphalevels2xml(uncprsd,file,subject, level)
 }
 
 
 ## FUNCTION
 alphalevels2xml <- function(uncprsd,file,subject,level) {
-  node <- newXMLNode("results")
+  TAB <- "  "
+  cat("<results>\n")
   ## adding 'print' node
-  newXMLNode("print",parent = node, attrs=c("file" = file))
+  cat(TAB,'<print file="',file,'"/>\n',sep="")
   ## adding 'timestamp' node
   ts <- format(Sys.time(),"%Y%m%d%H%M%S")
-  newXMLNode("timestamp", parent = node, attrs=c("order" = "YMDhms", "value" = ts))
+  cat(TAB,'<timestamp order="YMDhms" value="',ts,'"/>\n',sep="")
   ## adding 'subject' node
-  newXMLNode("subject", parent = node, attrs=c("value" = subject))
+  cat(TAB,'<subject value="',subject,'"/>\n',sep="")
   ## adding 'level' node
-  newXMLNode("level", parent = node, attrs=c("value" = level))
+  cat(TAB,'<level value="',level,'"/>\n',sep="")
   ## adding 'eval' nodes
   modes <- names(uncprsd)
-  mode <- modes[[1]]
+  ##mode <- modes[[1]]
   for (mode in modes) {
-    nodeName <- paste("mode",mode,sep=".")
-    assign(nodeName, newXMLNode("eval", parent = node, attrs=c("mode" = mode)))
+    cat(TAB,'<eval mode="',mode,'"',sep="")
     dat <- uncprsd[[mode]]
-    text <- paste('lapply(as.data.frame(t(dat)),function(x) newXMLNode("alphanode", parent=',nodeName,', attrs=c("alphaID" = as.character(x[["alphaID"]]),"userdescription" = as.character(x[["userdescription"]]),"example" = as.character(x[["example"]]))))',sep="")
-    eval(parse(text=text))
+    nr <- nrow(dat)
+    if (nr > 0) {
+      cat('>\n')
+      r <- 1
+      for (r in 1:nr) {
+        cat(TAB,TAB,'<alphanode alphaID="',dat[r,"alphaID"],'" userdescription="',dat[r,"userdescription"],'" example="',dat[r,"example"],'">\n',sep="")
+      }
+      cat('</eval>\n')   
+    } else cat('/>\n')
   }
-  node
+  cat("</results>\n")
 }
-
