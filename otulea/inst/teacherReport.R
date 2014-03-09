@@ -7,8 +7,59 @@ if (length(args)==0) {
   cat("* user: user Number\n")
   cat("Example: teacherReport.R 6CKBT\n")
 } else {
-  require(otulea)
-  ##require(tools)
+  ## REQUIREMENTS
+  require(XML)
+  ## transforming a test to a data.frame
+  test2df <- function(test) {
+    test.list <- xmlToList(test)
+    attrs <- test.list$.attrs
+    names(attrs) <- paste(names(attrs),"string",sep=".")
+    test.list <- test.list[names(test.list)=="item"] ## *2 possible place for improvement
+    test.df <- data.frame(t(as.data.frame(test.list)),stringsAsFactors=FALSE)
+    rownames(test.df) <- NULL
+    attributes(test.df)$attrs <- attrs
+    test.df
+  }
+  ## list all tests taken by a user
+  list.tests <- function(guf) {
+    doc <- xmlParse(guf)
+    ##doc.root <- xmlRoot(doc)
+    tests <- getNodeSet(doc, "//test")
+    tests
+  }
+  ## getting testresults
+  testResults <- function(user,last=FALSE) {
+      ## location of global user file
+    userDir <- file.path(usersDir,user)
+    guf <- file.path(userDir,paste(user,"xml",sep=".")) ## later on we rewrite this with system.file
+    ## tests taken by the user (returned as an XMLNodeSet)
+    tests <- list.tests(guf)
+    ## apply 'last' filter if requested
+    if (last) tests <- last(tests)
+    ## getting the last test taken
+    tests.df <- lapply(tests,test2df)
+    testresults <- lapply(tests.df, function(x) {
+      ans <- file.path(userDir,x$data)
+      attributes(ans) <- list(attrs=attributes(x)$attrs)
+      ans})
+    testresults
+  }
+  ## getting the marking sections of various testresult files
+  ## and merge them into a data frame containing character strings
+  getMarkings <- function(testresults) {
+    markings <- lapply(testresults, function(x) {
+      x.parse <- xmlParse(x)
+      x.marking <- getNodeSet(x.parse, "//marking")
+      getNodeSet(x.marking[[1]],"//mark")
+    })
+    markings.all <- do.call("c",markings)
+    markings.all2 <- lapply(markings.all,function(x) c(xmlAttrs(x)[c("itemnumber","alphalevel")],mark=xmlValue(x)))
+    markings.df <- as.data.frame(do.call("rbind",markings.all2))
+    attributes(markings.df)<- c(attributes(markings.df),attributes(testresults))
+    markings.df
+  }
+
+  ## MAIN
   ## Layer 1: xml to tabular form
   user <- as.character(args[1])
   testresults <- testResults(user)
@@ -24,9 +75,7 @@ if (length(args)==0) {
   layer1$mark[layer1$mark==""] <- 0 # we don't want any empty mark value
   layer1$mark[layer1$mark=="failed"] <- 0 # we don't want "failed" as a mark value
   ## Layer 2: extend tabular form with information about categories
-  print(layer1)
   bysubject <- by(layer1,as.character(layer1$subject.string),function(x) x)
-  bysubject
   layer2.list <- lapply(bysubject,function(x) { # sorts elements by subject
     y <- by(x[,c("timestamp.string","mark")],as.character(x$itemnumber),function(x) x) # sorts elements belonging to a subject by itemnumber
     lapply(y,function(x) { # calculating n, tendency and category for a certain itemnumber
@@ -61,5 +110,4 @@ if (length(args)==0) {
   ##write.table(layer2,"/tmp/tmp.txt")
   ##layer2$category
   print(layer2)
-  print(args)
 }
