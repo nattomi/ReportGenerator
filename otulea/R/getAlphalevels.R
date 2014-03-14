@@ -3,7 +3,7 @@
 ## EXAMPLES
 if (FALSE) {
 library(otulea)
-user <- "6CKBT" ## user id as character string
+user <- "KFCG1" ## user id as character string
 threshold <- 50 ## percentage
 maxListings <- 3 ## maximal number of results listed
 alphalist.df <- alphalist2df(alphalist)
