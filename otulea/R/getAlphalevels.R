@@ -24,10 +24,14 @@ getAlphalevelsA <- function(user, threshold, maxListings,
   ## Derivation of results
   ## getting alphaID-s from the alphalist data frame
   alphaIDs <- sort(alphalist.df$alphaID)
-  ## all tested alphalevels
-  thresholds <- tapply(as.numeric(markings[[1]][,"mark"]),markings[[1]][,"alphalevel"],mean)
+  ## all tested ability levels
+  thresholds <- tapply(as.integer(as.character(markings[[1]][,"mark"])),as.character(markings[[1]][,"alphalevel"]), mean)
+  thresholds
+  markings[[1]][markings[[1]][,"alphalevel"]=="1.3.2.1","mark"]
+  10/16
+  
   alphas.tested <- names(thresholds)
-  ## which alphalevels are above and below the threshold?
+  ## which ability levels are above and below the threshold?
   above <- thresholds >= threshold/100
   alphas.above <- alphas.tested[above]
   alphas.below <- alphas.tested[!above]
