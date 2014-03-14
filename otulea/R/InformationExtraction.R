@@ -112,7 +112,8 @@ testResults <- function(user,last=FALSE) {
   
 
 ## getting the marking sections of various testresult files
-## and merge them into a data frame containing character strings 
+## and merge them into a data frame containing character strings
+##testresults <- testresults[[1]]
 getMarkings <- function(testresults) {
   markings <- lapply(testresults, function(x) {
     x.parse <- xmlParse(x)
@@ -120,9 +121,13 @@ getMarkings <- function(testresults) {
     getNodeSet(x.marking[[1]],"//mark")
   })
   markings.all <- do.call("c",markings)
-  markings.all2 <- lapply(markings.all,function(x) c(xmlAttrs(x),mark=xmlValue(x)))
-  markings.df <- as.data.frame(do.call("rbind",markings.all2))
+  markings.all2 <- lapply(markings.all,function(x) c(xmlAttrs(x)[c("itemnumber","alphalevel")],mark=xmlValue(x)))
+  markings.all3 <- lapply(markings.all2,function(x) {
+    m <- x[["mark"]]
+    if (m=="" | m=="failed") x[["mark"]] <- 0
+    x
+  })
+  markings.df <- as.data.frame(do.call("rbind",markings.all3))
   attributes(markings.df)<- c(attributes(markings.df),attributes(testresults))
   markings.df
 }
-
