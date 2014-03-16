@@ -1,0 +1,101 @@
+\documentclass{article}
+%\usepackage{fullpage}
+\usepackage[a4paper,landscape,left=2mm,right=2mm,top=2mm,bottom=2mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[german,english]{babel}
+%\usepackage{longtable}
+\usepackage[table]{xcolor}
+%\usepackage{multirow}
+\usepackage{amssymb}
+%\usepackage{array}
+%\usepackage{booktabs}
+\usepackage{tikz}
+\usepackage{hyperref}
+\usepackage{afterpage}
+
+\definecolor{Lesen-solved}{RGB}{199,237,226}
+\definecolor{Lesen-partly}{RGB}{134,199,190}
+\definecolor{Lesen-notsolved}{RGB}{96,148,125}
+\definecolor{Schreiben-solved}{RGB}{209,233,202}
+\definecolor{Schreiben-partly}{RGB}{154,204,148}
+\definecolor{Schreiben-notsolved}{RGB}{106,166,106}
+\definecolor{Sprache-solved}{RGB}{246,246,213}
+\definecolor{Sprache-partly}{RGB}{234,234,119}
+\definecolor{Sprache-notsolved}{RGB}{223,196,11}
+\definecolor{Rechnen-solved}{RGB}{248,230,174}
+\definecolor{Rechnen-partly}{RGB}{230,188,125}
+\definecolor{Rechnen-notsolved}{RGB}{180,136,86}
+\definecolor{frame}{RGB}{185,186,150}
+
+\newcommand{\hasab}[1]{% for being
+  \vbox to .97\textheight{
+    \begin{center}#1\end{center}
+      \vfill}}
+
+\newcommand\textline[4][t]{%
+  \par\smallskip\noindent\parbox[#1]{.333\textwidth}{\raggedright Teilnehmer/Teilnehmerin: \textbf{#2}}%
+  \parbox[#1]{.333\textwidth}{\centering#3}%
+  \parbox[#1]{.333\textwidth}{\raggedleft#4}\par\smallskip%
+}
+
+\begin{document}
+\pagenumbering{gobble}
+\setlength{\fboxsep}{0pt}%
+
+% First page: guidelines
+\newgeometry{left=2.5cm,right=2cm,top=1.5cm,bottom=2cm}
+\section*{Erläuterungen zum Report}
+\subsection*{Pfeile}
+Die Pfeile beziehen sich auf die Kannbeschreibungen (nicht die Aufgaben). Sie zeigen an, ob sich eine Person im Vergleich zum vorherigen Durchlauf in Bezug auf die geprüfte Dimension verbessert, nicht verändert oder verschlechtert hat.
+\vspace{.5em}\\
+\begin{tabular}{cl}
+$\Uparrow$ & Die/ Der Teilnehmerin/ Teilnehmer hat sich im Vergleich zum vorherigen Durchlauf verbessert.\\
+$\Rightarrow$ & Die/ Der Teilnehmerin/ Teilnehmer hat sich im Vergleich zum vorherigen Durchlauf weder verbessert noch verschlechtert.\\
+$\Downarrow$ & Die/ Der Teilnehmerin/ Teilnehmer hat sich im Vergleich zum vorherigen Durchlauf verschlechtert.
+\end{tabular}
+\vspace{.5em}\\
+\noindent Beispiel: Eine Person hat in dem vorletzten Durchlauf eine Kannbeschreibung nicht erfüllt. In dem letzten Durchlauf erfüllte die Person die Kannbeschreibung. Sie hat sich also im Vergleich zum vorherigen Durchlauf verbessert. Der Pfeil bei der Kannbeschreibung zeigt nach oben.
+
+
+\subsection*{Einzelne Zahlen in einer Aufgabennummer:}
+Die Aufgabennummern setzen sich aus mehreren Zahlen zusammen, die unterschiedliche Bedeutungen haben. Aus einer Aufgabennummer lassen sich mehrere Informationen ziehen. Einige Aufgaben setzen sich aus mehreren Teilaufgaben zusammen, wie im folgenden Beispiel:
+\vspace{0.5em}\\
+
+\begin{tikzpicture}
+  \usetikzlibrary{shapes}
+  \node (dim) at (-1.5,-1) {Dimension};
+  \draw[purple,thick] (0,0) -- (dim);
+  \node[ultra thick, fill=blue!10, draw=purple, ellipse, align=center, inner sep=0.1em] at (0,0) {\Huge2.};
+
+  \node (auf) at (0,-1.5) {Level};
+  \draw[purple,thick] (1,0) -- (auf);
+  \node[ultra thick, fill=blue!10, draw=purple, ellipse, align=center, inner sep=0.1em] at (1,0) {\Huge2.};
+
+  \node (teilauf) at (2,-2) {Aufgabennummer};
+  \draw[purple,thick] (2.55,-0.1) -- (teilauf);
+  \node[ultra thick, fill=blue!10, draw=purple, ellipse, align=center, inner sep=0.1em] at (2.55,-0.1) {\Huge01\textunderscore};
+
+  \node (item) at (5,-1.5) {Teilaufgabennummer};
+  \draw[purple,thick] (4.3,0) -- (item);
+  \node[ultra thick, fill=blue!10, draw=purple, ellipse, align=center, inner sep=0.1em] at (4.3,0) {\Huge III}; 
+\end{tikzpicture}
+
+\subsection*{Häkchen (\checkmark) hinter den Kannbeschreibungen:}
+Die Häkchen (\checkmark) sind den Aufgaben zugeordnet. Ein Häkchen zeigt an, ob in dieser Aufgabe die Kannbeschreibung, die in der gleichen Zeile angegeben ist, erfüllt wurde. Ist hinter der Aufgabe kein Häkchen vorhanden, wurde die Kannbeschreibung in dieser Aufgabe nicht erfüllt.
+
+\noindent Eine Kannbeschreibung kann in mehreren Aufgaben geprüft werden. Daher werden oftmals hinter der einzelnen Kannbeschreibungen mehrere Aufgaben angezeigt. Es kann sein, dass eine Kannbeschreibung in einer Aufgabe erfüllt wurde (und somit hinter der Aufgabennummer ein Häkchen angezeigt wird) und in einer anderen Aufgabe nicht (und daher kein Häkchen hinter der Aufgabennummer angegeben ist). Diese Angabe kann dafür verwendet werden, gezielt Aufgaben zu Übungszwecken zu nutzen.
+%\vspace{1em}\\
+\subsection*{Weitere Informationen zu den Kannbeschreibungen und der lea.-Diagnostik finden Sie unter:} 
+\begin{center}\url{http://blogs.epb.uni-hamburg.de/lea/die-lea-diagnostik/}\end{center}
+\newpage
+\restoregeometry
+
+% main content: report for solved, partially solved and not solved
+\input{solved}
+\newpage
+\input{partly}
+\newpage
+\input{notsolved}
+
+\end{document}
