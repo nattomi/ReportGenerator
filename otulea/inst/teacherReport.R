@@ -1,6 +1,12 @@
 #!/usr/bin/Rscript
+## SETTINGS
+X <- c("Lesen","Schreiben","Sprache","Rechnen")
+Y <- c(solved="Kannbeschreibungen erfüllt",
+       partly="Kannbeschreibungen teilweise erfüllt",
+       notsolved="Kannbeschreibungen nicht erfüllt")
+
 args <- commandArgs(TRUE)
-args <- "KFCG1"
+##args <- "KFCG1" # this my test user
 if (length(args)==0) {
   cat("Usage: teacherReport.R user\n")
   cat("where\n")
@@ -9,6 +15,7 @@ if (length(args)==0) {
 } else {
   ## REQUIREMENTS
   require(XML)
+  require(tools)
   ## transforming a test to a data.frame
   test2df <- function(test) {
     test.list <- xmlToList(test)
@@ -54,13 +61,29 @@ if (length(args)==0) {
     })
     markings.all <- do.call("c",markings)
     markings.all2 <- lapply(markings.all,function(x) c(xmlAttrs(x)[c("itemnumber","alphalevel")],mark=xmlValue(x)))
-    markings.df <- as.data.frame(do.call("rbind",markings.all2))
+    markings.all3 <- lapply(markings.all2,function(x) {
+      m <- x[["mark"]]
+      if (m=="" | m=="failed") x[["mark"]] <- 0
+      x
+    })
+    markings.df <- as.data.frame(do.call("rbind",markings.all3))
     attributes(markings.df)<- c(attributes(markings.df),attributes(testresults))
     markings.df
+  }
+  ## converts alphalist.XML to a data.frame  
+  alphalist2df <- function(alphalist) {
+    if (is.character(alphalist)) alphalist <- xmlInternalTreeParse(alphalist)
+    alphalist.list <- xmlToList(alphalist)
+    alphalist.list <- alphalist.list[names(alphalist.list)=="alphanode"]
+    ans <- data.frame(t(as.data.frame(alphalist.list)),stringsAsFactors=F)
+    rownames(ans) <- NULL
+    ans
   }
 
   ## MAIN
   ## Layer 1: xml to tabular form
+
+
   user <- as.character(args[1])
   testresults <- testResults(user)
   markings <- lapply(testresults,getMarkings)
@@ -71,43 +94,110 @@ if (length(args)==0) {
     colnames(b) <- names(a)
     cbind(b,x)
   })
-  layer1 <- do.call("rbind",layer0)[,c(c("timestamp.string","subject.string","itemnumber","alphalevel","mark"))]
-  layer1$mark[layer1$mark==""] <- 0 # we don't want any empty mark value
-  layer1$mark[layer1$mark=="failed"] <- 0 # we don't want "failed" as a mark value
-  ## Layer 2: extend tabular form with information about categories
-  bysubject <- by(layer1,as.character(layer1$subject.string),function(x) x)
+  ##layer0
+  layer1 <- do.call("rbind",layer0)[,c(c("timestamp.string","subject.string","level.string","itemnumber","alphalevel","mark"))]
+  ##layer1$mark[layer1$mark==""] <- 0 # we don't want any empty mark value
+  ##layer1$mark[layer1$mark=="failed"] <- 0 # we don't want "failed" as a mark value
+  ##layer1
+  ## Layer 2: sort by subject,alphalevel,itemnumber, then report last 2 marks for each itemnumber
+  bysubject <- by(layer1[,c(1,4,5,6)],as.character(layer1$subject.string),function(x) x)
+  ##head(bysubject$Lesen)
   layer2.list <- lapply(bysubject,function(x) { # sorts elements by subject
-    y <- by(x[,c("timestamp.string","mark")],as.character(x$itemnumber),function(x) x) # sorts elements belonging to a subject by itemnumber
-    lapply(y,function(x) { # calculating n, tendency and category for a certain itemnumber
-      ## At this point, x looks like this:
-      ##      timestamp.string mark
-      ##69  2014_2_27_18_37_23    1
-      ##70  2014_2_27_18_37_23    1
-      ##347  2014_3_3_20_32_49    1
-      ##348  2014_3_3_20_32_49    1
-      n <- nrow(x)
-      bydate <- tapply(x$mark,as.character(x$timestamp.string),function(x) as.integer(as.character(x))) ## sorting mark values by date (this way we get a list of dates, each element of this list is a vector of mark values. !!!NOTE!!! At the moment I assumed that the length of the vector is always the same. 
-      ind.latests <- order(strptime(names(bydate),format="%Y_%m_%d_%H_%M_%S",tz="GMT"),decreasing=TRUE) 
-      latest <- as.integer(as.character(bydate[[ind.latests[1]]])) ## the vector of latest latest mark values for a certain itemnumber
-      tendency <- NA # if the itemnumber was tested only in one test, i.e. bydate is a list of length 1, then the tendency is NA
-      if (length(bydate) > 1) { # if the length of bydate is at least 2, then we caculate tendency by comparing the vectors 'latest' and 'before.latest'. !!!NOTE!!! this is an elementwise comparision, but at the moment I can't be sure that in the 2 vectors the elements are in the same order! For that purpose probably I would have to use the alphalevel item as well. 
-        before.latest <- as.integer(as.character(bydate[[ind.latests[2]]]))
-        if (all(before.latest <= latest)) {
-          tendency <- ifelse(all(before.latest==latest),0,1)
-        } else if (all(latest <= before.latest)) tendency <- -1
-      }
-      ## It remains to calculate the category
+    y <- by(x[,c(1,2,4)],as.character(x$alphalevel),function(x) x) # sorts elements belonging to a subject by ability description (alphalevel)
+    lapply(y,function(x) { # calculating last two marks 
+      byitem <- by(x[,c(1,3)],as.character(x$itemnumber),function(x) {
+        x.time <- strptime(as.character(x$timestamp.string),format="%Y_%m_%d_%H_%M_%S",tz="GMT")
+        x.time.bylatest <- order(x.time,decreasing=TRUE)
+        as.integer(as.character(x$mark[x.time.bylatest]))
+      })
+      sapply(byitem,function(x) c(before.latest=x[2],latest=x[1]))
+    })
+  })
+  ##layer2.list$Lesen
+  layer2 <- lapply(layer2.list,function(z) { # calculating overall tendency and category for each alphalevel
+    lapply(z,function(y) {
+      tendencyvector <- apply(y,2,function(x) x[2]-x[1])
+      ans <- rbind(y,tendency=tendencyvector)
+      ## calculating the overall tendency
+      tv0 <- tendencyvector[!is.na(tendencyvector)]
+      tv <- ifelse(length(tv0) > 0,sum(tv0),NA)
+      ## add category as attribute
+      latest <- y["latest",]
       ctg <- 10 
       if (any(latest==0)) { 
         ctg <- ifelse(all(latest==0),0,5)
       }
-      c(n=n,tendency=tendency,category=ctg)
+      attributes(ans) <- c(attributes(ans),list(ctg=ctg,tendency=sign(tv)))
+      ans
     })
   })
-  ##head(layer2.list$Lesen)
-  ##layer2.list
-  layer2 <- cbind(layer1,t(apply(layer1,1,function(x) layer2.list[[x[2]]][[x[3]]])))
-  ##write.table(layer2,"/tmp/tmp.txt")
-  ##layer2$category
-  print(layer2)
-}
+  ## group alphalevels by category
+  layer3 <- lapply(layer2,function(x) lapply(c(solved=10,partly=5,notsolved=0),function(i) x[sapply(x,function(x) attributes(x)$ctg==i)]))
+  systime <- Sys.time()
+  baseName <- paste(user,format(systime,format="%Y%m%d_%H_%M_%S"),sep="_")
+  baseName <- "systime" # for testing only
+  baseName <- paste(baseName,"teacher",sep="_")
+  pdfName <- paste(baseName,"pdf",sep=".")
+  texName <- paste(baseName,"tex",sep=".")
+  userDir <- file.path(usersDir, user) # this one is quite redundant here, but quicker than rewriting a bunch of functions
+  userDir <- "/tmp" # for testing
+  tmpdir <- file.path(userDir,baseName)
+  if (!file.exists(tmpdir)) dir.create(tmpdir) # just to make sure
+  ## creating tex tabulars
+  alphalist.df <- alphalist2df(alphalist)
+  for (y in Y) {
+    catname <- names(Y)[Y==y]
+    sink(file.path(tmpdir,paste(catname,".tex",sep="")))
+    cat("\\textline[t]{",user,"}{",y,"}{Datum: ",format(systime,format="%d.%m.%Y"),"}\n",sep="")
+    cat("{\\scriptsize\\noindent")
+    for (x in X) {
+      cat("\\colorbox{",x,"-",catname,"}{\\begin{minipage}{.25\\textwidth}\n",sep="")
+      cat("\\hasab{\\begin{tabular}{@{}p{.3cm}@{}|@{}p{3.5cm}@{}|@{}p{3.5cm}@{}}\n")
+      cat("\\hline\n")
+      cat("\\multicolumn{3}{c}{\\textbf{",x,"}}\\\\\n",sep="")
+      cat("\\hline\n")
+      cat("\\multicolumn{2}{@{}l|}{\\textbf{Kannbeschreibung}} & \\textbf{Aufgabe} \\\\\n")
+      cat("\\hline\n")
+      xy <- layer3[[x]][[catname]]
+      item <- names(xy)[1]
+      for (item in names(xy)) {
+        i.alphaID <- match(item,alphalist.df$alphaID)
+        tab <- xy[[item]]
+        ctg <- attributes(tab)$ctg
+        CN <- colnames(tab)
+        checkmarks <- sapply(tab["latest",CN],function(x) ifelse(x,"\\checkmark",""))
+        cell1 <- alphalist.df[i.alphaID,"description"]
+        cell1 <- gsub("μ","$\\\\mu$",cell1) # replacing out-of-range unicode character
+        cell2 <- paste(paste(gsub("_","\\\\textunderscore ",CN),checkmarks,sep=""),collapse=", ")
+        tend.int <- attributes(tab)$tendency
+        tend <- "-"
+        if (!is.na(tend.int)) {
+          tend <- ifelse(tend.int > 0,"$\\Uparrow$",
+                         ifelse(tend.int==0,"$\\Rightarrow$","$\\Downarrow$"))
+        }
+        cat(tend,"&",cell1,"&",cell2,"\\\\\n")
+        cat("\\hline\n")
+      }
+      cat("\\end{tabular}}\n")
+      cat("\\end{minipage}}%\n")
+    }
+    cat("}\n")
+    sink()
+  } # for
+  
+  ## copying template file to temporary directory 
+  file.copy(file.path(dir.template,"feedback.tex"),
+            file.path(tmpdir,texName))
+  ## running pdflatex                                                     
+  wd.orig <- getwd()                                                      
+  setwd(tmpdir)                                                           
+  texi2dvi(texName,pdf=TRUE)                                              
+  setwd(wd.orig)
+  ## moving resulting pdf to user's dir and
+  ## deleting temporary directory
+  file.copy(file.path(tmpdir,pdfName),userDir)                            
+  unlink(tmpdir,recursive=TRUE)
+  ## printing name of xml file to screen
+  cat(pdfName)
+} # else
+
