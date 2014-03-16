@@ -79,11 +79,16 @@ if (length(args)==0) {
     rownames(ans) <- NULL
     ans
   }
-
+  ## Sanitizing out-of-range characters
+  sanitize <- function(x) {
+    x <- gsub("μ","$\\\\mu$",x)
+    x <- gsub("«","\\\\guillemotleft ",x)
+    x <- gsub("»","\\\\guillemotright ",x)
+    x
+  }
+  
   ## MAIN
   ## Layer 1: xml to tabular form
-
-
   user <- as.character(args[1])
   testresults <- testResults(user)
   markings <- lapply(testresults,getMarkings)
@@ -167,7 +172,6 @@ if (length(args)==0) {
         CN <- colnames(tab)
         checkmarks <- sapply(tab["latest",CN],function(x) ifelse(x,"\\checkmark",""))
         cell1 <- alphalist.df[i.alphaID,"description"]
-        cell1 <- gsub("μ","$\\\\mu$",cell1) # replacing out-of-range unicode character
         cell2 <- paste(paste(gsub("_","\\\\textunderscore ",CN),checkmarks,sep=""),collapse=", ")
         tend.int <- attributes(tab)$tendency
         tend <- "-"
@@ -175,7 +179,7 @@ if (length(args)==0) {
           tend <- ifelse(tend.int > 0,"$\\Uparrow$",
                          ifelse(tend.int==0,"$\\Rightarrow$","$\\Downarrow$"))
         }
-        cat(tend,"&",cell1,"&",cell2,"\\\\\n")
+        cat(tend,"&",sanitize(cell1),"&",cell2,"\\\\\n")
         cat("\\hline\n")
       }
       cat("\\end{tabular}}\n")
