@@ -1,21 +1,23 @@
 \documentclass[landscape,slidestop]{slides}
 \usepackage[utf8]{inputenc}
 \usepackage[top=0.5cm, bottom=0.5cm, left=0.5cm, right=0.5cm]{geometry}
-%\usepackage{fancybox}
-%\usepackage{background}
 \usepackage{xcolor}
-%\usepackage{tabularx}
-%\usepackage{tabu}
 \usepackage{colortbl}
 \usepackage{multirow}
 \usepackage{verbatim}
 \usepackage{graphicx}
 \usepackage{array}
-\usepackage{tikz}
-\usepackage{pstricks}
+\usepackage{booktabs}
+%\usepackage{tikz}
+%\usepackage{pstricks}
 
 % color definitions
-\definecolor{bg}{RGB}{242,242,203}% background color
+\definecolor{bg}{RGB}{248,230,174}% background color
+\definecolor{Lesen}{HTML}{D8F2F1}
+\definecolor{Schreiben}{HTML}{DDF4DD}
+\definecolor{Sprache}{HTML}{F2F2CB} 
+\definecolor{Rechnen}{HTML}{F7E5C5}
+
 % commands
 
 % for drawing a 'haken'
@@ -41,8 +43,15 @@
 \vfill
 }
 
-\begin{document}
+% for drawing user information
+\newcommand\textline[4][t]{%
+  \par\smallskip\noindent\parbox[#1]{.333\textwidth}{\raggedright Teilnehmer/Teilnehmerin: \textbf{#2}}%
+  \parbox[#1]{.333\textwidth}{\centering#3}%
+  \parbox[#1]{.333\textwidth}{\raggedleft#4}\par\smallskip%
+}
 
+\begin{document}
+\setlength{\arrayrulewidth}{.08em}
 % mode A1
 \begin{slide}
 \feedback{A1} 
@@ -50,10 +59,6 @@
 % mode A2
 \begin{slide}
 \feedback{A2}
-\end{slide}
-% mode A3
-\begin{slide}
-\feedback{A3}
 \end{slide}
 
 \end{document}
