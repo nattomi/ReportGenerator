@@ -6,7 +6,7 @@ Y <- c(solved="Kannbeschreibungen erfüllt",
        notsolved="Kannbeschreibungen nicht erfüllt")
 
 args <- commandArgs(TRUE)
-##args <- "KFCG1" # this my test user
+args <- "KFCG1" # this my test user
 if (length(args)==0) {
   cat("Usage: teacherReport.R user\n")
   cat("where\n")
@@ -103,10 +103,11 @@ if (length(args)==0) {
   layer1 <- do.call("rbind",layer0)[,c(c("timestamp.string","subject.string","level.string","itemnumber","alphalevel","mark"))]
   ##layer1$mark[layer1$mark==""] <- 0 # we don't want any empty mark value
   ##layer1$mark[layer1$mark=="failed"] <- 0 # we don't want "failed" as a mark value
-  ##layer1
+  layer1
   ## Layer 2: sort by subject,alphalevel,itemnumber, then report last 2 marks for each itemnumber
   bysubject <- by(layer1[,c(1,4,5,6)],as.character(layer1$subject.string),function(x) x)
   ##head(bysubject$Lesen)
+  bysubject
   layer2.list <- lapply(bysubject,function(x) { # sorts elements by subject
     y <- by(x[,c(1,2,4)],as.character(x$alphalevel),function(x) x) # sorts elements belonging to a subject by ability description (alphalevel)
     lapply(y,function(x) { # calculating last two marks 
@@ -118,7 +119,7 @@ if (length(args)==0) {
       sapply(byitem,function(x) c(before.latest=x[2],latest=x[1]))
     })
   })
-  ##layer2.list$Lesen
+  layer2.list$Lesen
   layer2 <- lapply(layer2.list,function(z) { # calculating overall tendency and category for each alphalevel
     lapply(z,function(y) {
       tendencyvector <- apply(y,2,function(x) x[2]-x[1])
@@ -138,6 +139,7 @@ if (length(args)==0) {
   })
   ## group alphalevels by category
   layer3 <- lapply(layer2,function(x) lapply(c(solved=10,partly=5,notsolved=0),function(i) x[sapply(x,function(x) attributes(x)$ctg==i)]))
+  layer3
   systime <- Sys.time()
   baseName <- paste(user,format(systime,format="%Y%m%d_%H_%M_%S"),sep="_")
   baseName <- "systime" # for testing only
@@ -157,11 +159,11 @@ if (length(args)==0) {
     cat("{\\scriptsize\\noindent")
     for (x in X) {
       cat("\\colorbox{",x,"-",catname,"}{\\begin{minipage}{.25\\textwidth}\n",sep="")
-      cat("\\hasab{\\begin{tabular}{@{}p{.3cm}@{}|@{}p{3.5cm}@{}|@{}p{3.5cm}@{}}\n")
+      cat("\\hasab{\\begin{tabular}{@{\\hspace{.2em}}p{1em}@{\\hspace{.1em}}|@{\\hspace{.4em}}p{9.2em}@{\\hspace{.4em}}|@{\\hspace{.4em}}p{14em}@{\\hspace{.4em}}}\n")
       cat("\\hline\n")
       cat("\\multicolumn{3}{c}{\\textbf{",x,"}}\\\\\n",sep="")
       cat("\\hline\n")
-      cat("\\multicolumn{2}{@{}l|}{\\textbf{Kannbeschreibung}} & \\textbf{Aufgabe} \\\\\n")
+      cat("\\multicolumn{2}{@{\\hspace{.4em}}l|@{\\hspace{.4em}}}{\\textbf{Kannbeschreibung}} & \\textbf{Aufgabe} \\\\\n")
       cat("\\hline\n")
       xy <- layer3[[x]][[catname]]
       item <- names(xy)[1]
@@ -179,7 +181,8 @@ if (length(args)==0) {
           tend <- ifelse(tend.int > 0,"$\\Uparrow$",
                          ifelse(tend.int==0,"$\\Rightarrow$","$\\Downarrow$"))
         }
-        cat(tend,"&",sanitize(cell1),"&",cell2,"\\\\\n")
+        cat(tend," & \\textbf{",item,"}: ",sanitize(cell1),
+            " & ",cell2,"\\\\\n",sep="")
         cat("\\hline\n")
       }
       cat("\\end{tabular}}\n")
@@ -191,7 +194,7 @@ if (length(args)==0) {
   
   ## copying template file to temporary directory 
   file.copy(file.path(dir.template,"feedback.tex"),
-            file.path(tmpdir,texName))
+            file.path(tmpdir,texName),overwrite=TRUE)
   ## running pdflatex                                                     
   wd.orig <- getwd()                                                      
   setwd(tmpdir)                                                           
@@ -199,7 +202,7 @@ if (length(args)==0) {
   setwd(wd.orig)
   ## moving resulting pdf to user's dir and
   ## deleting temporary directory
-  file.copy(file.path(tmpdir,pdfName),userDir)                            
+  file.copy(file.path(tmpdir,pdfName),userDir,overwrite=TRUE)                            
   unlink(tmpdir,recursive=TRUE)
   ## printing name of xml file to screen
   cat(pdfName)

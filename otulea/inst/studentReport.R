@@ -157,31 +157,69 @@ if (nargs==0) {
       ## if the first argument is missing then we enter into demo mode
       cat(paste(paste(template_default,collapse="\n"),"\n"))
     } else {
-      ## this one goes to the title row
-      cat("{\\tiny\\textline[t]{",user,"}{\\normalsize ",subject,"}{",level,"}}\n",sep="")
-      cat("\\hrule\n")
-      cat("\\vspace{2em}\n")
       ## number of rows
       rownum <- dim(x)[1]
-      rownum <- 0 # for testing only
+      ##rownum <- 0 # for testing only
       if (rownum > 0) {
+        ## this one goes to the title row
+        cat("\\feedback{\n")
+        cat("{\\tiny\\textline[t]{",user,"}{\\normalsize ",subject,"}{",level,"}}\n",sep="")
+        cat("\\hrule\n")
+        cat("\\vspace{1em}\n")
+        ##x$example[c(2,3,5)] <- "Let's pretend we have some content here" # for testing only
         x.sub <- cbind(graphics=paste("\\scalebox{0.8}{",graphics.command,"}",sep=""),x[,c("userdescription","example")])
-        ## setting font size to small
-        cat("{\\small\n")
-        cat("\\begin{tabular}{|m{80pt}|m{300pt}|m{300pt}|}\n")
-        cat("\\multicolumn{2}{m{380pt}}{\\tiny ",modes.string[[mode]],"} & \\multicolumn{1}{l}{\\tiny Beispiel}\\\\  \\rowcolor{",subject,"}\n",sep="")
+        cellcolor <- paste("\\cellcolor{",subject,"}",sep="")
+        ## in the following loop we calculate which table borders should be drawn in the 3rd column
+        ## initial hhline value
+        ISEMPTY <- sapply(x$example,function(x) nchar(x)==0)
+        hhline <- paste("\\hhline{",ifelse(ISEMPTY[1],"--~","---"),"}",sep="")
+        align <- c()
         for (i in 1:rownum) {
-          cat("\\hline\n",as.character(x.sub[i,"graphics"])," & ",as.character(x.sub[i,"userdescription"])," & ",as.character(x.sub[i,"example"])," \\\\\n",sep="") 
-          cat("\\rowcolor{",subject,"} \\hline",sep="")
+          ## hhline
+          hhline[i+1] <- hhline[i]
+          isempty <- ISEMPTY[i]
+          isempty.next <- TRUE
+          if (i<rownum) isempty.next <- ISEMPTY[i+1]
+          firsttwo <- ifelse(i<rownum,"==","--")
+          if (isempty) {
+            if (isempty.next) {
+              third <- "~"
+            } else {
+              third <- "-"
+            }
+            cline <- ""
+            align[i] <- "{m{300pt}}{"
+          } else {
+            if (isempty.next) {
+              third <- "~"
+              cline <- "\\cline{3-3}"
+            } else {
+              third <- "="
+              cline <- ""
+            }
+            align[i] <- paste("{m{300pt}|}{",cellcolor,sep="")
+          }
+          hhline[i+1] <- paste(cline,"\\hhline{",firsttwo,third,"}",sep="")
+        }
+        ## we don't print "Beispiel" when there is nothing to print
+        beispiel <- ifelse(all(ISEMPTY),"","Beispiel")
+        cat("{\\small\n") # setting font size to small
+        cat("\\begin{tabular}{|m{80pt}|m{300pt}|m{300pt}|}\n")
+        cat("\\multicolumn{2}{m{380pt}}{\\tiny ",modes.string[[mode]],"} & \\multicolumn{1}{l}{\\tiny ",beispiel,"}\\\\",sep="")
+        cat(hhline[1],"\n")    
+        for (i in 1:rownum) {
+          cat(cellcolor,as.character(x.sub[i,"graphics"])," & ",cellcolor," ",as.character(x.sub[i,"userdescription"])," & \\multicolumn{1}",align[i]," ",as.character(x.sub[i,"example"]),"}\\\\",sep="")
+        cat(hhline[i+1],"\n")
         }
         cat("\n\\end{tabular}\n")
-        cat("}\n")
+        cat("}}\n")
       } else {
         if (mode=="A2"){
-          ##level <- "Schwer" # for testing only
-          cat(welldone[[level]],"\n")
-        } else {
-          cat("Empty list.\n")
+          cat("\\feedback{\n") 
+          cat("{\\tiny\\textline[t]{",user,"}{\\normalsize ",subject,"}{",level,"}}\n",sep="") # slightly redundant
+          cat("\\hrule\n") # slightly redundant
+          cat("\\vspace{1em}\n") # sligthly redundant
+          cat(welldone[[level]],"}\n",sep="")
         }
       }
     }
@@ -223,7 +261,7 @@ if (nargs==0) {
   threshold <- as.numeric(args[2])
   threshold <- 50 # testing only
   maxListings <- as.integer(args[3])
-  maxListings <- 3 # testing only
+  maxListings <- 5 # testing only
   debug <- FALSE
   if (nargs > 3) debug <- as.character(args[4])
   ##maxListings <- 3 ## maximal number of results listed
@@ -250,17 +288,16 @@ if (nargs==0) {
   success <- dir.create(tmpdir)
   if (debug) cat(success,tmpdir,"\n")
   ##mode <- "A1" # for testing only
+  sink(file.path(tmpdir,"modes.tex"))
   for (mode in paste("A",1:2,sep="")) {
     row.of.mode <- match(mode,modes)
     ##mode.string <- modes.string[row.of.mode]
     graphics.command <- paste("\\",graphics[row.of.mode],sep="")
-    texIncludePath <- file.path(tmpdir,mode)
-    sink(texIncludePath)
     x <- tables_pro_mode[[mode]]
     feedback2tex(tables_pro_mode[[mode]],subject,mode,
                  graphics.command)
-    sink()
   }
+  sink()
   #t3 <- Sys.time()
   ## copying template file to temporary directory 
   file.copy(file.path(dir.template,"userfeedback.tex"),

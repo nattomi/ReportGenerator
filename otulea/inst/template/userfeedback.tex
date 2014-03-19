@@ -8,6 +8,7 @@
 \usepackage{graphicx}
 \usepackage{array}
 \usepackage{booktabs}
+\usepackage{hhline}
 %\usepackage{tikz}
 %\usepackage{pstricks}
 
@@ -32,15 +33,17 @@
 
 % for creating a particular type of feedback
 \newcommand{\feedback}[1]{
+\begin{slide}
 \pagecolor{bg}
 
 \begin{center}
 %{\Huge \textbf{\underline{#1}}}
 %\vspace{2em}
-\input{#1}
+#1
 \end{center}
 \null
 \vfill
+\end{slide}
 }
 
 % for drawing user information
@@ -52,13 +55,7 @@
 
 \begin{document}
 \setlength{\arrayrulewidth}{.08em}
-% mode A1
-\begin{slide}
-\feedback{A1} 
-\end{slide}
-% mode A2
-\begin{slide}
-\feedback{A2}
-\end{slide}
+
+\input{modes}
 
 \end{document}
