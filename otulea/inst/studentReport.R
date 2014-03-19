@@ -1,13 +1,14 @@
 #!/usr/bin/Rscript
 ## SETTINGS
 modes <- c("A1","A2")
-modes.string <- c("Das kann ich!","Das kann ich bald wenn ich noch ein wenig üben.")
+modes.string <- c(A1="Das kann ich!",A2="Das kann ich bald wenn ich noch ein wenig übe.")
 graphics <- c("haken","leiter")
 graphics.files <- c("haken.pdf", "leiter.pdf")
-
-
+welldone <- c(Einfach="Sehr gut, Sie haben alle Aufgaben gelöst! Machen Sie weiter mit dem mittleren Niveau!",
+              Mittel="Sehr gut, Sie haben alle Aufgaben gelöst! Machen Sie weiter mit dem schwierigen Niveau!",
+              Schwer=" Sehr gut, Sie haben alle Aufgaben gelöst!")
 args <- commandArgs(TRUE)
-##args <- "KFCG1"
+args <- "KFCG1"
 nargs <- length(args)
 if (nargs==0) {
   cat("Usage: studentReport.R user threshold maxListings\n")
@@ -150,26 +151,25 @@ if (nargs==0) {
   ## PROVIDED THAT WE HAVE A DATA.FRAME AT LEAST WITH COLUMNS
   ## "userdescription" AND "example" THIS FUNCTION CREATES THE LATEX
   ## SOURCE NEEDED FOR INCLUSION IN THE MAIN USER FEEDBACK FILE
-  feedback2tex <- function(x,subject, mode.string, graphics.command) {
+  ##x <- tables_pro_mode[["A1"]] # for testing only
+  feedback2tex <- function(x,subject, mode, graphics.command) {
     if (missing(x)) {
       ## if the first argument is missing then we enter into demo mode
       cat(paste(paste(template_default,collapse="\n"),"\n"))
     } else {
-      ## declare cellcolor - FIXME: should it be here or in the master file?
-      ##cat("\\definecolor{cellcol}{HTML}{",toupper(cellcol),"}\n",sep="")
+      ## this one goes to the title row
+      cat("{\\tiny\\textline[t]{",user,"}{\\normalsize ",subject,"}{",level,"}}\n",sep="")
+      cat("\\hrule\n")
+      cat("\\vspace{2em}\n")
       ## number of rows
       rownum <- dim(x)[1]
+      rownum <- 0 # for testing only
       if (rownum > 0) {
         x.sub <- cbind(graphics=paste("\\scalebox{0.8}{",graphics.command,"}",sep=""),x[,c("userdescription","example")])
-        ## this one goes to the title row
-        cat("{\\tiny\\textline[t]{",user,"}{\\normalsize ",subject,"}{",level,"}}\n",sep="")
-        cat("\\hrule\n")
-        ##cat("{\\Huge \\textbf{\\underline{",subject,"}}}\\\\\n",sep="")
-        cat("\\vspace{2em}\n")
         ## setting font size to small
         cat("{\\small\n")
         cat("\\begin{tabular}{|m{80pt}|m{300pt}|m{300pt}|}\n")
-        cat("\\multicolumn{2}{m{380pt}}{\\tiny ",mode.string,"} & \\multicolumn{1}{l}{\\tiny Beispiel}\\\\  \\rowcolor{",subject,"}\n",sep="")
+        cat("\\multicolumn{2}{m{380pt}}{\\tiny ",modes.string[[mode]],"} & \\multicolumn{1}{l}{\\tiny Beispiel}\\\\  \\rowcolor{",subject,"}\n",sep="")
         for (i in 1:rownum) {
           cat("\\hline\n",as.character(x.sub[i,"graphics"])," & ",as.character(x.sub[i,"userdescription"])," & ",as.character(x.sub[i,"example"])," \\\\\n",sep="") 
           cat("\\rowcolor{",subject,"} \\hline",sep="")
@@ -177,7 +177,12 @@ if (nargs==0) {
         cat("\n\\end{tabular}\n")
         cat("}\n")
       } else {
-        cat("Nothing to display\n")
+        if (mode=="A2"){
+          ##level <- "Schwer" # for testing only
+          cat(welldone[[level]],"\n")
+        } else {
+          cat("Empty list.\n")
+        }
       }
     }
   }
@@ -244,15 +249,15 @@ if (nargs==0) {
   tmpdir <- file.path(userDir,baseName)
   success <- dir.create(tmpdir)
   if (debug) cat(success,tmpdir,"\n")
-  mode <- "A1"
+  ##mode <- "A1" # for testing only
   for (mode in paste("A",1:2,sep="")) {
     row.of.mode <- match(mode,modes)
-    mode.string <- modes.string[row.of.mode]
+    ##mode.string <- modes.string[row.of.mode]
     graphics.command <- paste("\\",graphics[row.of.mode],sep="")
     texIncludePath <- file.path(tmpdir,mode)
     sink(texIncludePath)
     x <- tables_pro_mode[[mode]]
-    feedback2tex(tables_pro_mode[[mode]],subject,mode.string,
+    feedback2tex(tables_pro_mode[[mode]],subject,mode,
                  graphics.command)
     sink()
   }
@@ -272,7 +277,7 @@ if (nargs==0) {
   ## cleaning up
   #if (debug) cat(file.path())
   file.copy(file.path(tmpdir,pdfName),userDir)
-  unlink(tmpdir,recursive=TRUE)
+  ##unlink(tmpdir,recursive=TRUE)
   ## dumping xml output
   sink(file.path(userDir,xmlName))
   alphalevels2xml(tables_pro_mode,file=pdfName,
