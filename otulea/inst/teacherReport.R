@@ -171,13 +171,13 @@ if (length(args)==0) {
       emptytab <- length(xy)==0
       cat("\\colorbox{",x,"-",catname,"}{\\begin{minipage}{.25\\textwidth}\n",sep="")
       cat("\\hasab{")
-      if (emptytab) cat("\\vspace{0.125em}") # adjustment factor for empty tables
+      ##if (emptytab) cat("\\vspace{0.125em}") # adjustment factor for empty tables
       cat("{\\renewcommand{\\arraystretch}{1.4}\n") # adjustment factor for vertical padding of a table
-      cat("\\begin{tabular}{@{\\hspace{.2em}}p{1em}@{\\hspace{.1em}}|@{\\hspace{.2em}}p{14.4em}@{\\hspace{.2em}}|@{\\hspace{.2em}}p{9.6em}@{\\hspace{.2em}}}\n")
+      cat("\\begin{tabular}{@{\\hspace{.2em}}p{1em}@{\\hspace{.1em}}|@{\\hspace{.2em}}p{14.3em}@{\\hspace{.2em}}|@{\\hspace{.2em}}p{9.6em}@{\\hspace{.2em}}}\n")
       cat("\\hline\n")
       cat("\\multicolumn{3}{c}{\\textbf{",x,"}}\\\\\n",sep="")
       cat("\\hline\n")
-      cat("\\multicolumn{2}{@{\\hspace{1.5em}}p{12em}|@{\\hspace{.2em}}}{\\textbf{Kannbeschreibung}} & \\textbf{Aufgabe} \\\\\n")
+      cat("\\multicolumn{2}{@{\\hspace{1.5em}}p{10em}|@{\\hspace{.2em}}}{\\textbf{Kannbeschreibung}} & \\textbf{Aufgabe} \\\\\n")
       cat("\\hline\n")
 
       ##item <- names(xy)[1] # for testing

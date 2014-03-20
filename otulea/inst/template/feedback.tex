@@ -26,7 +26,9 @@
 \definecolor{Rechnen-solved}{RGB}{248,230,174}
 \definecolor{Rechnen-partly}{RGB}{230,188,125}
 \definecolor{Rechnen-notsolved}{RGB}{180,136,86}
-\definecolor{frame}{RGB}{185,186,150}
+\definecolor{frame}{RGB}{180,171,136}
+
+%frame light brown	212	209	179	
 
 \newcommand{\hasab}[1]{% for being
   \vbox to .97\textheight{
@@ -42,7 +44,7 @@
 \begin{document}
 \pagenumbering{gobble}
 \setlength{\fboxsep}{0pt}%
-
+%\setlength\extrarowheight{2em}
 % First page: guidelines
 \newgeometry{left=2.5cm,right=2cm,top=1.5cm,bottom=2cm}
 \section*{Erläuterungen zum Report}
@@ -93,6 +95,7 @@ Die Häkchen (\checkmark) sind den Aufgaben zugeordnet. Ein Häkchen zeigt an, o
 \restoregeometry
 
 % main content: report for solved, partially solved and not solved
+\pagecolor{frame}
 \input{solved}
 \newpage
 \input{partly}
