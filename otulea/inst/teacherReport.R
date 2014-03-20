@@ -147,7 +147,7 @@ if (length(args)==0) {
       tasks
     })
   })
-  layer2$Schreiben
+  layer2$Sprache$solved
   ## group alphalevels by category
   layer3 <- lapply(layer2,function(x) lapply(c(solved=10,partly=5,notsolved=0),function(i) x[sapply(x,function(x) attributes(x)$ctg==i)]))
   systime <- Sys.time()
@@ -167,14 +167,19 @@ if (length(args)==0) {
     cat("\\textline[t]{",user,"}{",y,"}{Datum: ",format(systime,format="%d.%m.%Y"),"}\n",sep="")
     cat("{\\scriptsize\\noindent")
     for (x in X) {
+      xy <- layer3[[x]][[catname]]
+      emptytab <- length(xy)==0
       cat("\\colorbox{",x,"-",catname,"}{\\begin{minipage}{.25\\textwidth}\n",sep="")
-      cat("\\hasab{\\begin{tabular}{@{\\hspace{.2em}}p{1em}@{\\hspace{.1em}}|@{\\hspace{.4em}}p{14em}@{\\hspace{.4em}}|@{\\hspace{.4em}}p{9.2em}@{\\hspace{.4em}}}\n")
+      cat("\\hasab{")
+      if (emptytab) cat("\\vspace{0.125em}") # adjustment factor for empty tables
+      cat("{\\renewcommand{\\arraystretch}{1.4}\n") # adjustment factor for vertical padding of a table
+      cat("\\begin{tabular}{@{\\hspace{.2em}}p{1em}@{\\hspace{.1em}}|@{\\hspace{.2em}}p{14.4em}@{\\hspace{.2em}}|@{\\hspace{.2em}}p{9.6em}@{\\hspace{.2em}}}\n")
       cat("\\hline\n")
       cat("\\multicolumn{3}{c}{\\textbf{",x,"}}\\\\\n",sep="")
       cat("\\hline\n")
-      cat("\\multicolumn{2}{@{\\hspace{.4em}}l|@{\\hspace{.4em}}}{\\textbf{Kannbeschreibung}} & \\textbf{Aufgabe} \\\\\n")
+      cat("\\multicolumn{2}{@{\\hspace{1.5em}}p{12em}|@{\\hspace{.2em}}}{\\textbf{Kannbeschreibung}} & \\textbf{Aufgabe} \\\\\n")
       cat("\\hline\n")
-      xy <- layer3[[x]][[catname]]
+
       ##item <- names(xy)[1] # for testing
       for (item in names(xy)) {
         i.alphaID <- match(item,alphalist.df$alphaID)
@@ -194,7 +199,12 @@ if (length(args)==0) {
             " & ",cell2,"\\\\\n",sep="")
         cat("\\hline\n")
       }
-      cat("\\end{tabular}}\n")
+      if (emptytab) {
+        cat("\\multicolumn{2}{@{}p{16.1em}@{}}{\\quad} & \\multicolumn{1}{@{}p{10em}@{}}{\\quad} \\\\\n")
+      }
+      cat("\\end{tabular}}}\n")
+      ##if (emptytab) cat("}")
+      ##cat("\n")
       cat("\\end{minipage}}%\n")
     }
     cat("}\n")
