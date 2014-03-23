@@ -7,8 +7,10 @@ graphics.files <- c("haken.pdf", "leiter.pdf")
 welldone <- c(Einfach="Sehr gut, Sie haben alle Aufgaben gelöst! Machen Sie weiter mit dem mittleren Niveau!",
               Mittel="Sehr gut, Sie haben alle Aufgaben gelöst! Machen Sie weiter mit dem schwierigen Niveau!",
               Schwer=" Sehr gut, Sie haben alle Aufgaben gelöst!")
+testing <- TRUE
+
 args <- commandArgs(TRUE)
-args <- "RX5AE"
+args <- "CFDRY"
 nargs <- length(args)
 if (nargs==0) {
   cat("Usage: studentReport.R user threshold maxListings\n")
@@ -113,6 +115,7 @@ if (nargs==0) {
     markings <- lapply(testresults,getMarkings)
     lastmarkings <- markings[[1]]
     ##lastmarkings <- getMarkings(testresults[[2]]) # for testing
+    ##lastmarkings
     ## Derivation of results
     ## getting alphaID-s from the alphalist data frame
     alphaIDs <- sort(alphalist.df$alphaID)
@@ -124,8 +127,12 @@ if (nargs==0) {
     alphas.above <- alphas.tested[above]
     ## for A1 (Das kann ich) I only need to do an ordering and then filter according to maxListings
     ##ind.above <- alphaIDs %in% alphas.above
-    df <- t(sapply(strsplit(alphas.above,"\\."),function(x) as.integer(x)))
-    alphas.A1 <- alphas.above[order(df[,1],df[,2],df[,3],df[,4],decreasing=TRUE)]
+    if (length(alphas.above)>0) {
+      df <- t(sapply(strsplit(alphas.above,"\\."),function(x) as.integer(x)))
+      alphas.A1 <- alphas.above[order(df[,1],df[,2],df[,3],df[,4],decreasing=TRUE)]
+    } else {
+      alphas.A1 <- alphas.above
+    }
     ## for A2 (Das kann ich bald wenn ich noch ein wenig üben) I order by item, alphalevel. Take only the alphalevel and only those values which are not duplicates !!!FIXME!!! I should rewrite this with thersholds
     wronganswers <- lastmarkings[lastmarkings$mark==0,1:2]
     wrong.item <- as.character(wronganswers$itemnumber)
@@ -263,32 +270,30 @@ if (nargs==0) {
   user <- as.character(args[1])
   ##user <- "6CKBT" ## user id as character string
   threshold <- as.numeric(args[2])
-  threshold <- 100 # testing only
+  if (testing) threshold <- 100 # testing only
   maxListings <- as.integer(args[3])
-  maxListings <- 5 # testing only
+  if (testing) maxListings <- 5 # testing only
   debug <- FALSE
   if (nargs > 3) debug <- as.character(args[4])
   ##maxListings <- 3 ## maximal number of results listed
   alphalist.df <- alphalist2df(alphalist) # this one just converts the alphalist xml to a df
   userDir <- file.path(usersDir, user) # the user's folder
   ## student report generation
-  testResults(userDir)[[1]]
   alphalevels_pro_mode <- getAlphalevels(userDir,threshold,maxListings,alphalist.df) ## this one just reports corresponding alphalevels for each eval mode
   subject <- attr(alphalevels_pro_mode,"subject")
   level <- attr(alphalevels_pro_mode,"level")
-  ##cellcolor <- as.character(cellcolors$color[match(subject,cellcolors$subject)]) # probably I can replace it
   tables_pro_mode <- uncompress(alphalevels_pro_mode,alphalist.df,c("userdescription","example","alphaID")) ## does a lookup in alphalist df and reports tabular information
   systime <- Sys.time()
   baseName <- paste(user,format(systime,format="%Y%m%d_%H_%M_%S"),sep="_")
   baseName <- paste(baseName,"result",sep="_")
-  baseName <- "baseName" # for testing only
+  if (testing) baseName <- "baseName" # for testing only
   texName <- paste(baseName,"tex",sep=".")
   pdfName <- paste(baseName,"pdf",sep=".")
   xmlName <- paste(baseName,"xml",sep=".")
   if (debug) cat("XML output created\n")
   #t2 <- Sys.time()
   ## creating tex files
-  userDir <- "/tmp" # for testing only
+  if (testing) userDir <- "/tmp" # for testing only
   tmpdir <- file.path(userDir,baseName)
   success <- dir.create(tmpdir)
   if (debug) cat(success,tmpdir,"\n")
@@ -319,7 +324,7 @@ if (nargs==0) {
   ## cleaning up
   #if (debug) cat(file.path())
   file.copy(file.path(tmpdir,pdfName),userDir)
-  ##unlink(tmpdir,recursive=TRUE)
+  if (!tesing) unlink(tmpdir,recursive=TRUE)
   ## dumping xml output
   sink(file.path(userDir,xmlName))
   alphalevels2xml(tables_pro_mode,file=pdfName,
