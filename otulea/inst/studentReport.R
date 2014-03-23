@@ -67,7 +67,7 @@ if (nargs==0) {
   ## getting testresults
   testResults <- function(userDir,last=FALSE) {
     ## location of global user file
-    guf <- file.path(userDir,paste(user,"xml",sep=".")) ## later on we rewrite this with system.file
+    guf <- file.path(userDir,paste(user,"xml",sep=".")) # this one here can imply a risky behaviour, becuase 'user' is not on the argument list. It works however in the present context
     ## tests taken by the user (returned as an XMLNodeSet)
     tests <- list.tests(guf)
     ## apply 'last' filter if requested
@@ -248,7 +248,7 @@ if (nargs==0) {
         cat('>\n')
         r <- 1
         for (r in 1:nr) {
-          cat(TAB,TAB,'<alphanode alphaID="',dat[r,"alphaID"],'" userdescription="',dat[r,"userdescription"],'" example="',dat[r,"example"],'">\n',sep="")
+          cat(TAB,TAB,'<alphanode alphaID="',dat[r,"alphaID"],'" userdescription="',dat[r,"userdescription"],'" example="',dat[r,"example"],'"/>\n',sep="")
         }
         cat(TAB,'</eval>\n',sep="")   
       } else cat('/>\n')
