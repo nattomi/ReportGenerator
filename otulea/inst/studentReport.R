@@ -8,7 +8,7 @@ welldone <- c(Einfach="Sehr gut, Sie haben alle Aufgaben gelöst! Machen Sie wei
               Mittel="Sehr gut, Sie haben alle Aufgaben gelöst! Machen Sie weiter mit dem schwierigen Niveau!",
               Schwer=" Sehr gut, Sie haben alle Aufgaben gelöst!")
 args <- commandArgs(TRUE)
-args <- "KFCG1"
+args <- "RX5AE"
 nargs <- length(args)
 if (nargs==0) {
   cat("Usage: studentReport.R user threshold maxListings\n")
@@ -108,8 +108,11 @@ if (nargs==0) {
     ## getting testresults - FIXME: adding a mode argument?
     testresults <- testResults(userDir,TRUE)
     ## marking
+    ##testresults <- testResults(userDir) # for testing!
+    ##testreults <- testresults[1]
     markings <- lapply(testresults,getMarkings)
     lastmarkings <- markings[[1]]
+    ##lastmarkings <- getMarkings(testresults[[2]]) # for testing
     ## Derivation of results
     ## getting alphaID-s from the alphalist data frame
     alphaIDs <- sort(alphalist.df$alphaID)
@@ -120,22 +123,23 @@ if (nargs==0) {
     above <- thresholds >= threshold/100
     alphas.above <- alphas.tested[above]
     ## for A1 (Das kann ich) I only need to do an ordering and then filter according to maxListings
-    ind.above <- alphaIDs %in% alphas.above
-    alphas.A1 <- sort(alphas.above,decreasing=TRUE)
+    ##ind.above <- alphaIDs %in% alphas.above
+    df <- t(sapply(strsplit(alphas.above,"\\."),function(x) as.integer(x)))
+    alphas.A1 <- alphas.above[order(df[,1],df[,2],df[,3],df[,4],decreasing=TRUE)]
     ## for A2 (Das kann ich bald wenn ich noch ein wenig üben) I order by item, alphalevel. Take only the alphalevel and only those values which are not duplicates !!!FIXME!!! I should rewrite this with thersholds
     wronganswers <- lastmarkings[lastmarkings$mark==0,1:2]
     wrong.item <- as.character(wronganswers$itemnumber)
     wrong.alpha <- as.character(wronganswers$alphalevel)
-    ind.order <- order(wrong.item,wrong.alpha,decreasing=TRUE)
+    ind.order <- order(wrong.item,wrong.alpha,decreasing=FALSE)
     highest.alpha <- wrong.alpha[ind.order]
     alphas.A2 <- highest.alpha[!duplicated(highest.alpha)]
     ## result as list
     alphas <- list(A1=alphas.A1,A2=alphas.A2)
     ## limit the number of results
     alphas.limited <- lapply(alphas,function(x) head(x,maxListings))
+    alphas.limited$A2 <- head(alphas.limited$A2,2) # that's a patch, we need only 2 values
     ## passing 'subject' and 'level' as attribute
     attrs <- lapply(testresults,attributes)[[1]]
-    attrs
     attr(alphas.limited,"subject") <- attrs$attrs[["subject.string"]]
     attr(alphas.limited,"level") <- attrs$attrs[["level.string"]]
     alphas.limited
@@ -259,7 +263,7 @@ if (nargs==0) {
   user <- as.character(args[1])
   ##user <- "6CKBT" ## user id as character string
   threshold <- as.numeric(args[2])
-  threshold <- 50 # testing only
+  threshold <- 100 # testing only
   maxListings <- as.integer(args[3])
   maxListings <- 5 # testing only
   debug <- FALSE
@@ -268,6 +272,7 @@ if (nargs==0) {
   alphalist.df <- alphalist2df(alphalist) # this one just converts the alphalist xml to a df
   userDir <- file.path(usersDir, user) # the user's folder
   ## student report generation
+  testResults(userDir)[[1]]
   alphalevels_pro_mode <- getAlphalevels(userDir,threshold,maxListings,alphalist.df) ## this one just reports corresponding alphalevels for each eval mode
   subject <- attr(alphalevels_pro_mode,"subject")
   level <- attr(alphalevels_pro_mode,"level")
