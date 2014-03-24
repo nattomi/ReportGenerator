@@ -103,12 +103,13 @@ if (length(args)==0) {
     colnames(b) <- names(a)
     cbind(b,x)
   })
-  ##layer0
   layer1 <- do.call("rbind",layer0)[,c(c("timestamp.string","subject.string","level.string","itemnumber","alphalevel","mark","task"))]
+  ## creating a frequency table for the abilities
+  abis <- do.call("c",tapply(as.character(layer1$alphalevel),as.character(layer1$timestamp.string),function(x) levels(as.factor(x))))
+  abis.freq <- tapply(abis,as.factor(abis),length)
   ## Layer 2: sort by subject,alphalevel,itemnumber, then report last 2 marks for each itemnumber
   bysubject <- by(layer1[,c(1,7,4,5,6)],as.character(layer1$subject.string),function(x) x)
   ##head(bysubject$Lesen)
-  ##bysubject
   layer2.list <- lapply(bysubject,function(x) { # sorts elements by subject
     y <- by(x[,c(1,2,3,5)],as.character(x$alphalevel),function(x) x) # sorts elements belonging to a subject by ability description (alphalevel)
     lapply(y,function(x) { # calculating last two marks 
@@ -125,7 +126,7 @@ if (length(args)==0) {
       ans
     })
   })
-  ##layer2.list$Sprache
+  #layer2.list$Sprache
   layer2 <- lapply(layer2.list,function(z) { # calculating overall tendency, category and checkmark for each alphalevel
     lapply(z,function(y) {
       ## calculating associated tasks and checkmarks
@@ -151,6 +152,7 @@ if (length(args)==0) {
   ##layer2$Sprache
   ## group alphalevels by category
   layer3 <- lapply(layer2,function(x) lapply(c(solved=10,partly=5,notsolved=0),function(i) x[sapply(x,function(x) attributes(x)$ctg==i)]))
+  ##layer3
   systime <- Sys.time()
   baseName <- paste(user,format(systime,format="%Y%m%d_%H_%M_%S"),sep="_")
   baseName <- "systime" # !!! TESTING !!!
@@ -207,7 +209,7 @@ if (length(args)==0) {
           tend <- ifelse(tend.int > 0,"\\arrowup\\quad",
                          ifelse(tend.int==0,"\\arrowright\\quad","\\arrowdown\\quad"))
         }
-        testcount <- 3 # !!! TESTING !!!
+        testcount <- abis.freq[item] # !!! TESTING !!!
         cat("\\multicolumn{2}{l}{\\small ",tend,item," (",testcount,")}\\\\\n",sep="")
         cat("\\begin{tabular}[t]{p{\\descwidth}}{\\small ",cell1,"}\\end{tabular} & \\begin{tabular}[t]{l}",paste(paste("{\\scriptsize",cell2,"}\\\\[-1ex]",sep=""),collapse=" "),"\\end{tabular}\\\\\n",sep="")
       } # for (item in names(xy))
