@@ -10,7 +10,7 @@ welldone <- c(Einfach="Sehr gut, Sie haben alle Aufgaben gelöst! Machen Sie wei
 testing <- TRUE
 
 args <- commandArgs(TRUE)
-if (testing) args <- "GA731"
+if (testing) args <- "W4KSE"
 nargs <- length(args)
 if (nargs==0) {
   cat("Usage: studentReport.R user threshold maxListings\n")
@@ -67,9 +67,7 @@ if (nargs==0) {
     test.df
   }
   ## getting testresults
-  testResults <- function(userDir,last=FALSE) {
-    ## location of global user file
-    guf <- file.path(userDir,paste(user,"xml",sep=".")) # this one here can imply a risky behaviour, becuase 'user' is not on the argument list. It works however in the present context
+  testResults <- function(userDir,guf,last=FALSE) {
     ## tests taken by the user (returned as an XMLNodeSet)
     tests <- list.tests(guf)
     ## apply 'last' filter if requested
@@ -78,47 +76,53 @@ if (nargs==0) {
     tests.df <- lapply(tests,test2df)
     testresults <- lapply(tests.df, function(x) {
       ans <- file.path(userDir,x$data)
-      attributes(ans) <- list(attrs=attributes(x)$attrs)
+      names(ans) <- x$iname
+      attributes(ans) <- c(attributes(ans),list(attrs=attributes(x)$attrs))
       ans})
     testresults
   }
   ## getting the marking sections of various testresult files
   ## and merge them into a data frame containing character strings
-  ##testresults <- testresults[[1]]
-  getMarkings <- function(testresults) {
-    markings <- lapply(testresults, function(x) {
+  getMarkings <- function(testresult) {
+    markings <- lapply(testresult, function(x) {
       x.parse <- xmlParse(x)
       x.marking <- getNodeSet(x.parse, "//marking")
       getNodeSet(x.marking[[1]],"//mark")
     })
-    markings.all <- do.call("c",markings)
-    markings.all2 <- lapply(markings.all,function(x) c(xmlAttrs(x)[c("itemnumber","alphalevel")],mark=xmlValue(x)))
-    markings.all3 <- lapply(markings.all2,function(x) {
-      m <- x[["mark"]]
-      if (m=="" | m=="failed") x[["mark"]] <- 0
-      x
-    })
-    markings.df <- as.data.frame(do.call("rbind",markings.all3))
-    attributes(markings.df)<- c(attributes(markings.df),attributes(testresults))
+    markings
+    markings.all <- c()
+    for (n in names(markings)) {
+      markings.n <- markings[[n]]
+      ans.n <- lapply(markings.n,function(x) c(task=n,xmlAttrs(x)[c("itemnumber","alphalevel")],mark=xmlValue(x)))
+      ans.n <- do.call("rbind",ans.n)
+      markings.all <- rbind(markings.all,ans.n)
+    }
+    markings.all
+    ## this is for sanitizing erronous data
+    marks <- markings.all[,"mark"]
+    markings.all[marks=="" | marks=="failed","mark"] <- 0
+    markings.df <- as.data.frame(markings.all)
+    attributes(markings.df)<- c(attributes(markings.df),attributes(testresult)$attrs)
     markings.df
   }
 
   ## alphalevels to be reported
-  getAlphalevels <- function(userDir, threshold, maxListings,
+  getAlphalevels <- function(userDir,guf,threshold, maxListings,
                              alphalist.df) {
     ## Information extraction
     ## getting testresults - FIXME: adding a mode argument?
-    testresults <- testResults(userDir,TRUE)
+    testresults <- testResults(userDir,guf,TRUE)
     ## marking
     ##testresults <- testResults(userDir) # for testing!
     ##testreults <- testresults[1]
     markings <- lapply(testresults,getMarkings)
     lastmarkings <- markings[[1]]
+    lastmarkings
     ##lastmarkings <- getMarkings(testresults[[2]]) # for testing
     ##lastmarkings
     ## Derivation of results
     ## getting alphaID-s from the alphalist data frame
-    alphaIDs <- sort(alphalist.df$alphaID)
+    alphaIDs <- sort(alphalist.df$alphaID) # this is most probably redundant
     ## all tested alphalevels
     thresholds <- tapply(as.integer(as.character(lastmarkings[,"mark"])),as.character(lastmarkings[,"alphalevel"]), mean)
     alphas.tested <- names(thresholds)
@@ -135,11 +139,11 @@ if (nargs==0) {
     } else {
       alphas.A1 <- alphas.above
     }
-    ## for A2 (Das kann ich bald wenn ich noch ein wenig üben) I order by item, alphalevel. Take only the alphalevel and only those values which are not duplicates !!!FIXME!!! I should rewrite this with thersholds
-    wronganswers <- lastmarkings[lastmarkings$mark==0,1:2]
-    wrong.item <- as.character(wronganswers$itemnumber)
+    ## for A2 (Das kann ich bald wenn ich noch ein wenig übe) I order by item, alphalevel. Take only the alphalevel and only those values which are not duplicates !!!FIXME!!! I should rewrite this with thersholds
+    wronganswers <- lastmarkings[lastmarkings$mark==0,c("task","alphalevel")]
+    wrong.task <- as.character(wronganswers$task)
     wrong.alpha <- as.character(wronganswers$alphalevel)
-    ind.order <- order(wrong.item,wrong.alpha,decreasing=FALSE)
+    ind.order <- order(wrong.task,wrong.alpha,decreasing=FALSE)
     highest.alpha <- wrong.alpha[ind.order]
     alphas.A2 <- highest.alpha[!duplicated(highest.alpha)]
     ## result as list
@@ -280,11 +284,14 @@ if (nargs==0) {
   ##maxListings <- 3 ## maximal number of results listed
   alphalist.df <- alphalist2df(alphalist) # this one just converts the alphalist xml to a df
   userDir <- file.path(usersDir, user) # the user's folder
+  guf <- file.path(userDir,paste(user,"xml",sep=".")) # global user file
   ## student report generation
   alphalevels_pro_mode <- getAlphalevels(userDir,threshold,maxListings,alphalist.df) ## this one just reports corresponding alphalevels for each eval mode
+  alphalevels_pro_mode
   subject <- attr(alphalevels_pro_mode,"subject")
   level <- attr(alphalevels_pro_mode,"level")
   tables_pro_mode <- uncompress(alphalevels_pro_mode,alphalist.df,c("userdescription","example","alphaID")) ## does a lookup in alphalist df and reports tabular information
+  tables_pro_mode
   systime <- Sys.time()
   baseName <- paste(user,format(systime,format="%Y%m%d_%H_%M_%S"),sep="_")
   baseName <- paste(baseName,"result",sep="_")
