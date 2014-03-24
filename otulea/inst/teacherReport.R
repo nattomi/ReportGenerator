@@ -7,7 +7,7 @@ Y <- c(solved="Kannbeschreibungen erfüllt",
 graphics.files <- c("arrow_grey_down.png", "logo.pdf", "arrow_grey_right.png", "arrow_grey_up.png", "dot_grey.png")
 
 args <- commandArgs(TRUE)
-args <- "KFCG1" # !!! TESTING !!!
+args <- "CWB8D" # !!! TESTING !!!
 if (length(args)==0) {
   cat("Usage: teacherReport.R user\n")
   cat("where\n")
@@ -44,14 +44,17 @@ if (length(args)==0) {
     ## getting the last test taken
     tests.df <- lapply(tests,test2df)
     testresults <- lapply(tests.df, function(x) {
-      ans <- file.path(userDir,x$data)
-      names(ans) <- x$iname
+      x.data <- x$data
+      ind <- nchar(x.data)> 0 # this one is needed for getting rid of empty data fields
+      ans <- file.path(userDir,x.data[ind])
+      names(ans) <- x$iname[ind]
       attributes(ans) <- c(attributes(ans),list(attrs=attributes(x)$attrs))
       ans})
     testresults
   }
   ## getting the marking sections of various testresult files
   ## and merge them into a data frame containing character strings
+  ##testresult <- testresults[[3]]
   getMarkings <- function(testresult) {
     markings <- lapply(testresult, function(x) {
       x.parse <- xmlParse(x)
@@ -66,8 +69,10 @@ if (length(args)==0) {
       markings.all <- rbind(markings.all,ans.n)
     }
     ## this is for sanitizing erronous data
-    marks <- markings.all[,"mark"]
-    markings.all[marks=="" | marks=="failed","mark"] <- 0
+    if (!is.null(markings.all)) {
+      marks <- markings.all[,"mark"]
+      markings.all[marks=="" | marks=="failed","mark"] <- 0
+    }
     markings.df <- as.data.frame(markings.all)
     attributes(markings.df)<- c(attributes(markings.df),attributes(testresult)$attrs)
     markings.df
@@ -95,7 +100,9 @@ if (length(args)==0) {
   userDir <- file.path(usersDir,user) # the user's folder
   guf <- file.path(userDir,paste(user,"xml",sep=".")) # global user file
   testresults <- testResults(userDir,guf)
+  testresults
   markings <- lapply(testresults,getMarkings)
+  markings <- markings[sapply(markings,nrow)>0] # some of them will be empty because of the mysterious data="" attribute
   layer0 <- lapply(markings,function(x) {
     rown <- nrow(x)
     a <- attributes(x)[c("timestamp.string","subject.string","level.string")]
@@ -149,10 +156,10 @@ if (length(args)==0) {
       tasks
     })
   })
-  ##layer2$Sprache
+  layer2$Sprache
   ## group alphalevels by category
   layer3 <- lapply(layer2,function(x) lapply(c(solved=10,partly=5,notsolved=0),function(i) x[sapply(x,function(x) attributes(x)$ctg==i)]))
-  ##layer3
+  length(layer3$Rechnen$solved)*3
   systime <- Sys.time()
   baseName <- paste(user,format(systime,format="%Y%m%d_%H_%M_%S"),sep="_")
   baseName <- "systime" # !!! TESTING !!!
