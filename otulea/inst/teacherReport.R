@@ -4,9 +4,10 @@ X <- c("Lesen","Schreiben","Sprache","Rechnen")
 Y <- c(solved="Kannbeschreibungen erfüllt",
        partly="Kannbeschreibungen teilweise erfüllt",
        notsolved="Kannbeschreibungen nicht erfüllt")
+graphics.files <- c("arrow_grey_down.png", "logo.pdf", "arrow_grey_right.png", "arrow_grey_up.png", "dot_grey.png")
 
 args <- commandArgs(TRUE)
-##args <- "KFCG1" # this my test user
+args <- "KFCG1" # !!! TESTING !!!
 if (length(args)==0) {
   cat("Usage: teacherReport.R user\n")
   cat("where\n")
@@ -102,12 +103,12 @@ if (length(args)==0) {
     colnames(b) <- names(a)
     cbind(b,x)
   })
-  layer0
+  ##layer0
   layer1 <- do.call("rbind",layer0)[,c(c("timestamp.string","subject.string","level.string","itemnumber","alphalevel","mark","task"))]
   ## Layer 2: sort by subject,alphalevel,itemnumber, then report last 2 marks for each itemnumber
   bysubject <- by(layer1[,c(1,7,4,5,6)],as.character(layer1$subject.string),function(x) x)
   ##head(bysubject$Lesen)
-  bysubject
+  ##bysubject
   layer2.list <- lapply(bysubject,function(x) { # sorts elements by subject
     y <- by(x[,c(1,2,3,5)],as.character(x$alphalevel),function(x) x) # sorts elements belonging to a subject by ability description (alphalevel)
     lapply(y,function(x) { # calculating last two marks 
@@ -124,7 +125,7 @@ if (length(args)==0) {
       ans
     })
   })
-  layer2.list$Sprache
+  ##layer2.list$Sprache
   layer2 <- lapply(layer2.list,function(z) { # calculating overall tendency, category and checkmark for each alphalevel
     lapply(z,function(y) {
       ## calculating associated tasks and checkmarks
@@ -147,73 +148,83 @@ if (length(args)==0) {
       tasks
     })
   })
-  layer2$Sprache$solved
+  ##layer2$Sprache
   ## group alphalevels by category
   layer3 <- lapply(layer2,function(x) lapply(c(solved=10,partly=5,notsolved=0),function(i) x[sapply(x,function(x) attributes(x)$ctg==i)]))
   systime <- Sys.time()
   baseName <- paste(user,format(systime,format="%Y%m%d_%H_%M_%S"),sep="_")
-  baseName <- "systime" # for testing only
+  baseName <- "systime" # !!! TESTING !!!
   baseName <- paste(baseName,"teacher",sep="_")
   pdfName <- paste(baseName,"pdf",sep=".")
   texName <- paste(baseName,"tex",sep=".")
-  userDir <- "/tmp" # for testing
+  userDir <- "/tmp" # !!! TESTING !!!
   tmpdir <- file.path(userDir,baseName)
   if (!file.exists(tmpdir)) dir.create(tmpdir) # just to make sure
   ## creating tex tabulars
   alphalist.df <- alphalist2df(alphalist)
-  for (y in Y) {
+  pagenum <- 0
+  ##y <- Y[1] # !!! TESTING !!!
+  for (y in Y) { # looping through categories, each goes to a separate page
     catname <- names(Y)[Y==y]
+    pagenum <- pagenum + 1
     sink(file.path(tmpdir,paste(catname,".tex",sep="")))
-    cat("\\textline[t]{",user,"}{",y,"}{Datum: ",format(systime,format="%d.%m.%Y"),"}\n",sep="")
-    cat("{\\scriptsize\\noindent")
-    for (x in X) {
+    cat("\\textline[t]{",toupper(y),"}{",pagenum,"}{",user,"}{",format(systime,format="%d.%m.%Y"),"} % printing header \n",sep="")
+    cat("\\noindent{\\centering%\n")
+    cat("% start of tikz graphics\n")
+    cat("\\begin{tikzpicture}[x=0.01\\textwidth, y=1em]\n")
+    ## background node
+    cat("\\node[anchor=north west, inner sep=0] at (0,0) {%\n")
+    cat("\\begin{tabular}{|wLwSwPwR|}\n")
+    cat("\\hline\n")
+    cat(paste(rep(paste("\\parbox[l][\\layoutheight][l]{",c("\\descwidth","\\taskwidth"),"}{\\quad}",sep=""),4),collapse=" & "),"\\\\\n")
+    cat("\\hline\n")
+    cat("\\end{tabular}\n")
+    cat("};\n")
+    ##x <- "Lesen" # !!! TESTING !!!
+    for (x in X) {# this inner loop creates the data nodes
+      x.upper <- toupper(x)
+      cat("\\node [anchor=north west,inner sep=0] at (\\pos",x,") {% ",x.upper,"\n",sep="")
+      cat("\\begin{tabular}{@{}l@{}@{}p{\\taskwidth}@{}}\n")
+      cat("\\multicolumn{2}{l}{\\cellcolor{",x,"}\\quad}\\\\[-1ex]\n",sep="")
+      cat("\\multicolumn{2}{l}{\\cellcolor{",x,"}\\large {\\color{",x,"-head}",x.upper,"}}\\\\[1.5ex]\n",sep="")
+      cat("\\begin{tabular}{p{\\descwidth}}\\cellcolor{",x,"}\\textcolor{head-small}{\\small Kannbeschreibung}\\\\[.5ex]\\end{tabular} & \\multicolumn{1}{c}{\\cellcolor{",x,"-light}\\textcolor{head-small}{\\small Aufgabe}}\\\\\n",sep="")
+      cat("\\begin{tabular}{l}\\quad\\end{tabular} & \\quad\\\\[-1ex]\n")
+      ## another inner loop will follow here
       xy <- layer3[[x]][[catname]]
-      emptytab <- length(xy)==0
-      cat("\\colorbox{",x,"-",catname,"}{\\begin{minipage}{.25\\textwidth}\n",sep="")
-      cat("\\hasab{")
-      ##if (emptytab) cat("\\vspace{0.125em}") # adjustment factor for empty tables
-      cat("{\\renewcommand{\\arraystretch}{1.4}\n") # adjustment factor for vertical padding of a table
-      cat("\\begin{tabular}{@{\\hspace{.2em}}p{1em}@{\\hspace{.1em}}|@{\\hspace{.2em}}p{14.3em}@{\\hspace{.2em}}|@{\\hspace{.2em}}p{9.6em}@{\\hspace{.2em}}}\n")
-      cat("\\hline\n")
-      cat("\\multicolumn{3}{c}{\\textbf{",x,"}}\\\\\n",sep="")
-      cat("\\hline\n")
-      cat("\\multicolumn{2}{@{\\hspace{1.5em}}p{10em}|@{\\hspace{.2em}}}{\\textbf{Kannbeschreibung}} & \\textbf{Aufgabe} \\\\\n")
-      cat("\\hline\n")
-
-      ##item <- names(xy)[1] # for testing
-      for (item in names(xy)) {
+      ##emptytab <- length(xy)==0 # that's a chunk from a former version
+      item <- names(xy)[1] # !!! TESTING !!!
+      for (item in names(xy)) { # looping through ability IDs
         i.alphaID <- match(item,alphalist.df$alphaID)
         tab <- xy[[item]]
         ctg <- attributes(tab)$ctg
         CN <- names(tab)
-        checkmarks <- sapply(tab,function(x) ifelse(x,"\\checkmark",""))
-        cell1 <- alphalist.df[i.alphaID,"description"]
-        cell2 <- paste(paste(gsub("_","\\\\textunderscore ",CN),checkmarks,sep=""),collapse=", ")
+        checkmarks <- sapply(tab,function(x) ifelse(x,"\\cm",""))
+        cell1 <- sanitize(alphalist.df[i.alphaID,"description"])
+        cell2 <- paste(gsub("_","\\\\textunderscore ",CN),checkmarks,sep="")
         tend.int <- attributes(tab)$tendency
-        tend <- "-"
+        tend <- "\\dotthorben\\quad"
         if (!is.na(tend.int)) {
-          tend <- ifelse(tend.int > 0,"$\\Uparrow$",
-                         ifelse(tend.int==0,"$\\Rightarrow$","$\\Downarrow$"))
+          tend <- ifelse(tend.int > 0,"\\arrowup\\quad",
+                         ifelse(tend.int==0,"\\arrowright\\quad","\\arrowdown\\quad"))
         }
-        cat(tend," & \\textbf{",item,"}: ",sanitize(cell1),
-            " & ",cell2,"\\\\\n",sep="")
-        cat("\\hline\n")
-      }
-      if (emptytab) {
-        cat("\\multicolumn{2}{@{}p{16.1em}@{}}{\\quad} & \\multicolumn{1}{@{}p{10em}@{}}{\\quad} \\\\\n")
-      }
-      cat("\\end{tabular}}}\n")
-      ##if (emptytab) cat("}")
-      ##cat("\n")
-      cat("\\end{minipage}}%\n")
-    }
-    cat("}\n")
+        testcount <- 3 # !!! TESTING !!!
+        cat("\\multicolumn{2}{l}{\\small ",tend,item," (",testcount,")}\\\\\n",sep="")
+        cat("\\begin{tabular}[t]{p{\\descwidth}}{\\small ",cell1,"}\\end{tabular} & \\begin{tabular}[t]{l}",paste(paste("{\\scriptsize",cell2,"}\\\\[-1ex]",sep=""),collapse=" "),"\\end{tabular}\\\\\n",sep="")
+      } # for (item in names(xy))
+      cat("\\end{tabular}%\n")
+      cat("};\n")
+    } # for (x in X)
+
+    cat("\\end{tikzpicture}}\n")
     sink()
-  } # for
+  } # for (y in Y)
   
   ## copying template file to temporary directory 
   file.copy(file.path(dir.template,"feedback.tex"),
             file.path(tmpdir,texName),overwrite=TRUE)
+  for (f in graphics.files) {
+    file.copy(file.path(dir.template,f),tmpdir,overwrite=TRUE)
+  }
   ## running pdflatex                                                     
   wd.orig <- getwd()                                                      
   setwd(tmpdir)                                                           
@@ -221,9 +232,8 @@ if (length(args)==0) {
   setwd(wd.orig)
   ## moving resulting pdf to user's dir and
   ## deleting temporary directory
-  file.copy(file.path(tmpdir,pdfName),userDir,overwrite=TRUE)                            
-  ##unlink(tmpdir,recursive=TRUE)
+  file.copy(file.path(tmpdir,pdfName),userDir,overwrite=TRUE)             
+  unlink(tmpdir,recursive=TRUE)
   ## printing name of xml file to screen
   cat(pdfName)
 } # else
-
