@@ -10,7 +10,7 @@ welldone <- c(Einfach="Sehr gut, Sie haben alle Aufgaben gelöst! Machen Sie wei
 testing <- TRUE
 
 args <- commandArgs(TRUE)
-if (testing) args <- "W4KSE"
+if (testing) args <- "1X9C4"
 nargs <- length(args)
 if (nargs==0) {
   cat("Usage: studentReport.R user threshold maxListings\n")
@@ -117,7 +117,7 @@ if (nargs==0) {
     ##testreults <- testresults[1]
     markings <- lapply(testresults,getMarkings)
     lastmarkings <- markings[[1]]
-    lastmarkings
+    ##lastmarkings
     ##lastmarkings <- getMarkings(testresults[[2]]) # for testing
     ##lastmarkings
     ## Derivation of results
@@ -141,9 +141,19 @@ if (nargs==0) {
     }
     ## for A2 (Das kann ich bald wenn ich noch ein wenig übe) I order by item, alphalevel. Take only the alphalevel and only those values which are not duplicates !!!FIXME!!! I should rewrite this with thersholds
     wronganswers <- lastmarkings[lastmarkings$mark==0,c("task","alphalevel")]
-    wrong.task <- as.character(wronganswers$task)
-    wrong.alpha <- as.character(wronganswers$alphalevel)
-    ind.order <- order(wrong.task,wrong.alpha,decreasing=FALSE)
+    ##wrong.task <- as.character(wronganswers$task)
+    wrong.alpha <- unique(as.character(wronganswers$alphalevel))
+    ##ind.order <- order(wrong.task,wrong.alpha,decreasing=FALSE)
+    if (length(wrong.alpha)>0) {
+      df <- t(sapply(strsplit(wrong.alpha,"\\."),function(x) as.integer(x)))
+      df
+      orderlist <- 1:ncol(df)
+      orderind <- do.call("order",c(lapply(orderlist,function(x) df[,x]),list(decreasing=FALSE)))
+      alphas.A2 <- wrong.alpha[orderind]
+    } else {
+      alphas.A2 <- wrong.alpha
+    }
+    
     highest.alpha <- wrong.alpha[ind.order]
     alphas.A2 <- highest.alpha[!duplicated(highest.alpha)]
     ## result as list
@@ -286,7 +296,7 @@ if (nargs==0) {
   userDir <- file.path(usersDir, user) # the user's folder
   guf <- file.path(userDir,paste(user,"xml",sep=".")) # global user file
   ## student report generation
-  alphalevels_pro_mode <- getAlphalevels(userDir,threshold,maxListings,alphalist.df) ## this one just reports corresponding alphalevels for each eval mode
+  alphalevels_pro_mode <- getAlphalevels(userDir,guf,threshold,maxListings,alphalist.df) ## this one just reports corresponding alphalevels for each eval mode
   alphalevels_pro_mode
   subject <- attr(alphalevels_pro_mode,"subject")
   level <- attr(alphalevels_pro_mode,"level")
