@@ -10,7 +10,7 @@ welldone <- c(Einfach="Sehr gut, Sie haben alle Aufgaben gelöst! Machen Sie wei
 testing <- TRUE
 
 args <- commandArgs(TRUE)
-args <- "CFDRY"
+if (testing) args <- "GA731"
 nargs <- length(args)
 if (nargs==0) {
   cat("Usage: studentReport.R user threshold maxListings\n")
@@ -129,7 +129,9 @@ if (nargs==0) {
     ##ind.above <- alphaIDs %in% alphas.above
     if (length(alphas.above)>0) {
       df <- t(sapply(strsplit(alphas.above,"\\."),function(x) as.integer(x)))
-      alphas.A1 <- alphas.above[order(df[,1],df[,2],df[,3],df[,4],decreasing=TRUE)]
+      orderlist <- 1:ncol(df)
+      orderind <- do.call("order",c(lapply(orderlist,function(x) df[,x]),list(decreasing=TRUE)))
+      alphas.A1 <- alphas.above[orderind]
     } else {
       alphas.A1 <- alphas.above
     }
@@ -324,7 +326,7 @@ if (nargs==0) {
   ## cleaning up
   #if (debug) cat(file.path())
   file.copy(file.path(tmpdir,pdfName),userDir)
-  if (!tesing) unlink(tmpdir,recursive=TRUE)
+  ul <- unlink(tmpdir,recursive=TRUE)
   ## dumping xml output
   sink(file.path(userDir,xmlName))
   alphalevels2xml(tables_pro_mode,file=pdfName,
