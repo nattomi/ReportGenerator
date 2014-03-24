@@ -11,7 +11,7 @@
 \usepackage{array}
 %\usepackage{booktabs}
 \usepackage{tikz}
-\usepackage{hyperref}
+%\usepackage{hyperref}
 %\usepackage{hhline}
 %\usepackage{verbatim}
 \usepackage{helvet}
@@ -80,16 +80,16 @@
 \pagenumbering{gobble}
 \setlength{\fboxsep}{0pt}% ez minek?
 % first page is the legend
-\newgeometry{left=2.5cm,right=2cm,top=1.5cm,bottom=2cm}
-\section*{Erläuterungen zum Report}
+\newgeometry{left=1cm,right=1cm,top=1.5cm,bottom=2cm}
+{\small\section*{Erläuterungen zum Report}
 \subsection*{Pfeile}
 Die Pfeile beziehen sich auf die Kannbeschreibungen (nicht die Aufgaben). Sie zeigen an, ob sich eine Person im Vergleich zum vorherigen Durchlauf in Bezug auf die geprüfte Dimension verbessert, nicht verändert oder verschlechtert hat.
 \vspace{.5em}\\
 \begin{tabular}{cl}
-$\Uparrow$ & Die/Der Teilnehmerin/Teilnehmer hat sich im Vergleich zum vorherigen Durchlauf verbessert.\\
-$\Rightarrow$ & Die/Der Teilnehmerin/Teilnehmer hat sich im Vergleich zum vorherigen Durchlauf weder verbessert noch verschlechtert.\\
-$\Downarrow$ & Die/Der Teilnehmerin/Teilnehmer hat sich im Vergleich zum vorherigen Durchlauf verschlechtert.\\
-kein Pfeil & Die Kannbeschreibung wurde zum ersten Mal geprüft. Es ist keine Angabe über die Literalitätsentwicklung möglich.\\
+\arrowup & Die/Der Teilnehmerin/Teilnehmer hat sich im Vergleich zum vorherigen Durchlauf verbessert.\\
+\arrowright & Die/Der Teilnehmerin/Teilnehmer hat sich im Vergleich zum vorherigen Durchlauf weder verbessert noch verschlechtert.\\
+\arrowdown & Die/Der Teilnehmerin/Teilnehmer hat sich im Vergleich zum vorherigen Durchlauf verschlechtert.\\
+\dotthorben & Die Kannbeschreibung wurde zum ersten Mal geprüft. Es ist keine Angabe über die Literalitätsentwicklung möglich.\\
 \end{tabular}
 \vspace{.5em}\\
 \noindent Beispiel: Eine Person hat in dem vorletzten Durchlauf eine Kannbeschreibung nicht erfüllt. In dem letzten Durchlauf erfüllte die Person die Kannbeschreibung. Sie hat sich also im Vergleich zum vorherigen Durchlauf verbessert. Der Pfeil bei der Kannbeschreibung zeigt nach oben.
@@ -106,25 +106,25 @@ Die Aufgabennummern setzen sich aus mehreren Zahlen zusammen, die unterschiedlic
   \node[ultra thick, fill=blue!10, draw=purple, ellipse, align=center, inner sep=0.1em] at (0,0) {\Huge2.};
 
   \node (auf) at (0,-1.5) {Level};
-  \draw[purple,thick] (1,0) -- (auf);
-  \node[ultra thick, fill=blue!10, draw=purple, ellipse, align=center, inner sep=0.1em] at (1,0) {\Huge2.};
+  \draw[purple,thick] (1.25,0) -- (auf);
+  \node[ultra thick, fill=blue!10, draw=purple, ellipse, align=center, inner sep=0.1em] at (1.25,0) {\Huge2.};
 
-  \node (teilauf) at (2,-2) {Aufgabennummer};
-  \draw[purple,thick] (2.55,-0.1) -- (teilauf);
-  \node[ultra thick, fill=blue!10, draw=purple, ellipse, align=center, inner sep=0.1em] at (2.55,-0.1) {\Huge01\textunderscore};
+  \node (teilauf) at (3,-2) {Aufgabennummer};
+  \draw[purple,thick] (3,-0.1) -- (teilauf);
+  \node[ultra thick, fill=blue!10, draw=purple, ellipse, align=center, inner sep=0.1em] at (3,-0.1) {\Huge01\textunderscore};
 
-  \node (item) at (5,-1.5) {Teilaufgabennummer};
-  \draw[purple,thick] (4.3,0) -- (item);
-  \node[ultra thick, fill=blue!10, draw=purple, ellipse, align=center, inner sep=0.1em] at (4.3,0) {\Huge III};
+  \node (item) at (6,-1.5) {Teilaufgabennummer};
+  \draw[purple,thick] (4.8,0) -- (item);
+  \node[ultra thick, fill=blue!10, draw=purple, ellipse, align=center, inner sep=0.1em] at (4.8,0) {\Huge III};
 \end{tikzpicture}
 
-\subsection*{Häkchen (\checkmark) hinter den Kannbeschreibungen:}
-Die Häkchen (\checkmark) sind den Aufgaben zugeordnet. Ein Häkchen zeigt an, ob in dieser Aufgabe die Kannbeschreibung, die in der gleichen Zeile angegeben ist, erfüllt wurde. Ist hinter der Aufgabe kein Häkchen vorhanden, wurde die Kannbeschreibung in dieser Aufgabe nicht erfüllt.
+\subsection*{Zahlen neben dem Namen der Dimension:}
+Die Zahl in Klammern neben dem Namen der Dimension gibt an, wie oft eine Person eine Dimension bearbeitet hat. Steht hinter einer Dimension Mathe z.B. „(3)“ bedeutet dies, die Dimension Mathe wurde 3x bearbeitet.
+\subsection*{Häkchen (\checkmark) hinter den Aufgabennummern:}
+Die Häkchen (\cm) sind den Aufgaben zugeordnet. Ein Häkchen zeigt an, ob in dieser Aufgabe die Kannbeschreibung, die in der gleichen Zeile angegeben ist, in der Aufgabe immer erfüllt wurde. Ist hinter der Aufgabe kein Häkchen vorhanden, wurde die Kannbeschreibung in dieser Aufgabe teilweise (z.B. 1x ja und 1x nein) oder nicht erfüllt. Eine Kannbeschreibung kann in mehreren Aufgaben geprüft werden. Daher werden oftmals hinter den einzelnen Kannbeschreibungen mehrere Aufgaben angezeigt. Es kann sein, dass eine Kannbeschreibung in einer Aufgabe erfüllt wurde (und somit hinter der Aufgabennummer ein Häkchen angezeigt wird) und in einer anderen Aufgabe nicht (und daher kein Häkchen hinter der Aufgabennummer angegeben ist). Es ist auch möglich, dass in einer Aufgabe eine Kannbeschreibung mehrfach getestet wird. Wird die Kannbeschreibung in einer Aufgabe mindestens einmal nicht erfüllt, wird hinter der Aufgabe kein Häkchen angezeigt. Diese Angabe kann dafür verwendet werden, gezielt Aufgaben zu Übungszwecken zu nutzen.
 
-\noindent Eine Kannbeschreibung kann in mehreren Aufgaben geprüft werden. Daher werden oftmals hinter der einzelnen Kannbeschreibungen mehrere Aufgaben angezeigt. Es kann sein, dass eine Kannbeschreibung in einer Aufgabe erfüllt wurde (und somit hinter der Aufgabennummer ein Häkchen angezeigt wird) und in einer anderen Aufgabe nicht (und daher kein Häkchen hinter der Aufgabennummer angegeben ist). Diese Angabe kann dafür verwendet werden, gezielt Aufgaben zu Übungszwecken zu nutzen.
 %\vspace{1em}\\
-\subsection*{Weitere Informationen zu den Kannbeschreibungen und der lea.-Diagnostik finden Sie unter:}
-\begin{center}\url{http://blogs.epb.uni-hamburg.de/lea/die-lea-diagnostik/}\end{center}
+\subsubsection*{Weitere Informationen zu den Kannbeschreibungen und der lea.-Diagnostik finden Sie unter: \underline{http://blogs.epb.uni-hamburg.de/lea/die-lea-diagnostik/}}}
 \newpage
 \restoregeometry
 
