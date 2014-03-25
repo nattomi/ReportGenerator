@@ -7,7 +7,7 @@ Y <- c(solved="Kannbeschreibungen erfüllt",
 graphics.files <- c("arrow_grey_down.png", "logo.pdf", "arrow_grey_right.png", "arrow_grey_up.png", "dot_grey.png")
 
 args <- commandArgs(TRUE)
-args <- "KFCG1" # !!! TESTING !!!
+args <- "CWB8D" # !!! TESTING !!!
 if (length(args)==0) {
   cat("Usage: teacherReport.R user\n")
   cat("where\n")
@@ -102,7 +102,13 @@ if (length(args)==0) {
   testresults <- testResults(userDir,guf)
   ## frequency table for dimensions
   dims <- sapply(testresults,function(x) attr(x,"attrs")[["subject.string"]])
+  ##dims
   dims.freq <- tapply(dims,as.factor(dims),length)
+  missing.names <- X[!(X %in% names(dims.freq))] 
+  missing <- rep(0,length(missing.names))
+  names(missing) <- missing.names
+  dims.freq <- c(dims.freq,missing)
+  ##print(dims.freq)
   markings <- lapply(testresults,getMarkings)
   markings <- markings[sapply(markings,nrow)>0] # some of them will be empty because of the mysterious data="" attribute
   layer0 <- lapply(markings,function(x) {
