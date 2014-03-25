@@ -146,7 +146,6 @@ if (nargs==0) {
     ##ind.order <- order(wrong.task,wrong.alpha,decreasing=FALSE)
     if (length(wrong.alpha)>0) {
       df <- t(sapply(strsplit(wrong.alpha,"\\."),function(x) as.integer(x)))
-      df
       orderlist <- 1:ncol(df)
       orderind <- do.call("order",c(lapply(orderlist,function(x) df[,x]),list(decreasing=FALSE)))
       alphas.A2 <- wrong.alpha[orderind]
@@ -154,8 +153,8 @@ if (nargs==0) {
       alphas.A2 <- wrong.alpha
     }
     
-    highest.alpha <- wrong.alpha[ind.order]
-    alphas.A2 <- highest.alpha[!duplicated(highest.alpha)]
+    ##highest.alpha <- wrong.alpha[ind.order]
+    ##alphas.A2 <- highest.alpha[!duplicated(highest.alpha)]
     ## result as list
     alphas <- list(A1=alphas.A1,A2=alphas.A2)
     ## limit the number of results
