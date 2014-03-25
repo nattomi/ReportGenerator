@@ -7,7 +7,7 @@ Y <- c(solved="Kannbeschreibungen erfüllt",
 graphics.files <- c("arrow_grey_down.png", "logo.pdf", "arrow_grey_right.png", "arrow_grey_up.png", "dot_grey.png")
 
 args <- commandArgs(TRUE)
-args <- "CWB8D" # !!! TESTING !!!
+args <- "KFCG1" # !!! TESTING !!!
 if (length(args)==0) {
   cat("Usage: teacherReport.R user\n")
   cat("where\n")
@@ -100,7 +100,9 @@ if (length(args)==0) {
   userDir <- file.path(usersDir,user) # the user's folder
   guf <- file.path(userDir,paste(user,"xml",sep=".")) # global user file
   testresults <- testResults(userDir,guf)
-  testresults
+  ## frequency table for dimensions
+  dims <- sapply(testresults,function(x) attr(x,"attrs")[["subject.string"]])
+  dims.freq <- tapply(dims,as.factor(dims),length)
   markings <- lapply(testresults,getMarkings)
   markings <- markings[sapply(markings,nrow)>0] # some of them will be empty because of the mysterious data="" attribute
   layer0 <- lapply(markings,function(x) {
@@ -110,10 +112,11 @@ if (length(args)==0) {
     colnames(b) <- names(a)
     cbind(b,x)
   })
+  layer0
   layer1 <- do.call("rbind",layer0)[,c(c("timestamp.string","subject.string","level.string","itemnumber","alphalevel","mark","task"))]
   ## creating a frequency table for the abilities
-  abis <- do.call("c",tapply(as.character(layer1$alphalevel),as.character(layer1$timestamp.string),function(x) levels(as.factor(x))))
-  abis.freq <- tapply(abis,as.factor(abis),length)
+  ##abis <- do.call("c",tapply(as.character(layer1$alphalevel),as.character(layer1$timestamp.string),function(x) levels(as.factor(x))))
+  ##abis.freq <- tapply(abis,as.factor(abis),length)
   ## Layer 2: sort by subject,alphalevel,itemnumber, then report last 2 marks for each itemnumber
   bysubject <- by(layer1[,c(1,7,4,5,6)],as.character(layer1$subject.string),function(x) x)
   ##head(bysubject$Lesen)
@@ -152,14 +155,14 @@ if (length(args)==0) {
       }
       ## return
       attributes(tasks) <- c(attributes(tasks),list(ctg=ctg,tendency=sign(tv)))
-      tendencyvector
       tasks
     })
   })
   layer2$Sprache
   ## group alphalevels by category
   layer3 <- lapply(layer2,function(x) lapply(c(solved=10,partly=5,notsolved=0),function(i) x[sapply(x,function(x) attributes(x)$ctg==i)]))
-  length(layer3$Rechnen$solved)*3
+  length(layer3$Rechnen$solved)
+  
   systime <- Sys.time()
   baseName <- paste(user,format(systime,format="%Y%m%d_%H_%M_%S"),sep="_")
   baseName <- "systime" # !!! TESTING !!!
@@ -175,6 +178,8 @@ if (length(args)==0) {
   ##y <- Y[1] # !!! TESTING !!!
   for (y in Y) { # looping through categories, each goes to a separate page
     catname <- names(Y)[Y==y]
+    ## megnezzuk, hogy el kell-e torni az oldalt!
+    ##lapply(X,layer3[[catname]]
     pagenum <- pagenum + 1
     sink(file.path(tmpdir,paste(catname,".tex",sep="")))
     cat("\\textline[t]{",toupper(y),"}{",pagenum,"}{",user,"}{",format(systime,format="%d.%m.%Y"),"} % printing header \n",sep="")
@@ -195,7 +200,7 @@ if (length(args)==0) {
       cat("\\node [anchor=north west,inner sep=0] at (\\pos",x,") {% ",x.upper,"\n",sep="")
       cat("\\begin{tabular}{@{}l@{}@{}p{\\taskwidth}@{}}\n")
       cat("\\multicolumn{2}{l}{\\cellcolor{",x,"}\\quad}\\\\[-1ex]\n",sep="")
-      cat("\\multicolumn{2}{l}{\\cellcolor{",x,"}\\large {\\color{",x,"-head}",x.upper,"}}\\\\[1.5ex]\n",sep="")
+      cat("\\multicolumn{2}{l}{\\cellcolor{",x,"}\\large {\\color{",x,"-head}",x.upper," (",dims.freq[[x]],")}}\\\\[1.5ex]\n",sep="")
       cat("\\begin{tabular}{p{\\descwidth}}\\cellcolor{",x,"}\\textcolor{head-small}{\\small Kannbeschreibung}\\\\[.5ex]\\end{tabular} & \\multicolumn{1}{c}{\\cellcolor{",x,"-light}\\textcolor{head-small}{\\small Aufgabe}}\\\\\n",sep="")
       cat("\\begin{tabular}{l}\\quad\\end{tabular} & \\quad\\\\[-1ex]\n")
       ## another inner loop will follow here
@@ -216,8 +221,8 @@ if (length(args)==0) {
           tend <- ifelse(tend.int > 0,"\\arrowup\\quad",
                          ifelse(tend.int==0,"\\arrowright\\quad","\\arrowdown\\quad"))
         }
-        testcount <- abis.freq[item] # !!! TESTING !!!
-        cat("\\multicolumn{2}{l}{\\small ",tend,item," (",testcount,")}\\\\\n",sep="")
+        ##testcount <- abis.freq[item] # !!! TESTING !!!
+        cat("\\multicolumn{2}{l}{\\small ",tend,item,"}\\\\\n",sep="")
         cat("\\begin{tabular}[t]{p{\\descwidth}}{\\small ",cell1,"}\\end{tabular} & \\begin{tabular}[t]{l}",paste(paste("{\\scriptsize",cell2,"}\\\\[-1ex]",sep=""),collapse=" "),"\\end{tabular}\\\\\n",sep="")
       } # for (item in names(xy))
       cat("\\end{tabular}%\n")
