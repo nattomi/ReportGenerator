@@ -8,7 +8,7 @@ graphics.files <- c("arrow_grey_down.png", "logo.pdf", "arrow_grey_right.png", "
 hmax <- 8 # we break the page above that
   
 args <- commandArgs(TRUE)
-args <- "CWB8D" # !!! TESTING !!!
+##args <- "CWB8D" # !!! TESTING !!!
 if (length(args)==0) {
   cat("Usage: teacherReport.R user\n")
   cat("where\n")
@@ -104,7 +104,8 @@ if (length(args)==0) {
   ## frequency table for dimensions
   dims <- sapply(testresults,function(x) attr(x,"attrs")[["subject.string"]])
   ##dims
-  dims.freq <- tapply(dims,as.factor(dims),length)
+  dims.freq <- c()
+  if (length(dims) > 0) dims.freq <- tapply(dims,as.factor(dims),length)
   missing.names <- X[!(X %in% names(dims.freq))] 
   missing <- rep(0,length(missing.names))
   names(missing) <- missing.names
