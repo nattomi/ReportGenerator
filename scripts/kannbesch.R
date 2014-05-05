@@ -50,7 +50,7 @@ dat0 <- lapply(items,function(item) {
 dat1 <- do.call("rbind",dat0)
 rownames(dat1) <- NULL
 names(dat1) <- c("item","itemnumber","alphaID")
-dat2 <- merge(dat,alphalist.df[,c("alphaID","description")])
+dat2 <- merge(dat1,alphalist.df[,c("alphaID","description")])
 dat3 <- dat2[,c("item","itemnumber","alphaID","description")]
 head(dat3)
 dat4 <- dat3[order(dat3$item,dat3$itemnumber,dat3$alphaID),]
