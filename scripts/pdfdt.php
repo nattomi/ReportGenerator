@@ -1,19 +1,20 @@
-<html>
-<head>
-<meta charset="utf-8"> 
-<title>DT report</title>
-</head>
-<body>
 <?php
 // SETTINGS
 $alphalist_file = "";
 //MAIN
 $user = $_GET["user"];
 //$user = "KFCG1"; // testing
-$type = $_GET["type"];
-//$type = ""; // testing
-$israw = $type == "raw";
 $global_user_file = "" . $user . "/" . $user . ".xml";
+// ROUTINES
+function sanitize($x) {
+  $x = str_replace("μ","$\\mu$",$x);
+  $x = str_replace("«","\\guillemotleft ",$x);
+  $x = str_replace("»","\\guillemotright ",$x);
+  $x = str_replace("„","\"",$x);
+  $x = str_replace("“","\"",$x);
+  return $x;
+}
+//MAIN
 //echo $global_user_file;
 if (file_exists($alphalist_file)) { // parsing and sorting alphalist file first
   $alphalist = simplexml_load_file($alphalist_file);
@@ -35,6 +36,7 @@ if (file_exists($alphalist_file)) { // parsing and sorting alphalist file first
   }
   // we sort things by ability description id in increasing order
   array_multisort($abdesc_id_1,$abdesc_id_2,$abdesc_id_3,$abdesc_id_4,$abdesc_id,$abdesc);
+  $abdesc = sanitize($abdesc);
   if (file_exists($global_user_file)) { // parsing global user file
     $user_dir = dirname($global_user_file);
     $global_user = simplexml_load_file($global_user_file);
@@ -92,43 +94,83 @@ if (file_exists($alphalist_file)) { // parsing and sorting alphalist file first
     } // foreach ($global_user
     array_multisort($Y,$m,$d,$H,$M,$S,$timestamp,$subject,$level,$iname,
 		    $itemnumber,$alphalevel,$mark);
-    $indices = range(0,sizeof($Y) - 1);
-    echo "<pre><table style=\"border-collapse:collapse;\">\n";
-    if ($israw) {
-      echo "<tr><td style=\"border:1px solid black;\"><b>timestamp</b></td><td style=\"border:1px solid black;background-color: azure;\"><b>subject</b></td><td style=\"border:1px solid black;\"><b>level</b></td><td style=\"border:1px solid black;background-color: azure;\"><b>iname</b></td><td style=\"border:1px solid black;\"><b>itemnumber</b></td><td style=\"border:1px solid black;background-color: azure;\"><b>alphalevel</b></td><td style=\"border:1px solid black;\"><b>mark</b></td></tr>\n";
-      foreach ($indices as $i) {
-	//$erfuellt[$alphalevel[$i]] = $mark[$i];
-	echo "<tr><td style=\"border:1px solid black;\">" . $timestamp[$i] . "</td><td style=\"border:1px solid black;background-color: azure;\">" . $subject[$i] . "</td><td style=\"border:1px solid black;\">" . $level[$i] . "</td><td style=\"border:1px solid black;background-color: azure;\">" . $iname[$i] . "</td><td style=\"border:1px solid black;\">" . $itemnumber[$i] . "</td><td style=\"border:1px solid black;background-color: azure;\">" . $alphalevel[$i] . "</td><td style=\"border:1px solid black;\">" . $mark[$i] . "</td></tr>\n";
-      }
-    } else {
-      $erfuellt = $erfuellt_2dim[end($timestamp)];
-      echo "<tr><td style=\"border:1px solid black;\"><b>ability_description_id</b></td><td style=\"border:1px solid black;background-color: azure;\"><b>ability_description</b></td><td style=\"border:1px solid black;\"><b>bearbeitet (# tests)</b></td><td style=\"border:1px solid black;background-color: azure;\"><b>bearbeitet (# all occurrence)</b></td><td style=\"border:1px solid black;\"><b>KB erfüllt</b></td></tr>\n";
-      foreach ($abdesc_id as $abid) {
-	$bearbeitet_ntests[$abid] = 0;
-	$bearbeitet_all[$abid] = 0;
-      }
-      $indices = range(0,sizeof($abdesc) - 1);
-      foreach ($indices as $i) {
-	$a = $abdesc_id[$i];  
-	foreach ($bearbeitet_2dim as $b2dim) {
-	  if ($b2dim[$a] > 0) $bearbeitet_ntests[$a]++;
-	  $bearbeitet_all[$a] +=  $b2dim[$a];
-	}
-	echo "<tr><td style=\"border:1px solid black;\">" . $a . "</td><td style=\"border:1px solid black;background-color: azure;\">" . $abdesc[$i] . "</td><td style=\"border:1px solid black;\">" . $bearbeitet_ntests[$a] . "</td><td style=\"border:1px solid black;background-color: azure;\">" . $bearbeitet_all[$a] . "</td><td style=\"border: 1px solid black;\">";
-	if (array_key_exists($a,$erfuellt)) {
-	  echo $erfuellt[$a];
-	} else echo "&nbsp;";
-	echo "</td></tr>\n"; 
-      }
+    // create temporary directory first
+    $dir_tmp = "tmp";
+    $path_dir_tmp = $user_dir . "/" . $dir_tmp;
+    //$path_dir_tmp = $dir_tmp; //for testing
+    $file_tex = $dir_tmp . ".tex";
+    $file_pdf = $dir_tmp . ".pdf";
+    $path_file_tex = $path_dir_tmp . "/" . $file_tex; //I'm not sure we need this
+    $path_file_pdf = $path_dir_tmp . "/" . $file_pdf;
+    $path_file_pdf_target = $user_dir . "/" . $file_pdf;
+    //$path_file_pdf_target = $file_pdf; //for testing
+    if (!file_exists($path_dir_tmp)) mkdir($path_dir_tmp);
+    $fp = fopen($path_file_tex,"w");
+    fwrite($fp,"\documentclass{article}\n");
+    fwrite($fp,"\usepackage[a4paper,landscape,bottom=2.5cm,top=2.5cm,left=2.5cm, right=2.5cm]{geometry}\n");
+    fwrite($fp,"\usepackage[T1]{fontenc}\n");
+    fwrite($fp,"\usepackage[utf8]{inputenc}\n");
+    fwrite($fp,"\usepackage[ngerman]{babel}\n");
+    fwrite($fp,"\usepackage{longtable}\n");
+    fwrite($fp,"\usepackage{amssymb}\n");
+    fwrite($fp,"\usepackage{helvet}\n");
+    fwrite($fp,"\\renewcommand{\\familydefault}{\sfdefault}\n");
+    fwrite($fp,"\usepackage{fancyhdr}\n\n");
+    fwrite($fp,"\pagestyle{fancy}\n\\fancyhf{}\n");
+    fwrite($fp,"\\rhead{Teilnehmer/Teilnehmerin: " . $user ."}\n");
+    fwrite($fp,"\lhead{Datum: \\today}\n");
+    fwrite($fp,"\begin{document}\n");
+    fwrite($fp,"\begin{longtable}{c|p{0.75\\textwidth}|c|c|c}\n");
+    fwrite($fp,"id & ability description & BA-T & BA-A & KB\\\\\n");
+    fwrite($fp,"\hline\n");
+    $erfuellt = $erfuellt_2dim[end($timestamp)];
+    foreach ($abdesc_id as $abid) {
+      $bearbeitet_ntests[$abid] = 0;
+      $bearbeitet_all[$abid] = 0;
     }
-    echo "</table></pre>\n";
+    $indices = range(0,sizeof($abdesc) - 1);
+    foreach ($indices as $i) {
+      $a = $abdesc_id[$i];
+      $erfuellt_key = array_search($a,array_reverse($alphalevel));
+      $erfuellt_ts = array_reverse($timestamp)[$erfuellt_key];
+      $erfuellt = $erfuellt_2dim[$erfuellt_ts];
+      foreach ($bearbeitet_2dim as $b2dim) {
+	if ($b2dim[$a] > 0) $bearbeitet_ntests[$a]++;
+	$bearbeitet_all[$a] +=  $b2dim[$a];
+      }
+      fwrite($fp,$a . " & " . $abdesc[$i] . " & " . $bearbeitet_ntests[$a] . " & " . $bearbeitet_all[$a] . " & ");
+      if (array_key_exists($a,$erfuellt)) {
+	fwrite($fp,$erfuellt[$a]);
+      } else {
+      }
+      fwrite($fp,"\\\\\n");
+    } // foreach ($indices
+    fwrite($fp,"\\hline\n");
+    fwrite($fp,"\\end{longtable}\n");
+    fwrite($fp,"\\end{document}\n");
+    fclose($fp);
+    //  running pdflatex
+    $wd = getcwd();
+    chdir($path_dir_tmp);
+    $pdflatex = "pdflatex " . $file_tex;
+    exec($pdflatex);
+    copy($path_file_pdf, $path_file_pdf_target);
+    $dh = opendir($path_dir_tmp);
+    while (false !== ($filename = readdir($dh))) {
+      unlink($filename);
+    }
+    rmdir($path_dir_tmp);
+    copy($path_file_pdf_target,$wd . "/tmp.pdf"); // for testing only
+    unlink($path_file_pdf_target); // for testing only
+    //echo "eljutunk idáig?\n";
+    chdir($wd);
+    header("Content-type: application/pdf");
+    header("Content-Disposition: inline; filename=dt.pdf");
+    @readfile('tmp.pdf');
   } else { // if (file_exists($global_user_file
     exit("Failed to open global user file\n");
   }
 } else { // if (file_exists($alphalist_file
   exit("Failed to open alphalist file\n");
 }
-//print_r($erfuellt_2dim);
 ?>
-</body>
-</html>
