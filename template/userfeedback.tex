@@ -82,16 +82,16 @@
 \newcommand{\template}[1]{
   \begin{tikzpicture}[remember picture,overlay]
     \fill[color=BackgroundBright] 
-    ([shift={(-0.2\pgftextwidth,-0.2\pgftextwidth)}]current page.north east) 
+    ([shift={(-2mm,-2mm)}]current page.north east) 
     rectangle 
-    ([shift={(0.2\pgftextwidth,0.2\pgftextwidth)}]current page.south west);
+    ([shift={(2mm,2mm)}]current page.south west);
     \fill[color=white]
-    ([shift={(-0.2\pgftextwidth,-3.5cm)}]current page.north east)
+    ([shift={(-2mm,-3.5cm)}]current page.north east)
     rectangle
-    ([shift={(0.2\pgftextwidth,0.2\pgftextwidth)}]current page.south west);
+    ([shift={(2mm,2mm)}]current page.south west);
     \node at ([shift={(-2cm,-1.8cm)}]current page.north east) {\includegraphics[height=2cm]{logo}};
     \node[anchor=west] at ([shift={(10mm,-28mm)}]current page.north west) {\textcolor{TextStandard}{\fontsize{48pt}{1em}\selectfont\subject}\qquad\textcolor{TextBright}{\fontsize{32pt}{1em}\selectfont \level}\hspace{3cm}\textcolor{TextBright}{\fontsize{16pt}{1em}\selectfont Teilnahmecode: \user}};
-    \node[anchor=north west] at (20mm,-40mm) {%
+    \node[anchor=north west] at (10mm,-40mm) {%
       \renewcommand{\arraystretch}{10}
       \fontsize{16pt}{1em}\selectfont#1        
     };
@@ -102,8 +102,8 @@
 \thispagestyle{empty}
 \pagecolor{Background}
 
-\template{\input{kann}}
+\template{\input{A1}}
 \newpage
-\template{\input{kannbald}}
+\template{\input{A2}}
 
 \end{document}
