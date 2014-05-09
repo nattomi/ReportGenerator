@@ -1,61 +1,109 @@
-\documentclass[landscape,slidestop]{slides}
+\documentclass{article}
+\usepackage[landscape,top=2mm,bottom=2mm,left=2mm,right=2mm]{geometry}
+\usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
-\usepackage[top=0.5cm, bottom=0.5cm, left=0.5cm, right=0.5cm]{geometry}
-\usepackage{xcolor}
-\usepackage{colortbl}
-\usepackage{multirow}
-\usepackage{verbatim}
-\usepackage{graphicx}
-\usepackage{array}
-\usepackage{booktabs}
-\usepackage{hhline}
-%\usepackage{tikz}
-%\usepackage{pstricks}
+\usepackage[ngerman,english]{babel}
+\usepackage{tikz}
+\usepackage{lipsum}
+\usepackage{etoolbox}
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
 
-% color definitions
-\definecolor{bg}{RGB}{248,230,174}% background color
-\definecolor{Lesen}{HTML}{D8F2F1}
-\definecolor{Schreiben}{HTML}{DDF4DD}
-\definecolor{Sprache}{HTML}{F2F2CB} 
-\definecolor{Rechnen}{HTML}{F7E5C5}
+\newtoggle{Lesen}
+\newtoggle{Schreiben}
+\newtoggle{Sprache}
+\newtoggle{Mathe}
 
-% commands
+\input{settings} % loads the settings from external file
 
-% for drawing a 'haken'
-\newcommand{\haken}{
-\includegraphics{haken}
+% helps to define a unified raisebox value
+\newcommand{\rb}[1]{
+  \raisebox{-20px}{#1}
 }
+%checkmarks and ladders
+\iftoggle{Lesen}{% Lesen
+  \definecolor{TextStandard}{HTML}{345133}
+  \definecolor{TextBright}{HTML}{4F694A}
+  \definecolor{TextDark}{HTML}{2F472E}
+  \definecolor{Background}{HTML}{9ACC95}
+  \definecolor{BackgroundBright}{HTML}{D2E6CA}
+  \newcommand{\subject}{Lesen}
+  \newcommand{\Check}{
+    \rb{\includegraphics{lea_green_check.png}}
+  }
+  \newcommand{\Ladder}{
+    \rb{\includegraphics{lea_green_ladder.png}}
+  }
+}{%
+  \iftoggle{Schreiben}{% Schreiben
+    \definecolor{TextStandard}{HTML}{75661A}
+    \definecolor{TextBright}{HTML}{8B7C33}
+    \definecolor{TextDark}{HTML}{63561B}
+    \definecolor{Background}{HTML}{E9E779}
+    \definecolor{BackgroundBright}{HTML}{F5F6D5}
+    \newcommand{\subject}{Schreiben}
+    \newcommand{\Check}{
+      \rb{\includegraphics{lea_yellow_check.png}}
+    }
+    \newcommand{\Ladder}{
+      \rb{\includegraphics{lea_yellow_ladder.png}}
+    }    
+  }{%
+    \iftoggle{Sprache}{% Sprache
+      \definecolor{TextStandard}{HTML}{513D29}
+      \definecolor{TextBright}{HTML}{6D583D}
+      \definecolor{TextDark}{HTML}{493626}
+      \definecolor{Background}{HTML}{E6BC7C}
+      \definecolor{BackgroundBright}{HTML}{F9E6AE}
+      \newcommand{\subject}{Sprache}
+      \newcommand{\Check}{
+        \rb{\includegraphics{lea_red_check.png}}
+      }
+      \newcommand{\Ladder}{
+        \rb{\includegraphics{lea_red_ladder.png}}
+      }
+    }{% else we fall back to Mathe
+      \definecolor{TextStandard}{HTML}{2B3F35}
+      \definecolor{TextBright}{HTML}{43574E}
+      \definecolor{TextDark}{HTML}{26382E}
+      \definecolor{Background}{HTML}{87C7BD}
+      \definecolor{BackgroundBright}{HTML}{CAE6DE}
+      \newcommand{\subject}{Mathe}
+      \newcommand{\Check}{
+        \rb{\includegraphics{lea_blue_check.png}}
+      }
+      \newcommand{\Ladder}{
+        \rb{\includegraphics{lea_blue_ladder.png}}
+      }
+    } % Sprache
+  } % Schreiben
+} % Lesen
 
-% for drawing a 'leiter'
-\newcommand{\leiter}{
-\includegraphics{leiter}
-}
-
-% for creating a particular type of feedback
-\newcommand{\feedback}[1]{
-\begin{slide}
-\pagecolor{bg}
-
-\begin{center}
-%{\Huge \textbf{\underline{#1}}}
-%\vspace{2em}
-#1
-\end{center}
-\null
-\vfill
-\end{slide}
-}
-
-% for drawing user information
-\newcommand\textline[4][t]{%
-  \par\smallskip\noindent\parbox[#1]{.333\textwidth}{\raggedright Teilnehmer/Teilnehmerin: \textbf{#2}}%
-  \parbox[#1]{.333\textwidth}{\centering#3}%
-  \parbox[#1]{.333\textwidth}{\raggedleft#4}\par\smallskip%
-}
+\newcommand{\template}[1]{
+  \begin{tikzpicture}[remember picture,overlay]
+    \fill[color=BackgroundBright] 
+    ([shift={(-0.2\pgftextwidth,-0.2\pgftextwidth)}]current page.north east) 
+    rectangle 
+    ([shift={(0.2\pgftextwidth,0.2\pgftextwidth)}]current page.south west);
+    \fill[color=white]
+    ([shift={(-0.2\pgftextwidth,-3.5cm)}]current page.north east)
+    rectangle
+    ([shift={(0.2\pgftextwidth,0.2\pgftextwidth)}]current page.south west);
+    \node at ([shift={(-2cm,-1.8cm)}]current page.north east) {\includegraphics[height=2cm]{logo}};
+    \node[anchor=west] at ([shift={(10mm,-28mm)}]current page.north west) {\textcolor{TextStandard}{\fontsize{48pt}{1em}\selectfont\subject}\qquad\textcolor{TextBright}{\fontsize{32pt}{1em}\selectfont \level}\hspace{3cm}\textcolor{TextBright}{\fontsize{16pt}{1em}\selectfont Teilnahmecode: \user}};
+    \node[anchor=north west] at (20mm,-40mm) {%
+      \renewcommand{\arraystretch}{10}
+      \fontsize{16pt}{1em}\selectfont#1        
+    };
+  \end{tikzpicture}
+} % newcommand
 
 \begin{document}
-\setlength{\arrayrulewidth}{.08em}
+\thispagestyle{empty}
+\pagecolor{Background}
 
-\input{modes}
+\template{\input{kann}}
+\newpage
+\template{\input{kannbald}}
 
 \end{document}
