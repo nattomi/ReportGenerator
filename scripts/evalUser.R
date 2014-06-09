@@ -11,8 +11,7 @@ if (nargs==0) {
 } else {
   ## REQUIREMENTS
   #t0 <- Sys.time()
-  require(XML)
-  require(tools)
+  suppressWarnings(suppressMessages(library(XML)))
   #t1 <- Sys.time()
   ## ROUTINES
   ## converts alphalist.XML to a data.frame  
