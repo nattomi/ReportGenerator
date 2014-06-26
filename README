@@ -1,38 +1,5 @@
-OTULEAR - The daRk side of OTULEA
+# OTULEA - performance report generator
 
-Downloading
-===========
-cd /tmp
-git clone git://github.com/nattomi/otulear.git
-
-Configuration
-=============
-cd otulear
-## At the moment there are 3 configuration files:
-## * config.R -- user directory and location of alphalist XML. Important!
-## * modes.tab -- strings and graphics related to different feedback modes. Optional.
-## * cellcolors.tab -- table cell color related to different subjects. Optional  
-
-Installing the R package
-========================
-## before installing the package it is neccessary to edit at least the config.R file!
-emacs -nw otulea/data/config.R
-## f.i. 
-## usersDir <- "/var/www/otulea/data/user/"
-## alphalist <- "/var/www/otulea/data/item/alphalist/alphalist.XML"
-## 
-
-R CMD INSTALL otulea -l /usr/local/lib/R/site-library
-(the -l switch determines where the R package is going to be installed)
-
-Installing the develompment version of the web application
-==========================================================
-The web application is discontinued! Currently my focus is only on
-generating the pdfs, see below.
-
-Generating feedback files
-=========================
-student report - run inst/studentReport.R without parameters for
-usage instructions
-teacher report - coming soon
+git clone git://github.com/nattomi/otulear.git  
+git clone git@github.com:nattomi/otulear.git
 
