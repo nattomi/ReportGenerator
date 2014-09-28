@@ -3,6 +3,7 @@
 suppressWarnings(suppressMessages(library(optparse)))
 option_list <- list( # list of command line options
                     make_option(c("-m","--marking"),help="path of the marking file to be processed"),
+                    make_option(c("-a","--alphalist"),help="path of the alphalist xml file"),
                     make_option(c("-t","--threshold"),type="numeric",default=100, help="threshold for fullfilling a competency [defaults to %default]"),
                     make_option(c("-l","--maxlistings"),type="integer",default=3, help="max. number of listings in order to limit the output to a fixed set of reported competencies or needs for improvement [defaults to  %default]"),
                     make_option(c("-x","--xmltimestamp"),default="", help="timestamp string which goes to the xml result [defaults to \"\"]"),
@@ -21,102 +22,16 @@ alphalist2df <- function(alphalist) {
   rownames(ans) <- NULL
   ans
 }
-## list all tests taken by a user
-list.tests <- function(guf) {
-  doc <- xmlParse(guf)
-  ##doc.root <- xmlRoot(doc)
-  tests <- getNodeSet(doc, "//test")
-  tests
-}
-## tell the date a particular test was taken
-test.date <- function(test) {
-  ans <- strptime(xmlAttrs(test)["timestamp"],
-                  format="%Y_%m_%d_%H_%M_%S")
-  names(ans) <- NULL
-  ans
-}
-## getting the last test taken
-last <- function(tests) {
-  tests.date <- do.call("c",lapply(tests,test.date))
-  ## finding the index of the last test taken
-  tests[which.max(order(tests.date))]
-}
-## transforming a test to a data.frame
-test2df <- function(test) {
-  test.list <- xmlToList(test)
-  attrs <- test.list$.attrs
-  names(attrs) <- paste(names(attrs),"string",sep=".")
-  test.list <- test.list[names(test.list)=="item"] ## *2 possible place for improvement
-  test.df <- data.frame(t(as.data.frame(test.list)),stringsAsFactors=FALSE)
-  rownames(test.df) <- NULL
-  attributes(test.df)$attrs <- attrs
-  test.df
-}
-## getting testresults
-testResults <- function(userDir,guf) {
-  ## tests taken by the user (returned as an XMLNodeSet)
-  tests <- list.tests(guf)
-  tests.df <- lapply(tests,test2df)
-  testresults <- lapply(tests.df, function(x) {
-    x.data <- x$data
-    ans <- file.path(userDir,x.data)
-    ans[nchar(x.data)==0] <- NA
-    names(ans) <- x$iname
-    attributes(ans) <- c(attributes(ans),list(attrs=attributes(x)$attrs))
-    ans})
-  testresults
-}
-## getting the marking sections of various testresult files
-## and merge them into a data frame containing character strings
-getMarkings <- function(testresult) {
-  markings <- lapply(testresult, function(x) {
-    if (!is.na(x)) {
-      x.parse <- xmlParse(x)
-      x.marking <- getNodeSet(x.parse, "//marking")
-      getNodeSet(x.marking[[1]],"//mark")
-    } else list()
-  })
-  markings.all <- c()
-  for (n in names(markings)) {
-    markings.n <- markings[[n]]
-    if (length(markings.n) > 0) {
-      ans.n <- lapply(markings.n,function(x) c(task=n,xmlAttrs(x)[c("itemnumber","alphalevel")],mark=xmlValue(x)))
-      ans.n <- do.call("rbind",ans.n)
-      ## sanitizing erronous data
-      marks <- ans.n[,"mark"]
-      ans.n[marks=="" | marks=="failed","mark"] <- 0
-    } else ans.n <- c()
-    markings.all <- rbind(markings.all,ans.n)
-  }
-  ## this is for sanitizing erronous data
-  ##marks <- markings.all[,"mark"]
-  ##markings.all[marks=="" | marks=="failed","mark"] <- 0
-  markings.df <- as.data.frame(markings.all)
-  attributes(markings.df)<- c(attributes(markings.df),attributes(testresult)$attrs)
-  markings.df
-}
 
 ## alphalevels to be reported
-getAlphalevels <- function(userDir,guf,threshold, maxListings,
-                           alphalist.df,timestamp) {
+getAlphalevels <- function(marking,threshold, maxListings,
+                           alphalist.df) {
   ## Information extraction
-  ## getting testresults - FIXME: adding a mode argument?
-  testresults <- testResults(userDir,guf)
-  testresults.timestamp <- testresults[match(timestamp,sapply(testresults,function(x) attributes(x)$attrs[["timestamp.string"]]))]
-  ## marking
-  ##testresults <- testResults(userDir) # for testing!
-  ##testreults <- testresults[1]
-  ##testresults.timestamp
-  markings <- lapply(testresults.timestamp,getMarkings)
-  lastmarkings <- markings[[1]]
-  ##lastmarkings <- getMarkings(testresults[[2]]) # for testing
-  ##lastmarkings
-  ## Derivation of results
   ## getting alphaID-s from the alphalist data frame
   alphaIDs <- sort(alphalist.df$alphaID) # this is most probably redundant
   ## all tested alphalevels
-  if (nrow(lastmarkings) > 0) {
-    thresholds <- tapply(as.integer(as.character(lastmarkings[,"mark"])),as.character(lastmarkings[,"alphalevel"]), mean)
+  if (nrow(marking) > 0) {
+    thresholds <- tapply(as.integer(as.character(marking[,"mark"])),as.character(marking[,"alphaid"]), mean)
     ##if (FALSE) {
     alphas.tested <- names(thresholds)
     ## which alphalevels are above and below the threshold?
@@ -133,7 +48,7 @@ getAlphalevels <- function(userDir,guf,threshold, maxListings,
       alphas.A1 <- alphas.above
     }
     ## for A2 (Das kann ich bald wenn ich noch ein wenig übe) I order by item, alphalevel. Take only the alphalevel and only those values which are not duplicates !!!FIXME!!! I should rewrite this with thersholds
-    wronganswers <- lastmarkings[lastmarkings$mark==0,c("task","alphalevel")]
+    wronganswers <- marking[marking$mark==0,c("task","alphaid")]
     ##wrong.task <- as.character(wronganswers$task)
     wrong.alpha <- unique(as.character(wronganswers$alphalevel))
     ##ind.order <- order(wrong.task,wrong.alpha,decreasing=FALSE)
@@ -154,9 +69,9 @@ getAlphalevels <- function(userDir,guf,threshold, maxListings,
     alphas.limited$A2 <- head(alphas.limited$A2,2) # that's a patch, we need only 2 values
   } else alphas.limited <- list()
   ## passing 'subject' and 'level' as attribute
-  attrs <- lapply(testresults.timestamp,attributes)[[1]]
-  attr(alphas.limited,"subject") <- attrs$attrs[["subject.string"]]
-  attr(alphas.limited,"level") <- attrs$attrs[["level.string"]]
+  ##attrs <- lapply(testresults.timestamp,attributes)[[1]]
+  ##attr(alphas.limited,"subject") <- attrs$attrs[["subject.string"]]
+  ##attr(alphas.limited,"level") <- attrs$attrs[["level.string"]]
   alphas.limited
 }
 ## BASED ON THE RESULT OF 'getAlphalevels' AND AN ALPHALIST DATA FRAME
@@ -200,22 +115,19 @@ alphalevels2xml <- function(uncprsd,file,xmlfile,ts,subject,level) {
   cat("</results>\n",file=xmlfile,append=TRUE)
 }
 ## MAIN
-user <- opt$user
-userDir <- file.path(usersDir, user) # the user's folder
-guf <- file.path(userDir,paste(user,"xml",sep=".")) # global user file
+file.marking <- opt$marking
+marking <- read.table(file.marking,header=TRUE)
+##userDir <- file.path(usersDir, user) # the user's folder
+##guf <- file.path(userDir,paste(user,"xml",sep=".")) # global user file
 threshold <- opt$threshold
 maxListings <- opt$maxlistings
-timestamp <- opt$timestamp
-if (timestamp=="") { # if "", it defaults to the last test
-  tests <- list.tests(guf)
-  timestamp <- xmlAttrs(last(tests)[[1]])[["timestamp"]]
-}
 filename <- opt$filename
+alphalist <- opt$alphalist
 alphalist.df <- alphalist2df(alphalist) # this one just converts the alphalist xml to a df
 ## evaluation phase
-alphalevels_pro_mode <- getAlphalevels(userDir,guf,threshold,maxListings,alphalist.df,timestamp)
-subject <- attr(alphalevels_pro_mode,"subject")
-level <- attr(alphalevels_pro_mode,"level")
+alphalevels_pro_mode <- getAlphalevels(marking,threshold,maxListings,alphalist.df)
+subject <- marking$subject[1] ## It might not work if marking is totally empty
+level <- marking$level[1]
 tables_pro_mode <- uncompress(alphalevels_pro_mode,alphalist.df,c("userdescription","example","alphaID")) ## does a lookup in alphalist df and reports tabular information
 xmlName <- paste(filename,ifelse(filename!="",".xml",""),sep="")
 pdfName <- paste(basename(filename),"pdf",sep=".")
