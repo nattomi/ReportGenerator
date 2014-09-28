@@ -1,0 +1,12 @@
+<results>
+  <print file="SD5AM_20140904_16_14_47_result.pdf"/>
+  <timestamp order="YmdHis" value="20140904161447"/>
+  <subject value="Lesen"/>
+  <level value="Mittel"/>
+  <eval mode="A1">
+    <alphanode alphaID="1.4.1.3" userdescription="Ich kann aus kurzen und einfachen Texten mit Bildern Informationen heraussuchen, die nicht direkt im Text zu erkennen sind." example=""/>
+    <alphanode alphaID="1.4.1.2" userdescription="Ich kann aus kurzen und einfachen Texten mit Bildern Informationen heraussuchen." example=""/>
+    <alphanode alphaID="1.4.1.1" userdescription="Ich kann einzelne Wörter aus einem Text heraussuchen." example=""/>
+  </eval>
+  <eval mode="A2"/>
+</results>

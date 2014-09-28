@@ -1,0 +1,131 @@
+<item>
+  <itemnumber>2.1.02_I</itemnumber>
+  <meta_item>selectandwrite</meta_item>
+  <Item_creation>
+    <version>2</version>
+    <date>1.11.2010</date>
+    <person>Kai Schwedes</person>
+  </Item_creation>
+  <presets/>
+  <prescreen>
+    <pre_text sound="2.1.02_I_instruct_1.mp3">Josys Buchstabensuche</pre_text>
+    <pre_text sound="2.1.02_I_pretext_1.mp3">In der Wäscherei des Altenheims ist die Arbeit frühzeitig erledigt. Um die gewonnene Zeit zu nutzen, bat Josy ihren Kollegen Stefan, ihr einige Schreibaufgaben zum Üben zu geben.</pre_text>
+    <pre_media file="2.1.02_I_premedia_1.png"/>
+  </prescreen>
+  <instruction>
+    <in_text sound="2.1.02_I_question_instruct_1.mp3">Welcher Buchstabe wird gesucht?Bitte klicken Sie zuerst mit der linken Maustaste auf das Lautsprechersymbol und hören Sie zu. Klicken Sie den richtigen Buchstaben an und tippen Sie ihn dann mit der Tastatur in das freie Kästchen.</in_text>
+    <media file="2.1.02_I_premedia_1.png"/>
+  </instruction>
+  <questions>
+    <questionpage>
+      <q_text sound="2.1.02_I_question_1.mp3"/>
+      <question>
+        <choices>
+          <choice answerid="2.1.02_I_1a" img="2.1.02_I_1a.png"/>
+          <choice answerid="2.1.02_I_1b" img="2.1.02_I_1b.png"/>
+          <choice answerid="2.1.02_I_1c" img="2.1.02_I_1c.png"/>
+          <choice answerid="2.1.02_I_1d" img="2.1.02_I_1d.png"/>
+        </choices>
+        <gap answerid="2.1.02_I_1e" style="TextInput-center-big" length="4"/>
+      </question>
+    </questionpage>
+    <questionpage>
+      <q_text sound="2.1.02_I_question_2.mp3"/>
+      <question>
+        <choices>
+          <choice answerid="2.1.02_I_2a" img="2.1.02_I_2a.png"/>
+          <choice answerid="2.1.02_I_2b" img="2.1.02_I_2b.png"/>
+          <choice answerid="2.1.02_I_2c" img="2.1.02_I_2c.png"/>
+          <choice answerid="2.1.02_I_2d" img="2.1.02_I_2d.png"/>
+        </choices>
+        <gap answerid="2.1.02_I_2e" style="TextInput-center-big" length="4"/>
+      </question>
+    </questionpage>
+    <questionpage>
+      <q_text sound="2.1.02_I_question_3.mp3"/>
+      <question>
+        <choices>
+          <choice answerid="2.1.02_I_3a" img="2.1.02_I_3a.png"/>
+          <choice answerid="2.1.02_I_3b" img="2.1.02_I_3b.png"/>
+          <choice answerid="2.1.02_I_3c" img="2.1.02_I_3c.png"/>
+          <choice answerid="2.1.02_I_3d" img="2.1.02_I_3d.png"/>
+        </choices>
+        <gap answerid="2.1.02_I_3e" style="TextInput-center-big" length="4"/>
+      </question>
+    </questionpage>
+    <questionpage>
+      <q_text sound="2.1.02_I_question_4.mp3"/>
+      <question>
+        <choices>
+          <choice answerid="2.1.02_I_4a" img="2.1.02_I_4a.png"/>
+          <choice answerid="2.1.02_I_4b" img="2.1.02_I_4b.png"/>
+          <choice answerid="2.1.02_I_4c" img="2.1.02_I_4c.png"/>
+          <choice answerid="2.1.02_I_4d" img="2.1.02_I_4d.png"/>
+        </choices>
+        <gap answerid="2.1.02_I_4e" style="TextInput-center-big" length="4"/>
+      </question>
+    </questionpage>
+  </questions>
+  <answers>
+    <answer answerid="2.1.02_I_1a" question="1">0</answer>
+    <answer answerid="2.1.02_I_1b" question="1">0</answer>
+    <answer answerid="2.1.02_I_1c" question="1">0</answer>
+    <answer answerid="2.1.02_I_1d" question="1">1</answer>
+    <answer answerid="2.1.02_I_1e" question="1">L</answer>
+    <answer answerid="2.1.02_I_2a" question="2">0</answer>
+    <answer answerid="2.1.02_I_2b" question="2">0</answer>
+    <answer answerid="2.1.02_I_2c" question="2">0</answer>
+    <answer answerid="2.1.02_I_2d" question="2">0</answer>
+    <answer answerid="2.1.02_I_2e" question="2"></answer>
+    <answer answerid="2.1.02_I_3a" question="3">0</answer>
+    <answer answerid="2.1.02_I_3b" question="3">0</answer>
+    <answer answerid="2.1.02_I_3c" question="3">0</answer>
+    <answer answerid="2.1.02_I_3d" question="3">0</answer>
+    <answer answerid="2.1.02_I_3e" question="3"></answer>
+    <answer answerid="2.1.02_I_4a" question="4">0</answer>
+    <answer answerid="2.1.02_I_4b" question="4">0</answer>
+    <answer answerid="2.1.02_I_4c" question="4">0</answer>
+    <answer answerid="2.1.02_I_4d" question="4">0</answer>
+    <answer answerid="2.1.02_I_4e" question="4"></answer>
+  </answers>
+  <correctResponse>
+    <value itemnumber="2.1.02_I_1a" answerid="2.1.02_I_1a" match="full" points="0.5">1</value>
+    <value itemnumber="2.1.02_I_1a" answerid="2.1.02_I_1d" match="full" points="0.5">1</value>
+    <value itemnumber="2.1.02_I_1a" answerid="2.1.02_I_1e" casesensitiv="no" match="full" points="0.5">L</value>
+    <value itemnumber="2.1.02_I_1b" answerid="2.1.02_I_1d" match="full" points="1">1</value>
+    <value itemnumber="2.1.02_I_2a" answerid="2.1.02_I_2a" match="full" points="0.5">1</value>
+    <value itemnumber="2.1.02_I_2a" answerid="2.1.02_I_2b" match="full" points="0.5">1</value>
+    <value itemnumber="2.1.02_I_2a" answerid="2.1.02_I_2e" casesensitiv="no" match="full" points="0.5">r</value>
+    <value itemnumber="2.1.02_I_2b" answerid="2.1.02_I_2a" match="full" points="1">1</value>
+    <value itemnumber="2.1.02_I_3a" answerid="2.1.02_I_3d" match="full" points="0.5">1</value>
+    <value itemnumber="2.1.02_I_3a" answerid="2.1.02_I_3c" match="full" points="0.5">1</value>
+    <value itemnumber="2.1.02_I_3a" answerid="2.1.02_I_3e" casesensitiv="no" match="full" points="0.5">n</value>
+    <value itemnumber="2.1.02_I_3b" answerid="2.1.02_I_3d" match="full" points="1">1</value>
+    <value itemnumber="2.1.02_I_4a" answerid="2.1.02_I_4a" match="full" points="0.5">1</value>
+    <value itemnumber="2.1.02_I_4a" answerid="2.1.02_I_4b" match="full" points="0.5">1</value>
+    <value itemnumber="2.1.02_I_4a" answerid="2.1.02_I_4e" casesensitiv="no" match="full" points="0.5">f</value>
+    <value itemnumber="2.1.02_I_4b" answerid="2.1.02_I_4a" match="full" points="1">1</value>
+  </correctResponse>
+  <abilities>
+    <ability number="1" alphalevel="2.1.01">Buchstabierte Laute verschriftlichen</ability>
+    <ability number="2" alphalevel="2.1.02">Lautierte Laute verschriftlichen</ability>
+    <ability number="3" alphalevel="2.1.03">Groß-/Kleinbuchstaben unterscheiden</ability>
+  </abilities>
+  <marking>
+    <pointuse maxpoint="1"/>
+    <mark itemnumber="2.1.02_I_1a" alphalevel="2.1.01">1</mark>
+    <mark itemnumber="2.1.02_I_1b" alphalevel="2.1.03">1</mark>
+    <mark itemnumber="2.1.02_I_2a" alphalevel="2.1.01">0</mark>
+    <mark itemnumber="2.1.02_I_2b" alphalevel="2.1.03">0</mark>
+    <mark itemnumber="2.1.02_I_3a" alphalevel="2.1.02">0</mark>
+    <mark itemnumber="2.1.02_I_3b" alphalevel="2.1.03">0</mark>
+    <mark itemnumber="2.1.02_I_4a" alphalevel="2.1.02">0</mark>
+    <mark itemnumber="2.1.02_I_4b" alphalevel="2.1.03">0</mark>
+  </marking>
+  <time>
+    <start_time>2014_9_8_8_21_55</start_time>
+    <end_time>2014_9_8_8_22_24</end_time>
+    <time_consumption>28</time_consumption>
+  </time>
+  <usernumber>SD5AM</usernumber>
+</item>

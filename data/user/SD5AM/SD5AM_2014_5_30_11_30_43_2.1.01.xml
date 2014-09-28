@@ -1,0 +1,114 @@
+<item>
+  <itemnumber>2.1.01</itemnumber>
+  <meta_item>cloze</meta_item>
+  <Item_creation>
+    <version>6</version>
+    <date>1.11.2010</date>
+    <person>Kai Schwedes</person>
+  </Item_creation>
+  <presets/>
+  <prescreen>
+    <pre_text sound="2.1.01_pretext_1.mp3">Simone arbeitet als Reinigungskraft in einer Grundschule. Bevor sie mit der Arbeit beginnt, kontrolliert sie im Putzraum den Bestand der Putzmaterialien.</pre_text>
+    <pre_text sound="2.1.01_instruct_1.mp3">Die Schulreinigungskraft Simone Fischer schaut sich im Putzraum um. Es fehlen leider einige wichtige Gegenstände, die dringend nach-bestellt werden müssen. Simone erstellt eine Bestellliste.</pre_text>
+    <pre_media file="2.1.01_premedia_1.png"/>
+  </prescreen>
+  <instruction>
+    <in_text sound="2.1.01_question_instruct_1.mp3">Bitte ergänzen Sie die Bestellliste mit Ziffern und Silben: Klicken Sie auf das Lautsprechersymbol und hören Sie zu, tippen Sie die fehlenden Zahlen mit der Tastatur als Ziffern ein und ergänzen Sie die fehlenden Buchstaben.</in_text>
+    <media file="2.1.01_premedia_1.png"/>
+  </instruction>
+  <questions>
+    <questionpage>
+      <question>
+        <q_text sound="2.1.01_question_1.mp3">Gesucht wird .....</q_text>
+        <answertext sound="2.1.01_question_1.mp3">
+          <gap answerid="2.1.01_1a" style="TextInput_grey" length="3"/>
+          <gap answerid="2.1.01_1b" style="TextInput_blue" length="6"/>
+          <a_text>scher</a_text>
+        </answertext>
+      </question>
+      <question>
+        <answertext sound="2.1.01_question_2.mp3">
+          <gap answerid="2.1.01_2a" style="TextInput_grey" length="3"/>
+          <a_text>Staub</a_text>
+          <gap answerid="2.1.01_2b" style="TextInput_blue" length="6"/>
+          <a_text>ger</a_text>
+        </answertext>
+      </question>
+      <question>
+        <answertext sound="2.1.01_question_3.mp3">
+          <gap answerid="2.1.01_3a" style="TextInput_grey" length="3"/>
+          <a_text>Putz</a_text>
+          <gap answerid="2.1.01_3b" style="TextInput_blue" length="6"/>
+          <a_text>mer</a_text>
+        </answertext>
+      </question>
+    </questionpage>
+    <questionpage>
+      <question>
+        <answertext sound="2.1.01_question_4.mp3">
+          <gap answerid="2.1.01_4a" style="TextInput_grey" length="4"/>
+          <a_text>Pakete Fenster</a_text>
+          <gap answerid="2.1.01_4b" style="TextInput_blue" length="8"/>
+          <a_text>der</a_text>
+        </answertext>
+      </question>
+      <question>
+        <answertext sound="2.1.01_question_5.mp3">
+          <gap answerid="2.1.01_5a" style="TextInput_grey" length="4"/>
+          <a_text>Flaschen Hand</a_text>
+          <gap answerid="2.1.01_5b" style="TextInput_blue" length="8"/>
+        </answertext>
+      </question>
+    </questionpage>
+  </questions>
+  <answers>
+    <answer answerid="2.1.01_1a" question="1"></answer>
+    <answer answerid="2.1.01_1b" question="1"></answer>
+    <answer answerid="2.1.01_2a" question="2"></answer>
+    <answer answerid="2.1.01_2b" question="2"></answer>
+    <answer answerid="2.1.01_3a" question="3"></answer>
+    <answer answerid="2.1.01_3b" question="3"></answer>
+    <answer answerid="2.1.01_4a" question="4"></answer>
+    <answer answerid="2.1.01_4b" question="4"></answer>
+    <answer answerid="2.1.01_5a" question="5"></answer>
+    <answer answerid="2.1.01_5b" question="5" debug="Seife"></answer>
+  </answers>
+  <correctResponse>
+    <value itemnumber="2.1.01_1a" answerid="2.1.01_1a" casesensitiv="no" match="full" points="1">8</value>
+    <value itemnumber="2.1.01_1b" answerid="2.1.01_1b" casesensitiv="no" match="full" points="1">wi</value>
+    <value itemnumber="2.1.01_2a" answerid="2.1.01_2a" casesensitiv="no" match="full" points="1">2</value>
+    <value itemnumber="2.1.01_2b" answerid="2.1.01_2b" casesensitiv="no" match="full" points="1">sau</value>
+    <value itemnumber="2.1.01_3a" answerid="2.1.01_3a" casesensitiv="no" match="full" points="1">7</value>
+    <value itemnumber="2.1.01_3b" answerid="2.1.01_3b" casesensitiv="no" match="full" points="1">ei</value>
+    <value itemnumber="2.1.01_4a" answerid="2.1.01_4a" casesensitiv="no" match="full" points="1">6</value>
+    <value itemnumber="2.1.01_4b" answerid="2.1.01_4b" casesensitiv="no" match="full" points="1">le</value>
+    <value itemnumber="2.1.01_5a" answerid="2.1.01_5a" casesensitiv="no" match="full" points="1">13</value>
+    <value itemnumber="2.1.01_5b" answerid="2.1.01_5b" casesensitiv="no" match="first" matchlength="3" points="1">sei</value>
+    <value itemnumber="2.1.01_5c" answerid="2.1.01_5b" casesensitiv="no" match="last" matchlength="2" points="1">fe</value>
+  </correctResponse>
+  <abilities>
+    <ability number="1" alphalevel="2.1.04">Vokal/Diphthong als Silbe</ability>
+    <ability number="2" alphalevel="2.1.05">Zahlen bis 20</ability>
+    <ability number="3" alphalevel="2.1.14">Offene Silben</ability>
+  </abilities>
+  <marking>
+    <pointuse maxpoint="1"/>
+    <mark itemnumber="2.1.01_1a" alphalevel="2.1.05">0</mark>
+    <mark itemnumber="2.1.01_1b" alphalevel="2.1.14">0</mark>
+    <mark itemnumber="2.1.01_2a" alphalevel="2.1.05">0</mark>
+    <mark itemnumber="2.1.01_2b" alphalevel="2.1.14">0</mark>
+    <mark itemnumber="2.1.01_3a" alphalevel="2.1.05">0</mark>
+    <mark itemnumber="2.1.01_3b" alphalevel="2.1.04">0</mark>
+    <mark itemnumber="2.1.01_4a" alphalevel="2.1.05">0</mark>
+    <mark itemnumber="2.1.01_4b" alphalevel="2.1.14">0</mark>
+    <mark itemnumber="2.1.01_5a" alphalevel="2.1.05">0</mark>
+    <mark itemnumber="2.1.01_5b" alphalevel="2.1.14">0</mark>
+    <mark itemnumber="2.1.01_5c" alphalevel="2.1.14">0</mark>
+  </marking>
+  <time>
+    <start_time>2014_5_30_11_30_43</start_time>
+    <end_time>2014_5_30_11_31_45</end_time>
+    <time_consumption>61</time_consumption>
+  </time>
+  <usernumber>SD5AM</usernumber>
+</item>
