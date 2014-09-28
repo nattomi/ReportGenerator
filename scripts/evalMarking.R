@@ -126,8 +126,8 @@ alphalist <- opt$alphalist
 alphalist.df <- alphalist2df(alphalist) # this one just converts the alphalist xml to a df
 ## evaluation phase
 alphalevels_pro_mode <- getAlphalevels(marking,threshold,maxListings,alphalist.df)
-subject <- marking$subject[1] ## It might not work if marking is totally empty
-level <- marking$level[1]
+subject <- as.character(marking$subject[1]) ## It might not work if marking is totally empty
+level <- as.character(marking$level[1])
 tables_pro_mode <- uncompress(alphalevels_pro_mode,alphalist.df,c("userdescription","example","alphaID")) ## does a lookup in alphalist df and reports tabular information
 xmlName <- paste(filename,ifelse(filename!="",".xml",""),sep="")
 pdfName <- paste(basename(filename),"pdf",sep=".")
