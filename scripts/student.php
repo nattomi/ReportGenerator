@@ -72,11 +72,16 @@ if (file_exists($guf)) {
 } else {
   exit("Failed to open the user's global xml file.\n");
 }
-echo $markingtable;
 
-
-// this part is for testing how can I write out the file
-$markingfile = "../marking/marking.txt";
+// writing out marking table into a marking txt file
+$odir = $ini_array['directories']['odir']; // path to the users' data directory
+$odir_user = $odir . $user;
+if (!file_exists($odir_user)) mkdir($odir_user); // this is most probably not needed in the real application
+// we also generate a timestamp to be used in the name of the XML and PDF files and in the timestamp field of the XML file
+$systime = time(); 
+$baseName = $user . "_" .date('Ymd_H_i_s',$systime) . "_result";
+$markingfile = $odir_user . "/" . $baseName . ".mar";
+echo $markingfile;
 file_put_contents($markingfile,$markingtable);
 
 
