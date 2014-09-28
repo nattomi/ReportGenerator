@@ -2,10 +2,9 @@
 ## ARGUMENTS
 suppressWarnings(suppressMessages(library(optparse)))
 option_list <- list( # list of command line options
-                    make_option(c("-u","--user"),help="user id"),
+                    make_option(c("-m","--marking"),help="path of the marking file to be processed"),
                     make_option(c("-t","--threshold"),type="numeric",default=100, help="threshold for fullfilling a competency [defaults to %default]"),
-                    make_option(c("-m","--maxlistings"),type="integer",default=3, help="max. number of listings in order to limit the output to a fixed set of reported competencies or needs for improvement [defaults to  %default]"),
-                    make_option(c("-T","--timestamp"),default="", help="timestamp of the test we wish to evaluate [defaults to \"\", which means we go for the last test]"),
+                    make_option(c("-l","--maxlistings"),type="integer",default=3, help="max. number of listings in order to limit the output to a fixed set of reported competencies or needs for improvement [defaults to  %default]"),
                     make_option(c("-x","--xmltimestamp"),default="", help="timestamp string which goes to the xml result [defaults to \"\"]"),
                     make_option(c("-f","--filename"),default="", help="name of output file without extension [defaults to \"\", which means STDOUT]")
                     )
