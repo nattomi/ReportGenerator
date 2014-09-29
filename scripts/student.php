@@ -1,11 +1,12 @@
-<?php 
+<?php
 //$user = $_POST['user']; // user id
 $user = 'SD5AM';
 //$test = $_POST['test']; // timestamp of the test to be evaluated (as specified in the global user file, f.i. 2014_3_3_20_32_49)
 $test = '2014_9_12_11_30_29'; // if $test is not set here then it defaults to the last test
+// load settings and helper functions
+include 'conf_student.php';
+include 'functions.php';
 
-$ini_array = parse_ini_file("student.ini",true); // parsing configuration file
-$Udir = $ini_array['directories']['udir']; // path to the users' data directory
 $udir = $Udir . $user . '/'; // path to the specific user's data directory
 $guf = $udir . $user . ".xml"; // path of the user's "global file"
 // parsing the user's global xml file (if exists)
@@ -74,39 +75,25 @@ if (file_exists($guf)) {
 }
 
 // writing out marking table into a marking txt file
-$odir = $ini_array['directories']['odir']; // path to the users' data directory
 $odir_user = $odir . $user;
 if (!file_exists($odir_user)) mkdir($odir_user); // this is most probably not needed in the real application
 // we also generate a timestamp to be used in the name of the XML and PDF files and in the timestamp field of the XML file
 $systime = time(); 
 $baseName = $user . "_" .date('Ymd_H_i_s',$systime) . "_result";
-$markingfile = $odir_user . "/" . $baseName . ".mar";
-echo $markingfile;
+$tempdir = $odir_user . "/tmp";
+if (file_exists($tempdir)) rrmdir($tempdir); // if $tempdir exists we remove it (Alternatively, we could name the temporary directory based on $baseName and delete them in a cronjob...)
+mkdir($tempdir);
+$markingfile = $tempdir . "/" . $baseName . ".mar";
 file_put_contents($markingfile,$markingtable);
-
-
-
-
-
-
-/*
-$threshold =  100; // threshold for fullfilling a competency
-$maxListings = 3; // number of ability descriptions listed 
-$testTimestamp = ifelse(is_null($test),'""',$test);
-// we also generate a timestamp to be used in the name of the XML and PDF files and in the timestamp field of the XML file
-$systime = time(); 
+// we transform the data contained in the just created marking file into an xml result file using the external R script evalMarking.R
 $xmlTimestamp = date('YmdHis',$systime); // date/time of evaluation, used in the <timestamp> node of the xml file
-$baseName = $user . "_" .date('Ymd_H_i_s',$systime) . "_result";
-$odir = ""; // the XML and PDF files are going to be put into the corresponding subfolder whose name is identical to $user) of this directory
-//$odir = "user/"; // but for testing purposes you might want to set something different so you won't create garbage in live database  
-$odir_user = $odir . $user;
-if (!file_exists($odir_user)) mkdir($odir_user); // this is most probably not needed in the real application
-$xmlpath = $odir_user . "/" . $baseName;
-$xmlpath_full = $xmlpath . ".xml";
-$rcmd = "evalUser.R -u $user -t $threshold -m $maxListings -x $xmlTimestamp -f $xmlpath -T $testTimestamp";
-//echo $rcmd . "<br>";
+$xmlpath = $tempdir . "/" . $baseName;
+$rcmd = "$path_evalMarking -m $markingfile -t $threshold -l $maxListings -x $xmlTimestamp -f $xmlpath -a $alphalist";
+//echo $rcmd;
 exec($rcmd); // this one creates the XML file
+
 // Here we parse the just created XML and create TEX files
+$xmlpath_full = $xmlpath . ".xml";
 if (file_exists($xmlpath_full)) {
   $tempdir = $odir_user . "/tmp";
   rrmdir($tempdir); // if $tempdir exists we remove it (Alternatively, we could name the temporary directory based on $baseName and delete them in a cronjob...)
@@ -191,18 +178,14 @@ if (file_exists($xmlpath_full)) {
   // copying pdf to destination folder
   copy($tempdir . "/main.pdf", $odir_user . "/" . $pdfname);
   rrmdir($tempdir); // removing temporary directory
-//  header("Content-type: application/pdf");
- // header("Content-Disposition: inline; filename=report.pdf");
- // @readfile($odir_user . "/" . $pdfname);
  
- if (file_exists($xmlpath_full)) 
-	{
-		$file = file_get_contents($xmlpath_full);
-		echo $file;
-	} else {
-		//echo $xmlutvonal;
-		echo "error: not existent".$path." user:".$user." dim:".$dim." count:".$count." script:".$script." result:".$result;
-	}
+  if (file_exists($xmlpath_full)) 
+    {
+      $file = file_get_contents($xmlpath_full);
+      echo $file;
+    } else {
+    echo "error: not existent".$path." user:".$user." dim:".$dim." count:".$count." script:".$script." result:".$result;
+  }
 }
-*/
+
 ?>
