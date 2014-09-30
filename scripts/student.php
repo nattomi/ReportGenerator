@@ -87,7 +87,7 @@ $markingfile = $tempdir . "/" . $baseName . ".mar";
 file_put_contents($markingfile,$markingtable);
 // we transform the data contained in the just created marking file into an xml result file using the external R script evalMarking.R
 $xmlTimestamp = date('YmdHis',$systime); // date/time of evaluation, used in the <timestamp> node of the xml file
-$xmlpath = $tempdir . "/" . $baseName;
+$xmlpath = $odir_user . "/" . $baseName;
 $rcmd = "$path_evalMarking -m $markingfile -t $threshold -l $maxListings -x $xmlTimestamp -f $xmlpath -a $alphalist";
 //echo $rcmd;
 exec($rcmd); // this one creates the XML file
@@ -95,9 +95,6 @@ exec($rcmd); // this one creates the XML file
 // Here we parse the just created XML and create TEX files
 $xmlpath_full = $xmlpath . ".xml";
 if (file_exists($xmlpath_full)) {
-  $tempdir = $odir_user . "/tmp";
-  rrmdir($tempdir); // if $tempdir exists we remove it (Alternatively, we could name the temporary directory based on $baseName and delete them in a cronjob...)
-  mkdir($tempdir);
   $xmldoc = simplexml_load_file($xmlpath_full);
   $subject = (string)$xmldoc->subject['value'];
   $level = (string)$xmldoc->level['value'];
@@ -106,14 +103,11 @@ if (file_exists($xmlpath_full)) {
   foreach ($xmldoc->eval as $eval) { //
     $evalmodes[(string)$eval['mode']] = $eval;
   }
-  $keinbearbeitet = sizeof($evalmodes) == 0;
-  $mode_names = array("A1","A2");
-  $mode_strings = array(A1=>"Das kann ich!",A2=>"Das kann ich bald wenn ich noch ein wenig übe.");
-  $graphics = array(A1=>"\\Check",A2=>"\\Ladder");
+  $keinbearbeitet = sizeof($evalmodes) == 0; 
   foreach ($mode_names as $mode) {
     $fp = fopen($tempdir . "/" . $mode . ".tex",'w');
     if ($keinbearbeitet) {
-      fwrite($fp,"Es wurden keine Aufgaben bearbeitet\n");
+      fwrite($fp,$keinbearbeitet_string . "\n");
     } else {
       $evalmode = $evalmodes[$mode];
       //print_r($evalmode);
@@ -166,7 +160,7 @@ if (file_exists($xmlpath_full)) {
   fwrite($fp,"\\def\\level{" . strtolower($level) . "}\n");
   fclose($fp);
   // copying template files to temporary directory 
-  copy($dir_template . "/userfeedback_dev.tex",$tempdir . "/main.tex");
+  copy($dir_template . "/userfeedback.tex",$tempdir . "/main.tex");
   foreach ($graphics_files as $graphics_file) {
     copy($dir_template . "/" . $graphics_file,$tempdir . "/" . $graphics_file);
   }
