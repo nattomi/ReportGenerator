@@ -95,12 +95,12 @@ exec($rcmd); // this one creates the XML file
 // Here we parse the just created XML and create TEX files
 $xmlpath_full = $xmlpath . ".xml";
 if (file_exists($xmlpath_full)) {
-  $xmldoc = simplexml_load_file($xmlpath_full);
-  $subject = (string)$xmldoc->subject['value'];
-  $level = (string)$xmldoc->level['value'];
-  $pdfname = (string)$xmldoc->print['file'];
+  $xmldoc_result = simplexml_load_file($xmlpath_full);
+  $subject = (string)$xmldoc_result->subject['value'];
+  $level = (string)$xmldoc_result->level['value'];
+  $pdfname = (string)$xmldoc_result->print['file'];
   // Looping through eval modes. 
-  foreach ($xmldoc->eval as $eval) { //
+  foreach ($xmldoc_result->eval as $eval) { //
     $evalmodes[(string)$eval['mode']] = $eval;
   }
   $keinbearbeitet = sizeof($evalmodes) == 0; 
@@ -172,14 +172,10 @@ if (file_exists($xmlpath_full)) {
   // copying pdf to destination folder
   copy($tempdir . "/main.pdf", $odir_user . "/" . $pdfname);
   rrmdir($tempdir); // removing temporary directory
- 
-  if (file_exists($xmlpath_full)) 
-    {
-      $file = file_get_contents($xmlpath_full);
-      echo $file;
-    } else {
-    echo "error: not existent".$path." user:".$user." dim:".$dim." count:".$count." script:".$script." result:".$result;
-  }
+  //$file = file_get_contents($xmlpath_full);
+  echo $xmldoc_result->asXML();
+} else {
+  echo "error: not existent".$path." user:".$user." dim:".$dim." count:".$count." script:".$script." result:".$result;
 }
 
 ?>

@@ -12,4 +12,9 @@ $mode_strings = array("A1"=>"Das kann ich!","A2"=>"Das kann ich bald wenn ich no
 $graphics = array("A1"=>"\\Check","A2"=>"\\Ladder"); // graphics command associated to the different evaluation modes.
 $keinbearbeitet_string = "Es wurden keine Aufgaben bearbeitet"; // this message is displayed when no task were solved
 $welldone = array("Einfach"=>"Sehr gut, Sie haben alle Aufgaben gelöst! Machen Sie weiter mit dem mittleren Niveau!", "Mittel"=>"Sehr gut, Sie haben alle Aufgaben gelöst! Machen Sie weiter mit dem schwierigen Niveau!","Schwer"=>"Sehr gut, Sie haben alle Aufgaben gelöst!"); // strings to display when all tasks were solved, sorted by dimension
+$graphics_files = array("lea_blue_check.png","lea_blue_ladder.png",
+                        "lea_green_check.png","lea_green_ladder.png",
+                        "lea_red_check.png","lea_red_ladder.png",
+                        "lea_yellow_check.png","lea_yellow_ladder.png",
+                        "logo.pdf"); // these graphics files are required to compile the latex document
 ?>
