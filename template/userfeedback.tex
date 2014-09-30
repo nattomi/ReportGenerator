@@ -7,12 +7,13 @@
 \usepackage{lipsum}
 \usepackage{etoolbox}
 \usepackage{helvet}
+\usepackage{colortbl}
 \renewcommand{\familydefault}{\sfdefault}
 
 \newtoggle{Lesen}
 \newtoggle{Schreiben}
 \newtoggle{Sprache}
-\newtoggle{Mathe}
+\newtoggle{Rechnen}
 
 \input{settings} % loads the settings from external file
 
@@ -21,13 +22,13 @@
   \raisebox{-20px}{#1}
 }
 %checkmarks and ladders
-\iftoggle{Lesen}{% Lesen
+\iftoggle{Schreiben}{% Schreiben (green)
   \definecolor{TextStandard}{HTML}{345133}
   \definecolor{TextBright}{HTML}{4F694A}
   \definecolor{TextDark}{HTML}{2F472E}
   \definecolor{Background}{HTML}{9ACC95}
   \definecolor{BackgroundBright}{HTML}{D2E6CA}
-  \newcommand{\subject}{Lesen}
+  \newcommand{\subject}{Schreiben}
   \newcommand{\Check}{
     \rb{\includegraphics{lea_green_check.png}}
   }
@@ -35,13 +36,13 @@
     \rb{\includegraphics{lea_green_ladder.png}}
   }
 }{%
-  \iftoggle{Schreiben}{% Schreiben
+  \iftoggle{Sprache}{% Schreiben (yellow)
     \definecolor{TextStandard}{HTML}{75661A}
     \definecolor{TextBright}{HTML}{8B7C33}
     \definecolor{TextDark}{HTML}{63561B}
     \definecolor{Background}{HTML}{E9E779}
     \definecolor{BackgroundBright}{HTML}{F5F6D5}
-    \newcommand{\subject}{Schreiben}
+    \newcommand{\subject}{Sprache}
     \newcommand{\Check}{
       \rb{\includegraphics{lea_yellow_check.png}}
     }
@@ -49,26 +50,26 @@
       \rb{\includegraphics{lea_yellow_ladder.png}}
     }    
   }{%
-    \iftoggle{Sprache}{% Sprache
+    \iftoggle{Rechnen}{% Rechnen (red)
       \definecolor{TextStandard}{HTML}{513D29}
       \definecolor{TextBright}{HTML}{6D583D}
       \definecolor{TextDark}{HTML}{493626}
       \definecolor{Background}{HTML}{E6BC7C}
       \definecolor{BackgroundBright}{HTML}{F9E6AE}
-      \newcommand{\subject}{Sprache}
+      \newcommand{\subject}{Rechnen}
       \newcommand{\Check}{
         \rb{\includegraphics{lea_red_check.png}}
       }
       \newcommand{\Ladder}{
         \rb{\includegraphics{lea_red_ladder.png}}
       }
-    }{% else we fall back to Mathe
+    }{% else we fall back to Lesen (blue)
       \definecolor{TextStandard}{HTML}{2B3F35}
       \definecolor{TextBright}{HTML}{43574E}
       \definecolor{TextDark}{HTML}{26382E}
       \definecolor{Background}{HTML}{87C7BD}
       \definecolor{BackgroundBright}{HTML}{CAE6DE}
-      \newcommand{\subject}{Mathe}
+      \newcommand{\subject}{Lesen}
       \newcommand{\Check}{
         \rb{\includegraphics{lea_blue_check.png}}
       }
