@@ -11,5 +11,14 @@ unlink($dir."/".$object);
     reset($objects);                                                            
     rmdir($dir);                                                                
   }                                                                             
-} 
+}
+
+function ifelse($condition,$value_true,$value_false) { // resembles R's ifelse function
+  if ($condition) {
+    return $value_true; 
+  } else {
+    return $value_false;
+  }
+}
+ 
 ?>
