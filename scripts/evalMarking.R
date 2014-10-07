@@ -50,7 +50,7 @@ getAlphalevels <- function(marking,threshold, maxListings,
     ## for A2 (Das kann ich bald wenn ich noch ein wenig übe) I order by item, alphalevel. Take only the alphalevel and only those values which are not duplicates !!!FIXME!!! I should rewrite this with thersholds
     wronganswers <- marking[marking$mark==0,c("task","alphaid")]
     ##wrong.task <- as.character(wronganswers$task)
-    wrong.alpha <- unique(as.character(wronganswers$alphalevel))
+    wrong.alpha <- unique(as.character(wronganswers$alphaid))
     ##ind.order <- order(wrong.task,wrong.alpha,decreasing=FALSE)
     if (length(wrong.alpha)>0) {
       df <- t(sapply(strsplit(wrong.alpha,"\\."),function(x) as.integer(x)))
