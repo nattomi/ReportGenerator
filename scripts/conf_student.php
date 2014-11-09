@@ -17,4 +17,5 @@ $graphics_files = array("lea_blue_check.png","lea_blue_ladder.png",
                         "lea_red_check.png","lea_red_ladder.png",
                         "lea_yellow_check.png","lea_yellow_ladder.png",
                         "logo.pdf"); // these graphics files are required to compile the latex document
+date_default_timezone_set('Europe/Berlin'); // FIXME: on some of my machines I need to add this line, otherwise DateTime() throws an error
 ?>

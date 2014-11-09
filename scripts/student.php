@@ -1,11 +1,26 @@
 <?php
 //$user = $_POST['user']; // user id
-$user = 'SD5AM';
+$id = 'SD5AM';
 //$test = $_POST['test']; // timestamp of the test to be evaluated (as specified in the global user file, f.i. 2014_3_3_20_32_49)
 $test = '2014_9_12_11_30_29'; // if $test is not set here then it defaults to the last test
 // load settings and helper functions
 include 'conf_student.php';
 include 'functions.php';
+
+// MAIN
+$user = new user;
+$user->setId($id);
+$user = $user->id; // this is a dummy line so I can commit the object oriented initiative
+
+// CLASSES
+class user {
+  public $id='KFCG1'; // property for holding user id
+
+  public function setId($newid) {
+    $this->id = $newid;
+  }
+
+}
 
 $udir = $Udir . $user . '/'; // path to the specific user's data directory
 $guf = $udir . $user . ".xml"; // path of the user's "global file"
@@ -177,5 +192,4 @@ if (file_exists($xmlpath_full)) {
 } else {
   echo "error: not existent".$path." user:".$user." dim:".$dim." count:".$count." script:".$script." result:".$result;
 }
-
 ?>
