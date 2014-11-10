@@ -3,39 +3,35 @@
 $id = 'SD5AM';
 //$test = $_POST['test']; // timestamp of the test to be evaluated (as specified in the global user file, f.i. 2014_3_3_20_32_49)
 $test = '2014_9_12_11_30_29'; // if $test is not set here then it defaults to the last test
-// load settings and helper functions
+// load settings + function and class definitions
 include 'conf_student.php';
 include 'functions.php';
+include 'classes.php';
 
 // MAIN
 $user = new user;
 $user->setId($id);
-$user = $user->id; // this is a dummy line so I can commit the object oriented initiative
+$udir = $user->getUserDir(); // path to the specific user's data directory
+$guf = $user->getGlobalXML(); // path of the user's "global file"
 
-// CLASSES
-class user {
-  public $id='KFCG1'; // property for holding user id
-
-  public function setId($newid) {
-    $this->id = $newid;
-  }
-
-}
-
-$udir = $Udir . $user . '/'; // path to the specific user's data directory
-$guf = $udir . $user . ".xml"; // path of the user's "global file"
 // parsing the user's global xml file (if exists)
-//exit("dsd" . $guf . "\n")
-$markingtable = "timestamp\t" . "subject\t" . "level\t" . "task\t" .
-  "subtask\t" . "alphaid\t" . "mark\n";
+$timestamp = array();
+$subject = array();
+$level = array();
+$task = array();
+$subtask = array();
+$alphaid = array();
+$mark = array();
+//$markingtable = "timestamp\t" . "subject\t" . "level\t" . "task\t" .
+//  "subtask\t" . "alphaid\t" . "mark\n";
 if (file_exists($guf)) {
   $xmldoc = simplexml_load_file($guf);
-  $timestamp = array();
+  $timestamp0 = array();
   $datetime_diff = array();
   $prev = array();
   foreach ($xmldoc->test as $test_test) { //
     $timestamp_test = (string)$test_test['timestamp'];
-    $timestamp[] = $timestamp_test;
+    $timestamp0[] = $timestamp_test;
     $pieces = explode("_",$timestamp_test);
     $date = new DateTime();
     $date->setDate($pieces[0],$pieces[1],$pieces[2]);
@@ -57,7 +53,7 @@ if (file_exists($guf)) {
   do {
     //echo $index . "\n";
     $current_test = $xmldoc->test[$index];
-    $current_test_timestamp = $timestamp[$index];
+    $current_test_timestamp = $timestamp0[$index];
     $current_test_subject = (string)$current_test['subject'];
     $current_test_level = (string)$current_test['level'];
     foreach ($current_test->item as $item) {
@@ -67,14 +63,14 @@ if (file_exists($guf)) {
 	$dataf = $udir . $data;
 	if (file_exists($dataf)) {
 	  $xmldoc_item = simplexml_load_file($dataf);
-	  foreach ($xmldoc_item->marking->mark as $mark) {
-	    $markingtable .= $current_test_timestamp . "\t" .
-	      $current_test_subject . "\t" . 
-	      $current_test_level . "\t" .
-	      $iname . "\t" . 
-	      (string)$mark['itemnumber'] . "\t" .
-	      (string)$mark['alphalevel'] . "\t" .
-	      $mark ."\n";
+	  foreach ($xmldoc_item->marking->mark as $mark0) {
+	    $timestamp[] = $current_test_timestamp;
+	    $subject[] = $current_test_subject;
+	    $level[] = $current_test_level;
+	    $task[] = $iname;
+	    $subtask[] = (string)$mark0['itemnumber'];
+	    $alphaid[] = (string)$mark0['alphalevel'];
+	    $mark[] = (int)$mark0;
 	  }
 	} else {
 	  exit("Failed to open file" . $dataf . "\n");
@@ -83,11 +79,13 @@ if (file_exists($guf)) {
     }
     $prevtimestamp = $prev[$index];
     $stopcond = strlen($prevtimestamp) > 0;
-    if ($stopcond) $index = array_keys($timestamp,$prevtimestamp)[0];
+    if ($stopcond) $index = array_keys($timestamp0,$prevtimestamp)[0];
   } while ($stopcond);  
 } else {
   exit("Failed to open the user's global xml file.\n");
 }
+
+$user = $user->id; // this is a dummy line so I can commit the object oriented initiative - it is to be removed later
 
 // writing out marking table into a marking txt file
 $odir_user = $odir . $user;
@@ -99,7 +97,12 @@ $tempdir = $odir_user . "/tmp";
 if (file_exists($tempdir)) rrmdir($tempdir); // if $tempdir exists we remove it (Alternatively, we could name the temporary directory based on $baseName and delete them in a cronjob...)
 mkdir($tempdir);
 $markingfile = $tempdir . "/" . $baseName . ".mar";
-file_put_contents($markingfile,$markingtable);
+$marks = new marksMatrix($timestamp,$subject,$level,$task,$subtask,$alphaid,$mark);
+ob_start();
+$marks->display();
+$contents = ob_get_contents();
+ob_end_clean();
+file_put_contents($markingfile,$contents);
 // we transform the data contained in the just created marking file into an xml result file using the external R script evalMarking.R
 $xmlTimestamp = date('YmdHis',$systime); // date/time of evaluation, used in the <timestamp> node of the xml file
 $xmlpath = $odir_user . "/" . $baseName;
