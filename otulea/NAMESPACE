@@ -1,4 +1,0 @@
-export(alphalist2df,getAlphalevelsA,
-       uncompress,alphalevels2xml,
-       feedback2tex,testResults,
-       getMarkings)

@@ -1,5 +1,0 @@
-%\VignetteIndexEntry{specification}
-\documentclass{article}
-\begin{document}
-\end{document}
-
