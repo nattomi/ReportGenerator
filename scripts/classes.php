@@ -46,6 +46,63 @@ class marksMatrix {
     }
     echo $content;
   }
+  
+  public function evalA1() {
+    if ($this->length() > 0) {
+      $thresholds = tapply_mean($this->mark,$this->alphaid);
+      return $this->alphaid;
+    } else {
+      return array();
+    }
+  }
 }
+
+class alphalist {
+
+  public $alphaID=array();
+  public $order=array();
+  public $description=array();
+  public $userdescription=array();
+  public $example=array();
+  
+  public function __construct($alphalist) {
+    if (file_exists($alphalist)) {
+      $xmldoc = simplexml_load_file($alphalist);
+      foreach ($xmldoc->alphanode as $alphanode) {
+	$alphaID[] = (string)$alphanode['alphaID'];
+	$order[] = (int)$alphanode['order'];
+	$description[] = (string)$alphanode['description'];
+	$userdescription[] = (string)$alphanode['description'];
+	$example[] = (string)$alphanode['example'];
+      }
+      $this->alphaID = $alphaID;
+      $this->order = $order;
+      $this->description = $description;
+      $this->userdescription = $userdescription;
+      $this->example = $example;
+    } else {
+      exit("Creating new alphalist object failed: file not found\n");
+    }
+  }
+
+  public function order() {
+    $a0 = array();
+    $a1 = array();
+    $a2 = array();
+    $a3 = array();
+    foreach ($this->alphaID as $alphaID) {
+      $pieces = explode(".",$alphaID);
+      if (count($pieces) == 3) {
+	$pieces[] = 0; 
+      }
+      $a0[] = (int)$pieces[0];
+      $a1[] = (int)$pieces[1];
+      $a2[] = (int)$pieces[2];
+      $a3[] = (int)$pieces[3];
+    }
+    array_multisort($a0,$a1,$a2,$a3);
+  }
+}
+
 
 ?>
