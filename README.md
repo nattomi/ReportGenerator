@@ -1,14 +1,16 @@
-# OTULEA - performance report generator
+# Report Generator - performance report generator
 
-# for end users
-git clone git://github.com/nattomi/otulear.git 
-# for developers
-git clone git@github.com:nattomi/otulear.git
-# to get the current stable release
+This library is used as a pdf report generator for the [otu.lea](http://otulea.uni-bremen.de/) project. Currently it is pretty much attached to the parent project but the same idea can be used just as well to generate pdf reports of other nature too.
+
+## for end users
+git clone git://github.com/nattomi/ReportGenerator.git 
+## for developers
+git clone git@github.com:nattomi/ReportGenerator.git
+## to get the current stable release
 cd otulear
 git checkout tags/v.1.2.1
 
-# CHANGELOG
+## CHANGELOG
 
 v1.2.1
 ======
