@@ -42,6 +42,7 @@ function tapply_mean($val,$fac) { // resembles a special case of R's tapply func
   foreach (array_keys($levels) as $key) {
     $means[$key] = array_mean($levels[$key]);
   }
+  return $means;
 }
 // I'm not sure yet but maybe there will be a need for comparing alphaIDs
 //function cmp_alphaID($a,$b) {
