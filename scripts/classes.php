@@ -49,8 +49,8 @@ class marksMatrix {
   
   public function evalA1() {
     if ($this->length() > 0) {
-      $thresholds = tapply_mean($this->mark,$this->alphaid);
-      return $this->alphaid;
+      $performance_by_alphaid = tapply_mean($this->mark,$this->alphaid);
+      return $performance_by_alphaid;
     } else {
       return array();
     }

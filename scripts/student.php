@@ -112,14 +112,13 @@ exec($rcmd); // this one creates the XML file
 // At first we parse the alphalist file
 $alphalist = new alphalist($alphalist);
 //$alphalist->order();
-print_r(tapply_mean($marks->mark,$marks->alphaid));
 
 //print_r($marks->evalA1());
 
 
 //print_r($levels);
 //print_r(array_keys($levels));
-///*
+/*
 // Here we parse the just created XML and create TEX files
 $xmlpath_full = $xmlpath . ".xml";
 if (file_exists($xmlpath_full)) {
@@ -205,4 +204,5 @@ if (file_exists($xmlpath_full)) {
 } else {
     echo "error: not existent".$path." user:".$user." dim:".$dim." count:".$count." script:".$script." result:".$result;
   }
+*/
 ?>
