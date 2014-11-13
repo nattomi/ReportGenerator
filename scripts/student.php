@@ -2,7 +2,7 @@
 //$user = $_POST['user']; // user id
 $id = 'SD5AM';
 //$test = $_POST['test']; // timestamp of the test to be evaluated (as specified in the global user file, f.i. 2014_3_3_20_32_49)
-$test = '2014_9_12_11_30_29'; // if $test is not set here then it defaults to the last test
+//$test = '2014_9_12_11_30_29'; // if $test is not set here then it defaults to the last test
 // load settings + function and class definitions
 include 'conf_student.php';
 include 'functions.php';
@@ -22,8 +22,6 @@ $task = array();
 $subtask = array();
 $alphaid = array();
 $mark = array();
-//$markingtable = "timestamp\t" . "subject\t" . "level\t" . "task\t" .
-//  "subtask\t" . "alphaid\t" . "mark\n";
 if (file_exists($guf)) {
   $xmldoc = simplexml_load_file($guf);
   $timestamp0 = array();
@@ -113,7 +111,7 @@ exec($rcmd); // this one creates the XML file
 $alphalist = new alphalist($alphalist);
 //$alphalist->order();
 
-//print_r($marks->evalA1());
+var_dump($marks->evalA1($threshold));
 
 
 //print_r($levels);

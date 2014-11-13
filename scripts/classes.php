@@ -47,10 +47,18 @@ class marksMatrix {
     echo $content;
   }
   
-  public function evalA1() {
+  public function evalA1($threshold) {
     if ($this->length() > 0) {
-      $performance_by_alphaid = tapply_mean($this->mark,$this->alphaid);
-      return $performance_by_alphaid;
+      $score_by_alphaid = tapply_mean($this->mark,$this->alphaid);
+      $alphas_tested = array_keys($score_by_alphaid);
+      $above = array();
+      //print_r($above);
+      foreach($score_by_alphaid as $k => $v) {
+	if ($v >= $threshold/100) {
+	  $above[] = $k;
+	}
+      }
+      return $above;
     } else {
       return array();
     }
