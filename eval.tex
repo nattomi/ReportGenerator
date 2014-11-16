@@ -4,6 +4,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{amsthm}
 \usepackage{hyperref}
 \usepackage{float}
 \usepackage{verbatim}
@@ -11,6 +12,9 @@
 
 \usepackage{tikz}
 \usetikzlibrary{positioning, shapes, arrows}
+
+\newtheorem{mydef}{Definition}
+\newtheorem{remark}{Remark}
 
 \title{Evaluating the performance of users}
 \subtitle{of the otu.lea system}
@@ -34,6 +38,73 @@ timestamp	& subject	& level	& task	& subtask	& alphaid	& mark\\
 2014\_11\_8\_9\_58\_0	& Schreiben	& Einfach	& 2.1.01	& 2.1.01\_2a	& 2.1.05	& 0\\
 2014\_11\_8\_9\_58\_0	& Schreiben	& Einfach	& 2.1.01	& 2.1.01\_2b	& 2.1.14	& 0\\
 \end{tabular}
+
+\section{Definitions of some sets of concern}
+
+\begin{mydef}
+Throughout this document the sets of symbols
+\begin{equation}
+\Delta^+=\{1,2,3,4,5,6,7,8,9\}
+\end{equation}
+and
+\begin{equation}
+\Delta=\{0\}\cup\Delta^+
+\end{equation}
+are going to be referred to as \emph{positive digits} and \emph{digits}, respectively. The set of symbols
+\begin{equation}
+\begin{split}
+\Omega=\Delta \cup \{.,\_\}\cup\{a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,ä,ö,ü,ß\} & \cup\\
+\{A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,Ä,Ö,Ü\} & \\
+\end{split}
+\end{equation}
+is going to be referred to as \emph{alphabet}.
+\end{mydef}
+
+\begin{remark}
+It is trivial from the definition that $\Delta^+\subset\Delta\subset\Omega$.
+\end{remark}
+
+\begin{mydef}
+Elements of the set $$\mathcal{W}_n=\underbrace{\Omega\times \Omega\times\ldots \times \Omega}_{n}$$ are called \emph{words of length n over the alphabet $\Omega$}. We define the \emph{set of words over the alphabet $\Omega$} as $$\mathcal{W}=\bigcup_{n=1}^{\infty}\mathcal{W}_n.$$
+\end{mydef}
+
+\begin{mydef}
+Elements of the set
+$$\mathcal{I}=\Delta^+\cup\bigcup_{n=1}^{\infty}(\Delta^+\times\underbrace{\Delta\times \Delta\times\ldots \times \Delta}_{n})$
+are called \emph{integer words}.
+\end{mydef}
+
+Some examples of integer words are $(1,0)$, $(1,0,2)$, but f.i. $(0,0,1,2)$ is not a valid integer word.
+
+In the upcoming subsections we define some special subsets of $\mathcal{W}$.
+
+
+\subsection{$\mathcal{T}$ - the set of timestamps}
+I will give an exact definition later, for now it is enough to know that $\mathcal{T}\subset\mathcal{W}$.
+\subsection{$\mathcal{S}$ - the set of subjects}
+\begin{mydef}
+The \emph{set of subjects} is defined as
+\begin{equation}
+\mathcal{S}=\{(L,e,s,e,n),(S,c,h,r,e,i,b,e,n),(S,c,h,p,r,a,c,h,e),(M,a,t,h,e)\}.
+\end{equation}
+\end{mydef}
+
+\subsection{$\mathcal{L}$ - the set of levels}
+\begin{mydef}
+The \emph{set of levels} is defined as
+\begin{equation}
+\mathcal{L}=\{(E,i,n,f,a,c,h),(M,i,t,t,e,l),(S,c,h,w,e,r)\}.
+\end{equation}
+\end{mydef}
+
+\subsection{$\mathcal{K}$ - the set of tasks}
+I need more details in order to give an exact definition, for now it is enough to know that $\mathcal{K}\subset\mathcal{W}$.
+
+\subsection{$\mathcal{U}$ - the set of subtasks}
+I need more details in order to give an exact definition, for now it is enough to know that $\mathcal{U}\subset\mathcal{W}$.
+
+\subsection{$\mathcal{A}$ - the set of alpha ids}
+
 
 \section{Mark tables}
 Let $A$ denote the letters of the German alphabet (including numbers and special characters). Let us denote by $\mathcal{S}(A)$ the words that can be created from $A$, i.e.
