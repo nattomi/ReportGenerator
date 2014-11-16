@@ -38,7 +38,11 @@ timestamp	& subject	& level	& task	& subtask	& alphaid	& mark\\
 \section{Mark tables}
 Let $A$ denote the letters of the German alphabet (including numbers and special characters). Let us denote by $\mathcal{S}(A)$ the words that can be created from $A$, i.e.
 $$\mathcal{S}(A)=\cup_{k=1}^{\infty}A^k,$$
-where $A^n$ stands for $\underbrace{A\times A\times\ldots \times A}_{n}$. Let $B=\{0,1\}$ and $$\mathcal{M}=\underbrace{\mathcal{S}(A)}_{\mbox{timestamp}}\times\underbrace{\mathcal{S}(A)}_{\mbox{subject}}\times\underbrace{\mathcal{S}(A)}_{\mbox{level}}\times\underbrace{\mathcal{S}(A)}_{\mbox{task}}\times\underbrace{\mathcal{S}(A)}_{\mbox{subtask}}\times\underbrace{\mathcal{S}(A)}_{\mbox{alphaid}}\times \underbrace{B}_{\mbox{mark}}.$$ A \emph{mark table} is an element in $\mathcal{S}(\mathcal{M})$, but we can also think about it as a finite sequence $M=(m_i)_{i\in I}$ in $\mathcal{M}$ with $I=\{1,2,\ldots,n\}$ for some $n<\infty$. This definition could be even more fine-tuned but it's going to be sufficient for the use cases arise in this document.
+where $A^n$ stands for $\underbrace{A\times A\times\ldots \times A}_{n}$. 
+
+At first we define a further subset of $\mathcal{S}(A)$, namely the subset of alphaids.
+
+Let $B=\{0,1\}$ and $$\mathcal{M}=\underbrace{\mathcal{S}(A)}_{\mbox{timestamp}}\times\underbrace{\mathcal{S}(A)}_{\mbox{subject}}\times\underbrace{\mathcal{S}(A)}_{\mbox{level}}\times\underbrace{\mathcal{S}(A)}_{\mbox{task}}\times\underbrace{\mathcal{S}(A)}_{\mbox{subtask}}\times\underbrace{\mathcal{S}(A)}_{\mbox{alphaid}}\times \underbrace{B}_{\mbox{mark}}.$$ A \emph{mark table} is an element in $\mathcal{S}(\mathcal{M})$, but we can also think about it as a finite sequence $M=(m_i)_{i\in I}$ in $\mathcal{M}$ with $I=\{1,2,\ldots,n\}$ for some $n<\infty$. This definition could be even more fine-tuned but it's going to be sufficient for the use cases arise in this document.
 
 \section{Evaluation modes}
 We present two different evaluation methods here, one is called ``Das kann ich!'' (\emph{mode A1}) and the other is called ``Das kann ich bald wenn ich moch ein wenig übe'' (\emph{mode A2}). The evaluation methods are basically mappings from $\mathcal{S}({\mathcal{M}})$ to $\mathcal{P}({\mathcal{S}(A)})$, where $\mathcal{P}(\cdot)$ denotes the power set of a set.
@@ -49,5 +53,9 @@ We start from a mark table $M=(m_i)_{i\in I}$. Let's define the relation $\sim$ 
 i\sim j \Leftrightarrow m_i^{(6)}=m_j^{(6)}.
 \label{eq:part}
 \end{equation}
-It is easy to see that (\ref{eq:part}) is an equivalence relation and as such it defines a partition over $I$.
+It is easy to see that (\ref{eq:part}) is an equivalence relation and as such it defines a partition over $I$, i.e. there exist some nonempty, disjoint sets $I_1,I_2,\ldots,I_r$ such that $$I=\cup_{i=1}^r I_i$$ and $i$ and $j$ are in $I_k$ if and only if $i\sim j$ i.e. $m_i^{(6)}=m_j^{(6)}$. Moreover, this resolution of $I$ is unique. Let us choose an element $i_k\in I_k$ (i.e. a \emph{representative}) for each $k=1,2,\ldots,r$.
+
+Let $t\in [0,100]$ denote our predefined threshold for fullfilling a competency. Then, our preliminary result set is defined by 
+$$R=\{m_{i_k}^{(6)}: \frac{\sum_{i \in I_k}m_{i_k}^{(7)}}{|I_k|}\geq 100^{-1}t, k=1,2,\ldots r\}.$$
+Let 
 \end{document}
