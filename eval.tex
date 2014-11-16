@@ -1,0 +1,53 @@
+\documentclass{scrartcl}
+
+\usepackage{fullpage}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage{verbatim}
+\usepackage{color}
+
+\usepackage{tikz}
+\usetikzlibrary{positioning, shapes, arrows}
+
+\title{Evaluating the performance of users}
+\subtitle{of the otu.lea system}
+\author{Tamás Nagy\\ \small nattomi@gmail.com}
+
+\begin{document}
+\maketitle
+\section{Introduction}
+The performance of a user during a test-session (regardless whether the test was interrupted or not) can be summarized in a so-called \emph{mark table}. The formal definition of a mark table will be given later below, for now we just give an example for clarity:
+
+\vspace{.5cm}
+\begin{tabular}{lllllll}
+timestamp	& subject	& level	& task	& subtask	& alphaid	& mark\\
+2014\_11\_8\_10\_6\_59	& Schreiben	& Einfach	& 2.2.02\_III	& 2.2.02\_III\_10b	& 2.1.13	& 1\\
+2014\_11\_8\_10\_6\_59	& Schreiben	& Einfach	& 2.2.02\_III	& 2.2.02\_III\_10c	& 2.1.08	& 1\\
+2014\_11\_8\_10\_6\_59	& Schreiben	& Einfach	& 2.2.02\_III	& 2.2.02\_III\_11	& 2.2.08	& 0\\
+2014\_11\_8\_10\_6\_59	& Schreiben	& Einfach	& 2.2.02\_III	& 2.2.02\_III\_12	& 2.2.08	& 1\\
+2014\_11\_8\_10\_6\_59	& Schreiben	& Einfach	& 2.2.02\_III	& 2.2.02\_III\_13	& 2.1.07	& 0\\
+2014\_11\_8\_9\_58\_0	& Schreiben	& Einfach	& 2.1.01	& 2.1.01\_1a	& 2.1.05	& 1\\
+2014\_11\_8\_9\_58\_0	& Schreiben	& Einfach	& 2.1.01	& 2.1.01\_1b	& 2.1.14	& 1\\
+2014\_11\_8\_9\_58\_0	& Schreiben	& Einfach	& 2.1.01	& 2.1.01\_2a	& 2.1.05	& 0\\
+2014\_11\_8\_9\_58\_0	& Schreiben	& Einfach	& 2.1.01	& 2.1.01\_2b	& 2.1.14	& 0\\
+\end{tabular}
+
+\section{Mark tables}
+Let $A$ denote the letters of the German alphabet (including numbers and special characters). Let us denote by $\mathcal{S}(A)$ the words that can be created from $A$, i.e.
+$$\mathcal{S}(A)=\cup_{k=1}^{\infty}A^k,$$
+where $A^n$ stands for $\underbrace{A\times A\times\ldots \times A}_{n}$. Let $B=\{0,1\}$ and $$\mathcal{M}=\underbrace{\mathcal{S}(A)}_{\mbox{timestamp}}\times\underbrace{\mathcal{S}(A)}_{\mbox{subject}}\times\underbrace{\mathcal{S}(A)}_{\mbox{level}}\times\underbrace{\mathcal{S}(A)}_{\mbox{task}}\times\underbrace{\mathcal{S}(A)}_{\mbox{subtask}}\times\underbrace{\mathcal{S}(A)}_{\mbox{alphaid}}\times \underbrace{B}_{\mbox{mark}}.$$ A \emph{mark table} is an element in $\mathcal{S}(\mathcal{M})$, but we can also think about it as a finite sequence $M=(m_i)_{i\in I}$ in $\mathcal{M}$ with $I=\{1,2,\ldots,n\}$ for some $n<\infty$. This definition could be even more fine-tuned but it's going to be sufficient for the use cases arise in this document.
+
+\section{Evaluation modes}
+We present two different evaluation methods here, one is called ``Das kann ich!'' (\emph{mode A1}) and the other is called ``Das kann ich bald wenn ich moch ein wenig übe'' (\emph{mode A2}). The evaluation methods are basically mappings from $\mathcal{S}({\mathcal{M}})$ to $\mathcal{P}({\mathcal{S}(A)})$, where $\mathcal{P}(\cdot)$ denotes the power set of a set.
+
+\section{Description of evaluation mode A1}
+We start from a mark table $M=(m_i)_{i\in I}$. Let's define the relation $\sim$ over $I$ as follows:
+\begin{equation}
+i\sim j \Leftrightarrow m_i^{(6)}=m_j^{(6)}.
+\label{eq:part}
+\end{equation}
+It is easy to see that (\ref{eq:part}) is an equivalence relation and as such it defines a partition over $I$.
+\end{document}
