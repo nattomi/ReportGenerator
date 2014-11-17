@@ -22,7 +22,7 @@
 
 \begin{document}
 \maketitle
-\section{Introduction}
+\section{Introduction}\label{sec:intro}
 The performance of a user during a test-session (regardless whether the test was interrupted or not) can be summarized in a so-called \emph{mark table}. The formal definition of a mark table will be given later below, for now we just give an example for clarity:
 
 \vspace{.5cm}
@@ -70,11 +70,17 @@ Elements of the set $$\mathcal{W}_n=\underbrace{\Omega\times \Omega\times\ldots 
 
 \begin{mydef}
 Elements of the set
-$$\mathcal{I}=\Delta^+\cup\bigcup_{n=1}^{\infty}(\Delta^+\times\underbrace{\Delta\times \Delta\times\ldots \times \Delta}_{n})$
+$$\mathcal{I}=\Delta^+\cup\bigcup_{n=1}^{\infty}(\Delta^+\times\underbrace{\Delta\times \Delta\times\ldots \times \Delta}_{n})$$
 are called \emph{integer words}.
 \end{mydef}
 
 Some examples of integer words are $(1,0)$, $(1,0,2)$, but f.i. $(0,0,1,2)$ is not a valid integer word.
+
+\begin{mydef}
+Let $A,B\subset\mathcal{W}$ be arbitrary sets. We call the set 
+$$A.B=A\times\{.\}\times B\subset\mathcal{W}$$
+the \emph{dotproduct} of those sets.
+\end{mydef}
 
 In the upcoming subsections we define some special subsets of $\mathcal{W}$.
 
@@ -104,6 +110,23 @@ I need more details in order to give an exact definition, for now it is enough t
 I need more details in order to give an exact definition, for now it is enough to know that $\mathcal{U}\subset\mathcal{W}$.
 
 \subsection{$\mathcal{A}$ - the set of alpha ids}
+\begin{mydef}
+Consider the following recursion of sets in $\mathcal{W}:$
+\begin{equation}
+\begin{split}
+\mathcal{A}_0= & \mathcal{I}\\
+\vdots &\\
+\mathcal{A}_{n} = &\mathcal{A}_{n-1}.\mathcal{I} \mbox{ for } n>1.\\
+\end{split}
+\end{equation}
+The set $$\mathcal{A}=\bigcup_{n=0}^{\infty}\mathcal{A}_n\subset\mathcal{W}$$ is called the \emph{set of alpha ids}. 
+\end{mydef}
+
+\begin{remark}
+This definition doesn't describe the reality perfectly because in otu.lea some there are some alpha ids which are outside of $\mathcal{A}$, such as 2.1.08 (or $(2,.,1,.,0,8)$) in the example of section \ref{sec:intro}. However, it is rather an inconsistency in the implementation than in the definition above.
+\end{remark}
+
+Some examples of alpha ids are $(1,.,2,.,10)$ or $(10,.,2)$, but f.i. $(10,.,0,.,9,.,10)$ or $(a,.,10,.,b)$ are not valid alpha ids. In the remaining part of the subsection we introduce an ordering on the set $\mathcal{A}$. $\prec_{\mathcal{A}}$ or $\prec^{\mathcal{A}}$.
 
 
 \section{Mark tables}
