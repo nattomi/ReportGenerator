@@ -41,40 +41,40 @@ timestamp	& subject	& level	& task	& subtask	& alphaid	& mark\\
 
 \section{Definitions of some sets of concern}
 
-\begin{mydef}
-Throughout this document the sets of symbols
-\begin{equation}
-\Delta^+=\{1,2,3,4,5,6,7,8,9\}
-\end{equation}
-and
-\begin{equation}
-\Delta=\{0\}\cup\Delta^+
-\end{equation}
-are going to be referred to as \emph{positive digits} and \emph{digits}, respectively. The set of symbols
+Throughout this document the sets of some symbols are going to be referred to as a \emph{alphabet}. Some examples of a alphabet includes
+$$\Delta^+=\{1,2,3,4,5,6,7,8,9\} \mbox{ and }\Delta=\{0\}\cup\Delta^+$$
+which are going to be referred to as \emph{positive digits} and \emph{digits}, respectively. Another example is the set 
 \begin{equation}
 \begin{split}
 \Omega=\Delta \cup \{.,\_\}\cup\{a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,ä,ö,ü,ß\} & \cup\\
-\{A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,Ä,Ö,Ü\} & \\
+\{A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,Ä,Ö,Ü\}. & \\
 \end{split}
 \end{equation}
-is going to be referred to as \emph{alphabet}.
-\end{mydef}
-
-\begin{remark}
-It is trivial from the definition that $\Delta^+\subset\Delta\subset\Omega$.
-\end{remark}
+In this document when we use the word alphabet -- if not otherwise stated -- we always think about the set $\Omega$. It is trivial from the construction of the sets above that $\Delta^+\subset\Delta\subset\Omega$.
 
 \begin{mydef}
-Elements of the set $$\mathcal{W}_n=\underbrace{\Omega\times \Omega\times\ldots \times \Omega}_{n}$$ are called \emph{words of length n over the alphabet $\Omega$}. We define the \emph{set of words over the alphabet $\Omega$} as $$\mathcal{W}=\bigcup_{n=1}^{\infty}\mathcal{W}_n.$$
+Elements of the set $$\mathcal{W}_n(\Omega)=\underbrace{\Omega\times \Omega\times\ldots \times \Omega}_{n}$$ are called \emph{words of length n over the alphabet $\Omega$}. We define the \emph{set of words over the alphabet $\Omega$} as $$\mathcal{W}(\Omega)=\bigcup_{n=1}^{\infty}\mathcal{W}_n(\Omega).$$
 \end{mydef}
 
 \begin{mydef}
+Let $w\in\mathcal{W}({\Omega})$. It is easy to prove that there exists a unique $n>0$ such that $w\in\mathcal{W}_n({\Omega})$. $n$ is called the \emph{length} of the word $w$ and it is denoted by $|w|$.
+\end{mydef}
+
+\begin{mydef} 
 Elements of the set
-$$\mathcal{I}=\Delta^+\cup\bigcup_{n=1}^{\infty}(\Delta^+\times\underbrace{\Delta\times \Delta\times\ldots \times \Delta}_{n})$$
-are called \emph{integer words}.
+$$\mathcal{I}=\mathcal{W}(\Delta)$$
+are called \emph{integer words} whereas elements of the set
+$$\mathcal{I}^+=\mathcal{I}\setminus\mathcal{W}(\{0\})$$ are called \emph{positive integer words}.
 \end{mydef}
 
-Some examples of integer words are $(1,0)$, $(1,0,2)$, but f.i. $(0,0,1,2)$ is not a valid integer word.
+Some examples of integer words are $(1,0)$, $(1,0,2)$ or $(0,0,1,2)$. It is obvious that integer words got there name from the fact that they symbolize integer numbers, for instance
+\begin{equation}
+\begin{split}
+(1,0)\mapsto & 10^0\cdot 0+10^1\cdot 1=10\\
+(1,0,2)\mapsto & 10^0\cdot 2 + 10^1\cdot 0 + 10^2\cdot 1=102\\
+(0,0,1,2)\mapsto & 10^0\cdot 2 + 10^1\cdot 1 + 10^2\cdot 0 + 10^3\cdot 0=12
+\end{split}
+\end{equation}
 
 \begin{mydef}
 Let $A,B\subset\mathcal{W}$ be arbitrary sets. We call the set 
