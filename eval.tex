@@ -50,8 +50,12 @@ which are going to be referred to as \emph{positive digits} and \emph{digits}, r
 \{A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,Ä,Ö,Ü\}. & \\
 \end{split}
 \end{equation}
-In this document when we use the word alphabet -- if not otherwise stated -- we always think about the set $\Omega$. It is trivial from the construction of the sets above that $\Delta^+\subset\Delta\subset\Omega$.
+In this document when we use the word alphabet -- if not otherwise stated -- we always think about the set $\Omega$. It is trivial from the construction of the sets above that $\Delta^+\subset\Delta\subset\Omega$ and $\Delta^+\subset\Delta\subset\mathbb{N}$ where $\mathbb{N}$ denotes the set of natural numbers (including 0).
 
+\begin{remark}
+The last statement is not 100\% correct here because elements of $\Delta$ are just symbols not actual numbers, but we allow us this slight incorrectness because our notation is chosen so that it is clear that f.i. the digit $9\in\Delta$ symbolizes the number $9\in\mathbb{N}$.
+\end{remark}
+ 
 \begin{mydef}
 Elements of the set $$\mathcal{W}_n(\Omega)=\underbrace{\Omega\times \Omega\times\ldots \times \Omega}_{n}$$ are called \emph{words of length n over the alphabet $\Omega$}. We define the \emph{set of words over the alphabet $\Omega$} as $$\mathcal{W}(\Omega)=\bigcup_{n=1}^{\infty}\mathcal{W}_n(\Omega).$$
 \end{mydef}
@@ -67,7 +71,7 @@ are called \emph{integer words} whereas elements of the set
 $$\mathcal{I}^+=\mathcal{I}\setminus\mathcal{W}(\{0\})$$ are called \emph{positive integer words}.
 \end{mydef}
 
-Some examples of integer words are $(1,0)$, $(1,0,2)$ or $(0,0,1,2)$. It is obvious that integer words got there name from the fact that they symbolize integer numbers, for instance
+Some examples of integer words are $(1,0)$, $(1,0,2)$ or $(0,0,1,2)$. It is obvious that integer words got their name from the fact that they symbolize integer numbers, for instance
 \begin{equation}
 \begin{split}
 (1,0)\mapsto & 10^0\cdot 0+10^1\cdot 1=10\\
@@ -77,13 +81,16 @@ Some examples of integer words are $(1,0)$, $(1,0,2)$ or $(0,0,1,2)$. It is obvi
 \end{equation}
 
 \begin{mydef}
+Let $w\in\mathcal{I}$ and let $n=|w|$. Then there exists $d_1,d_2,\ldots,d_n\in\Delta\subset\mathbb{N}$ such that $w=(d_1,d_2,\ldots,d_n)$. The number $$w^{\ast}=\sum_{i=0}^{n-1}10^id_{n-i}$$ is called the \emph{integer value} of $w$.
+\end{mydef}
+
+\begin{mydef}
 Let $A,B\subset\mathcal{W}$ be arbitrary sets. We call the set 
 $$A.B=A\times\{.\}\times B\subset\mathcal{W}$$
 the \emph{dotproduct} of those sets.
 \end{mydef}
 
 In the upcoming subsections we define some special subsets of $\mathcal{W}$.
-
 
 \subsection{$\mathcal{T}$ - the set of timestamps}
 I will give an exact definition later, for now it is enough to know that $\mathcal{T}\subset\mathcal{W}$.
@@ -114,19 +121,28 @@ I need more details in order to give an exact definition, for now it is enough t
 Consider the following recursion of sets in $\mathcal{W}:$
 \begin{equation}
 \begin{split}
-\mathcal{A}_0= & \mathcal{I}\\
+\mathcal{A}_0= & \mathcal{I}^+\\
 \vdots &\\
-\mathcal{A}_{n} = &\mathcal{A}_{n-1}.\mathcal{I} \mbox{ for } n>1.\\
+\mathcal{A}_{n} = &\mathcal{A}_{n-1}.\mathcal{I}^+ \mbox{ for } n>1.\\
 \end{split}
 \end{equation}
 The set $$\mathcal{A}=\bigcup_{n=0}^{\infty}\mathcal{A}_n\subset\mathcal{W}$$ is called the \emph{set of alpha ids}. 
 \end{mydef}
 
-\begin{remark}
-This definition doesn't describe the reality perfectly because in otu.lea some there are some alpha ids which are outside of $\mathcal{A}$, such as 2.1.08 (or $(2,.,1,.,0,8)$) in the example of section \ref{sec:intro}. However, it is rather an inconsistency in the implementation than in the definition above.
-\end{remark}
+Some examples of alpha ids are $(1,.,2,.,10)$, $(10,.,2)$ or $(1,.,2,.,0,2)$, but f.i.  $(10,.,0,.,9,.,10)$ or $(a,.,10,.,b)$ are not valid alpha ids. 
 
-Some examples of alpha ids are $(1,.,2,.,10)$ or $(10,.,2)$, but f.i. $(10,.,0,.,9,.,10)$ or $(a,.,10,.,b)$ are not valid alpha ids. In the remaining part of the subsection we introduce an ordering on the set $\mathcal{A}$. $\prec_{\mathcal{A}}$ or $\prec^{\mathcal{A}}$.
+\begin{mydef}
+For each $w\in\matchal{A}$ there exists a unique $n>0$ such that $w\in\mathcal{A}_n$. $n$ is called the dimension of $w$ and it is denoted by $\dim(w)$.
+\end{mydef}
+
+\begin{mydef}
+Let $w\in\mathcal{A}$ and let $n=\dim(w)$. Then there exists $I_1,I_2,\ldots,I_n\in\mathcal{I}^+$ such that $w=(I_1,.,I_2,.,\ldots,.,I_n)$. The vector 
+$$w^{\times}=(I_1^{\ast},I_2^{\ast},\ldots,I_n^{\ast})\in\mathbb{N}^n$$ is called the \emph{integer decomposition} of $w$.
+\end{mydef}
+
+In the next section we introduce an ordering on the set $\mathcal{A}$.
+
+\section{Ordering of alpha ids}
 
 
 \section{Mark tables}
