@@ -140,24 +140,38 @@ Let $w\in\mathcal{A}$ and let $n=\dim(w)$. Then there exists $I_1,I_2,\ldots,I_n
 $$w^{\times}=(I_1^{\ast},I_2^{\ast},\ldots,I_n^{\ast})\in\mathbb{N}^n$$ is called the \emph{integer decomposition} of $w$.
 \end{mydef}
 
-In the next section we introduce an ordering on the set $\mathcal{A}$.
+It can be shown that one can define a total order on $\mathcal{A}$ using the following order relation.
 
-\section{Ordering of alpha ids}
-
+\begin{mydef}
+Let $\alpha, \beta\in\mathcal{A}$. We say that $\alpha\prec\beta$ if and only if
+\begin{itemize}
+\item there exists $0<m<\min(\dim\alpha,\dim\beta)$ such that $\alpha^{\times}_i=\beta^{\times}_i$ for all $i<m$ but $\alpha^{\times}_m<\beta^{\times}_m$ or
+\item $\dim\alpha < \dim\beta$ and $\alpha^{\times}_i=\beta^{\times}_i$ for all $i\leq\dim\alpha$.
+\end{itemize}
+\end{mydef}
 
 \section{Mark tables}
-Let $A$ denote the letters of the German alphabet (including numbers and special characters). Let us denote by $\mathcal{S}(A)$ the words that can be created from $A$, i.e.
-$$\mathcal{S}(A)=\cup_{k=1}^{\infty}A^k,$$
-where $A^n$ stands for $\underbrace{A\times A\times\ldots \times A}_{n}$. 
+Let $M=\{0,1\}$ and let us fix $\mathcal{F}\subset\mathcal{A}$, $|\mathcal{F}|<\infty$ as the set of \emph{feasible alpha ids}\footnote{This is an abstraction of the alpha ids in the \texttt{alphalist.xml} file}. We construct the set $\mu$ as 
+$$\mu=\underbrace{\mathcal{T}}_{\mbox{timestamps}}\times\underbrace{\mathcal{S}}_{\mbox{subjects}}\times\underbrace{\mathcal{L}}_{\mbox{levels}}\times\underbrace{\mathcal{K}}_{\mbox{tasks}}\times\underbrace{\mathcal{U}}_{\mbox{subtasks}}\times\underbrace{\mathcal{F}}_{\mbox{alphaids}}\times \underbrace{B}_{\mbox{marks}}.$$ 
+A \emph{mark table} is an element in $\mathcal{W}(\mathcal{\mu})$\footnote{I must emphasize earlier in the document that the notation $\mathcal{W}$ can be used not only for alphabets!}, but we can also think about it as a finite sequence $M=(m_i)_{i\in I}$ in $\mu$ with $I=\{1,2,\ldots,n\}$ for some $n<\infty$.
 
-At first we define a further subset of $\mathcal{S}(A)$, namely the subset of alphaids.
-
-Let $B=\{0,1\}$ and $$\mathcal{M}=\underbrace{\mathcal{S}(A)}_{\mbox{timestamp}}\times\underbrace{\mathcal{S}(A)}_{\mbox{subject}}\times\underbrace{\mathcal{S}(A)}_{\mbox{level}}\times\underbrace{\mathcal{S}(A)}_{\mbox{task}}\times\underbrace{\mathcal{S}(A)}_{\mbox{subtask}}\times\underbrace{\mathcal{S}(A)}_{\mbox{alphaid}}\times \underbrace{B}_{\mbox{mark}}.$$ A \emph{mark table} is an element in $\mathcal{S}(\mathcal{M})$, but we can also think about it as a finite sequence $M=(m_i)_{i\in I}$ in $\mathcal{M}$ with $I=\{1,2,\ldots,n\}$ for some $n<\infty$. This definition could be even more fine-tuned but it's going to be sufficient for the use cases arise in this document.
+Before we go on we introduce some further notations related to finite, totally ordered sets.
+\begin{mydef}
+If $(R,\prec)$ is a finite, totally ordered set, then the sequence $R^{\prec}=(r^{\prec}_i)_{i=1}^{|R|}$ defined by the recursion
+\begin{equation}
+\begin{split}
+r^{\prec}_1= & \min R\\
+\vdots &\\
+r^{\prec}_n = & \min R\setminus\{r^{\prec}_1,r^{\prec}_2,\ldots,r^{\prec}_{n-1}\} \mbox{ for } n>1.\\
+\end{split}
+\end{equation}
+is called the \emph{increasing sequence} of $R$. Similarly, $R^{\succ}$ can be defined as the \emph{decreasing sequence}.
+\end{mydef}
 
 \section{Evaluation modes}
-We present two different evaluation methods here, one is called ``Das kann ich!'' (\emph{mode A1}) and the other is called ``Das kann ich bald wenn ich moch ein wenig übe'' (\emph{mode A2}). The evaluation methods are basically mappings from $\mathcal{S}({\mathcal{M}})$ to $\mathcal{P}({\mathcal{S}(A)})$, where $\mathcal{P}(\cdot)$ denotes the power set of a set.
+We present two different evaluation methods here, one is called ``Das kann ich!'' (\emph{mode A1}) and the other is called ``Das kann ich bald wenn ich moch ein wenig übe'' (\emph{mode A2}). The evaluation methods are basically mappings from $\mathcal{W}({\mathcal{M}})$ to the set of finite sequences over $\mathcal{F}$.
 
-\section{Description of evaluation mode A1}
+\subsection{Description of evaluation mode A1}
 We start from a mark table $M=(m_i)_{i\in I}$. Let's define the relation $\sim$ over $I$ as follows:
 \begin{equation}
 i\sim j \Leftrightarrow m_i^{(6)}=m_j^{(6)}.
@@ -166,6 +180,17 @@ i\sim j \Leftrightarrow m_i^{(6)}=m_j^{(6)}.
 It is easy to see that (\ref{eq:part}) is an equivalence relation and as such it defines a partition over $I$, i.e. there exist some nonempty, disjoint sets $I_1,I_2,\ldots,I_r$ such that $$I=\cup_{i=1}^r I_i$$ and $i$ and $j$ are in $I_k$ if and only if $i\sim j$ i.e. $m_i^{(6)}=m_j^{(6)}$. Moreover, this resolution of $I$ is unique. Let us choose an element $i_k\in I_k$ (i.e. a \emph{representative}) for each $k=1,2,\ldots,r$.
 
 Let $t\in [0,100]$ denote our predefined threshold for fullfilling a competency. Then, our preliminary result set is defined by 
-$$R=\{m_{i_k}^{(6)}: \frac{\sum_{i \in I_k}m_{i_k}^{(7)}}{|I_k|}\geq 100^{-1}t, k=1,2,\ldots r\}.$$
-Let 
+$$R=\{m_{i_k}^{(6)}: |I_k|^{-1}\sum_{i \in I_k}m_{i}^{(7)}\geq 100^{-1}t, (k=1,2,\ldots r)\}.$$
+Our final result is then $R^{\prec}$.
+\begin{remark}
+In our example implementation we do not allow our result sequence to be longer then a predefined number $L\in\mathbb{N}^+$, so we take the sequence $(r^{\prec}_i)_{i=1}^{\min(|R|,L)}$ instead.    
+\end{remark}
+
+\begin{remark}
+It is possible, that $R=\emptyset$, especially when the thresold $t$ is too high. In that case $R^{\prec}$ also becomes empty of course.
+\end{remark}
+
+\subsection{Description of evaluation mode A2}
+Assume that we have the marking table $M=(m_i)_{i\in I}$ in hand which is to be evaluated.
+
 \end{document}
