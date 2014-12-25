@@ -183,14 +183,28 @@ Let $t\in [0,100]$ denote our predefined threshold for fullfilling a competency.
 $$R=\{m_{i_k}^{(6)}: |I_k|^{-1}\sum_{i \in I_k}m_{i}^{(7)}\geq 100^{-1}t, (k=1,2,\ldots r)\}.$$
 Our final result is then $R^{\prec}$.
 \begin{remark}
-In our example implementation we do not allow our result sequence to be longer then a predefined number $L\in\mathbb{N}^+$, so we take the sequence $(r^{\prec}_i)_{i=1}^{\min(|R|,L)}$ instead.    
+In our implementation we do not allow our result sequence to be longer then a predefined number $L\in\mathbb{N}^+$, so we take the sequence $(r^{\prec}_i)_{i=1}^{\min(|R|,L)}$ instead.    
 \end{remark}
 
 \begin{remark}
 It is possible, that $R=\emptyset$, especially when the thresold $t$ is too high. In that case $R^{\prec}$ also becomes empty of course.
 \end{remark}
 
+\begin{remark}
+Note that we could have projected or sequence into $\mathcal{F}\times\mathcal{B}$ because the other coordinates where not used at all in the evaluation.
+\end{remark}
 \subsection{Description of evaluation mode A2}
-Assume that we have the marking table $M=(m_i)_{i\in I}$ in hand which is to be evaluated.
+Assume that we have the marking table $M=(m_i)_{i\in I}$ in hand which is to be evaluated. At first We construct the set $I_0=\{i\in I: m_i^{(7)}=0\}\subset I$. Using the equivalence relation of \ref{eq:part} we can find nonempty, disjoint sets such that $$I_0=\cup_{i=1}^rI_i.$$ Let us choose an element $i_k\in I_k$ (i.e. a \emph{representative}) for each $k=1,2,\ldots,r$. Then, our preliminary result set is defined by
+$$R=\{m^{(6)}_{i_k}:k=1,2,\ldots,r\}.$$
+Our final result set is then $R^{\prec}$.
+\begin{remark}
+In our implementation we do not allow our result sequence to be longer then a predefined number $L\in\mathbb{N}^+$, so we take the sequence $(r^{\prec}_i)_{i=1}^{\min(|R|,L)}$ instead.    
+\end{remark}
+\begin{remark}
+Note that we could have projected or sequence into $\mathcal{F}\times\mathcal{B}$ because the other coordinates where not used at all in the evaluation.
+\end{remark}
+\begin{remark}
+If the mark received is 1 for each subtask, i.e. $m^{(7)}_i=1$ for all $i$ then $I_0=\emptyset$. In that case $R$ and consequently $R^{\prec}$ becomes empty too.
+\end{remark} 
 
 \end{document}
