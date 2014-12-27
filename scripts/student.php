@@ -11,8 +11,8 @@ include 'classes.php';
 // MAIN
 // We define wich user and (optionally) which test we wish to evaluate
 //$user = new user($_POST['user']); // this is going to be the most common use case
-//$user = new user('SD5AM'); // for testing/developing 
-$user = new user('SD5AM','2014_9_12_11_30_29'); // for testing/developing
+$user = new user('SD5AM'); // for testing/developing 
+//$user = new user('SD5AM','2014_9_12_11_30_29'); // for testing/developing
 $marks = $user->getMarks();
 
 $user = $user->id; // this is a dummy line so I can commit the object oriented initiative - it is to be removed later
@@ -27,7 +27,6 @@ $tempdir = $odir_user . "/tmp";
 if (file_exists($tempdir)) rrmdir($tempdir); // if $tempdir exists we remove it (Alternatively, we could name the temporary directory based on $baseName and delete them in a cronjob...)
 mkdir($tempdir);
 $markingfile = $tempdir . "/" . $baseName . ".mar";
-//$marks = new marksMatrix($timestamp,$subject,$level,$task,$subtask,$alphaid,$mark);
 ob_start();
 $marks->display();
 $contents = ob_get_contents();
@@ -44,10 +43,14 @@ $alphalist = new alphalist($alphalist);
 //$alphalist->order();
 
 var_dump($marks->evalA1($threshold));
+var_dump($marks->evalA2($threshold));
 
+$pdfname = $baseName . ".pdf";
+$subject = "Lesen";
+$level = "Einfach";
+$result = new result($pdfname,$xmlTimestamp,$subject,$level);
+echo $result->asXML()->asXML();
 
-//print_r($levels);
-//print_r(array_keys($levels));
 /*
 // Here we parse the just created XML and create TEX files
 $xmlpath_full = $xmlpath . ".xml";

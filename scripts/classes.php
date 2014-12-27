@@ -143,6 +143,47 @@ class marksMatrix {
       return array();
     }
   }
+
+  public function evalA2($threshold) { // note that at the moment it is a dummy function
+    if ($this->length() > 0) {
+      $score_by_alphaid = tapply_mean($this->mark,$this->alphaid);
+      $alphas_tested = array_keys($score_by_alphaid);
+      $above = array();
+      //print_r($above);
+      foreach($score_by_alphaid as $k => $v) {
+	if ($v >= $threshold/100) {
+	  $above[] = $k;
+	}
+      }
+      return $above;
+    } else {
+      return array();
+    }
+  }
+
+}
+
+class result {
+  public $pdfname;
+  public $timestamp;
+  public $subject;
+  public $level;
+
+  public function __construct($pdfname,$timestamp,$subject,$level) {
+    $this->pdfname = $pdfname;
+    $this->timestamp = $timestamp;
+    $this->subject = $subject;
+    $this->level = $level;
+  }
+  
+  public function asXML() {
+    $resultsXML = new SimpleXMLElement("<results></results>");
+    $resultsXML->addAttribute('newsPagePrefix', 'value goes here');
+    $resultsPrint = $resultsXML->addChild('print');
+    $resultsPrint->addAttribute('file',$pdfname);
+    //Header('Content-type: text/xml'); // do I need this?
+    return $resultsXML;
+  }
 }
 
 class alphalist {
