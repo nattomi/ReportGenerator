@@ -9,79 +9,11 @@ include 'functions.php';
 include 'classes.php';
 
 // MAIN
-$user = new user;
-$user->setId($id);
-$udir = $user->getUserDir(); // path to the specific user's data directory
-$guf = $user->getGlobalXML(); // path of the user's "global file"
-
-// parsing the user's global xml file (if exists)
-$timestamp = array();
-$subject = array();
-$level = array();
-$task = array();
-$subtask = array();
-$alphaid = array();
-$mark = array();
-if (file_exists($guf)) {
-  $xmldoc = simplexml_load_file($guf);
-  $timestamp0 = array();
-  $datetime_diff = array();
-  $prev = array();
-  foreach ($xmldoc->test as $test_test) { //
-    $timestamp_test = (string)$test_test['timestamp'];
-    $timestamp0[] = $timestamp_test;
-    $pieces = explode("_",$timestamp_test);
-    $date = new DateTime();
-    $date->setDate($pieces[0],$pieces[1],$pieces[2]);
-    $date->setTime($pieces[3],$pieces[4],$pieces[5]);
-    $unixtime_test = $date->getTimeStamp();
-    if (isset($test)) {
-      $pieces = explode("_",$test);
-      $refdate = new DateTime();
-      $refdate->setDate($pieces[0],$pieces[1],$pieces[2]);
-      $refdate->setTime($pieces[3],$pieces[4],$pieces[5]);
-      $unixtime_test = $date->getTimeStamp();
-      $datetime_diff[] = abs($unixtime_test - $refdate->getTimeStamp());
-    } else {
-      $datetime_diff[] = -$unixtime_test;
-    }
-    $prev[] = (string)$test_test['prev'];
-  }
-  $index = array_keys($datetime_diff,min($datetime_diff))[0];
-  do {
-    //echo $index . "\n";
-    $current_test = $xmldoc->test[$index];
-    $current_test_timestamp = $timestamp0[$index];
-    $current_test_subject = (string)$current_test['subject'];
-    $current_test_level = (string)$current_test['level'];
-    foreach ($current_test->item as $item) {
-      $iname = (string)$item['iname'];
-      $data = (string)$item['data'];
-      if (strlen($data) > 0) {
-	$dataf = $udir . $data;
-	if (file_exists($dataf)) {
-	  $xmldoc_item = simplexml_load_file($dataf);
-	  foreach ($xmldoc_item->marking->mark as $mark0) {
-	    $timestamp[] = $current_test_timestamp;
-	    $subject[] = $current_test_subject;
-	    $level[] = $current_test_level;
-	    $task[] = $iname;
-	    $subtask[] = (string)$mark0['itemnumber'];
-	    $alphaid[] = (string)$mark0['alphalevel'];
-	    $mark[] = (int)$mark0;
-	  }
-	} else {
-	  exit("Failed to open file" . $dataf . "\n");
-	}
-      }
-    }
-    $prevtimestamp = $prev[$index];
-    $stopcond = strlen($prevtimestamp) > 0;
-    if ($stopcond) $index = array_keys($timestamp0,$prevtimestamp)[0];
-  } while ($stopcond);  
-} else {
-  exit("Failed to open the user's global xml file.\n");
-}
+// We define wich user and (optionally) which test we wish to evaluate
+//$user = new user($_POST['user']); // this is going to be the most common use case
+//$user = new user('SD5AM'); // for testing/developing 
+$user = new user('SD5AM','2014_9_12_11_30_29'); // for testing/developing
+$marks = $user->getMarks();
 
 $user = $user->id; // this is a dummy line so I can commit the object oriented initiative - it is to be removed later
 
@@ -95,7 +27,7 @@ $tempdir = $odir_user . "/tmp";
 if (file_exists($tempdir)) rrmdir($tempdir); // if $tempdir exists we remove it (Alternatively, we could name the temporary directory based on $baseName and delete them in a cronjob...)
 mkdir($tempdir);
 $markingfile = $tempdir . "/" . $baseName . ".mar";
-$marks = new marksMatrix($timestamp,$subject,$level,$task,$subtask,$alphaid,$mark);
+//$marks = new marksMatrix($timestamp,$subject,$level,$task,$subtask,$alphaid,$mark);
 ob_start();
 $marks->display();
 $contents = ob_get_contents();
