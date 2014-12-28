@@ -13,6 +13,14 @@ unlink($dir."/".$object);
   }                                                                             
 }
 
+function ts2dt($timestamp) { // shorthand for timestamp 2 DateTime
+  $pieces = explode("_",$timestamp);
+  $date = new DateTime();
+  $date->setDate($pieces[0],$pieces[1],$pieces[2]);
+  $date->setTime($pieces[3],$pieces[4],$pieces[5]);
+  return $date;
+}
+
 function ifelse($condition,$value_true,$value_false) { // resembles R's ifelse function. FIXME: It would be better to drop this and use statements like ($a < $b) ? -1 : 1 instead 
   if ($condition) {
     return $value_true; 

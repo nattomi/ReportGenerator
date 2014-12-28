@@ -13,6 +13,31 @@ include 'classes.php';
 //$user = new user($_POST['user']); // this is going to be the most common use case
 $user = new user('SD5AM'); // for testing/developing 
 //$user = new user('SD5AM','2014_9_12_11_30_29'); // for testing/developing
+echo $user->id;
+$performedtests = $user->performedTests();
+
+$unixtime = array();
+$datetime_diff = array();
+$prev = array();
+$refdate = !is_null(($user->test)) ? ts2dt($user->test)->getTimeStamp() : 0;
+if (!is_null($user->test)) {
+  $refdate = ts2dt($user->test)->getTimeStamp();
+} else {
+  $refdate = 0;
+}
+foreach ($performedtests as $test) {
+  $unixtime[] = ts2dt($test->timestamp)->getTimeStamp();
+  $prev[] = $test->prev;
+}
+if (!is_null($user->test)) {
+  $refdate = ts2dt($user->test)->getTimeStamp();
+} else {
+  $refdate = 0;
+}
+//$index = array_keys($datetime_diff,min($datetime_diff))[0];
+
+
+//var_dump($timestamp0);
 $marks = $user->getMarks();
 
 $user = $user->id; // this is a dummy line so I can commit the object oriented initiative - it is to be removed later
@@ -49,7 +74,9 @@ $pdfname = $baseName . ".pdf";
 $subject = "Lesen";
 $level = "Einfach";
 $result = new result($pdfname,$xmlTimestamp,$subject,$level);
-echo $result->asXML()->asXML();
+$xmlpath_full = $xmlpath . ".xml";
+//$result->asXML()->save($xmlpath_full);
+echo $result->asXML()->saveXML();
 
 /*
 // Here we parse the just created XML and create TEX files

@@ -1,5 +1,35 @@
 <?php
 
+class item {
+  public $iname;
+  public $data;
+  
+  public function __construct($iname,$data) {
+    $this->iname = $iname;
+    $this->data = $data;
+  }
+}
+
+class test {
+  public $timestamp;
+  public $subject;
+  protected $level;
+  protected $prev;
+  protected $items;
+  
+  public function __construct($timestamp,$subject,$level,$prev,$items) {
+    $this->timestamp = $timestamp;
+    $this->subject = $subject;
+    $this->level = $level;
+    $this->prev = $prev;
+    $this->items = $items;
+  }
+  
+  public function asDateTime() {
+    
+  }
+}
+
 class user {
   public $id; // this argument is required (later on I might change it back to protected)
   protected $test; // this argument can be omitted
@@ -16,6 +46,24 @@ class user {
 
   public function getGlobalXML() {
     return $this->getUserDir() . $this->id . ".xml";
+  }
+
+  public function performedTests() {
+    $guf = $this->getGlobalXML();
+    if (file_exists($guf)) {
+      $xmldoc = simplexml_load_file($guf);
+      $performedtests = array();
+      foreach ($xmldoc->test as $test) {
+	$items = array();
+	foreach ($test->item as $item) {
+	  $items[] = new item((string)$item['iname'],(string)$item['data']);
+	}
+	$performedtests[] = new test((string)$test['timestamp'],(string)$test['subject'],(string)$test['level'],(string)$test['prev'],$items);
+      }
+    } else {
+      exit("Failed to open the user's global xml file.\n");
+    }
+    return $performedtests;
   }
 
   public function getMarks() {
@@ -177,12 +225,38 @@ class result {
   }
   
   public function asXML() {
-    $resultsXML = new SimpleXMLElement("<results></results>");
-    $resultsXML->addAttribute('newsPagePrefix', 'value goes here');
-    $resultsPrint = $resultsXML->addChild('print');
-    $resultsPrint->addAttribute('file',$pdfname);
-    //Header('Content-type: text/xml'); // do I need this?
-    return $resultsXML;
+    $dom = new DomDocument('1.0','UTF-8');
+    $results = $dom->appendChild($dom->createElement('results'));
+    // print node
+    $resultsPrint = $dom->createElement('print');
+    $results->appendChild($resultsPrint);
+    $attr = $dom->createAttribute('file');
+    $attr->appendChild($dom->createTextNode($this->pdfname));
+    $resultsPrint->appendChild($attr);
+    // timestamp node
+    $resultsTimestamp = $dom->createElement('timestamp');
+    $results->appendChild($resultsTimestamp);
+    $attr = $dom->createAttribute('order');
+    $attr->appendChild($dom->createTextNode('YmdHis'));
+    $resultsTimestamp->appendChild($attr);
+    $attr = $dom->createAttribute('value');
+    $attr->appendChild($dom->createTextNode($this->timestamp));
+    $resultsTimestamp->appendChild($attr);
+    // subject node
+    $resultsSubject = $dom->createElement('subject');
+    $results->appendChild($resultsSubject);
+    $attr = $dom->createAttribute('value');
+    $attr->appendChild($dom->createTextNode($this->subject));
+    $resultsSubject->appendChild($attr);
+    // level node
+    $resultsLevel = $dom->createElement('level');
+    $results->appendChild($resultsLevel);
+    $attr = $dom->createAttribute('value');
+    $attr->appendChild($dom->createTextNode($this->level));
+    $resultsLevel->appendChild($attr);
+    // it's also needed
+    $dom->formatOutput = true;
+    return $dom;
   }
 }
 
