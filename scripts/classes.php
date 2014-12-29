@@ -14,7 +14,7 @@ class test {
   public $timestamp;
   public $subject;
   protected $level;
-  protected $prev;
+  public $prev;
   protected $items;
   
   public function __construct($timestamp,$subject,$level,$prev,$items) {
@@ -32,7 +32,7 @@ class test {
 
 class user {
   public $id; // this argument is required (later on I might change it back to protected)
-  protected $test; // this argument can be omitted
+  public $test; // this argument can be omitted
   
   public function __construct($id,$test=null) {
     $this->id = $id;
@@ -64,6 +64,32 @@ class user {
       exit("Failed to open the user's global xml file.\n");
     }
     return $performedtests;
+  }
+
+  public function getTestIndex($performedtests) {
+    $datetime_diff = array();
+
+    function w_not_is_null($val) {
+      return abs($val);
+    }
+
+    function w_is_null($val) {
+      return $val;
+    }
+
+    if (!is_null($this->test)) {
+      $refdate = ts2dt($this->test)->getTimeStamp();
+      $w = 'w_not_is_null';
+    } else {
+      $refdate = 0;
+      $w = 'w_is_null';
+    }
+    foreach ($performedtests as $test) {
+      $unixtime_test = ts2dt($test->timestamp)->getTimeStamp();
+      $datetime_diff[] = $w($refdate - $unixtime_test);
+    }
+    $index = array_keys($datetime_diff,min($datetime_diff))[0];
+    return $index;
   }
 
   public function getMarks() {
