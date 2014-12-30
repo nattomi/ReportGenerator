@@ -13,9 +13,9 @@ class item {
 class test {
   public $timestamp;
   public $subject;
-  protected $level;
+  public $level;
   public $prev;
-  protected $items;
+  public $items;
   
   public function __construct($timestamp,$subject,$level,$prev,$items) {
     $this->timestamp = $timestamp;
@@ -58,7 +58,8 @@ class user {
 	foreach ($test->item as $item) {
 	  $items[] = new item((string)$item['iname'],(string)$item['data']);
 	}
-	$performedtests[] = new test((string)$test['timestamp'],(string)$test['subject'],(string)$test['level'],(string)$test['prev'],$items);
+	$timestamp_test = (string)$test['timestamp'];
+	$performedtests[$timestamp_test] = new test($timestamp_test,(string)$test['subject'],(string)$test['level'],(string)$test['prev'],$items);
       }
     } else {
       exit("Failed to open the user's global xml file.\n");

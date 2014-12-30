@@ -19,18 +19,26 @@ $index = $user->getTestIndex($performedtests); // this tells us the index from w
 // It goes like this:
 do {
   //echo $index . "\n";
-  $current_test = $xmldoc->test[$index];
-  $current_test_timestamp = $timestamp0[$index];
-  $current_test_subject = (string)$current_test['subject'];
-  $current_test_level = (string)$current_test['level'];
-  foreach ($current_test->item as $item) {
-    $iname = (string)$item['iname'];
-    $data = (string)$item['data'];
+  //$current_test = $xmldoc->test[$index];
+  $current_test = $performedtests[$index];
+  var_dump($performedtests[$index]);
+  //$current_test_timestamp = $timestamp0[$index];
+  $current_test_timestamp = $current_test->timestamp;
+  //$current_test_subject = (string)$current_test['subject'];
+  $current_test_subject = $current_test->subject;
+  //$current_test_level = (string)$current_test['level'];
+  $current_test_level = $current_test->level;
+  foreach ($current_test->items as $item) {
+    //$iname = (string)$item['iname'];
+    $iname = $item->iname;
+    //$data = (string)$item['data'];
+    $data = $item->data;
     if (strlen($data) > 0) {
-      $dataf = $udir . $data;
+      $dataf = $user->getUserDir() . $data;
       if (file_exists($dataf)) {
 	$xmldoc_item = simplexml_load_file($dataf);
 	foreach ($xmldoc_item->marking->mark as $mark0) {
+	  /*
 	  $timestamp[] = $current_test_timestamp;
 	  $subject[] = $current_test_subject;
 	  $level[] = $current_test_level;
@@ -38,15 +46,18 @@ do {
 	  $subtask[] = (string)$mark0['itemnumber'];
 	  $alphaid[] = (string)$mark0['alphalevel'];
 	  $mark[] = (int)$mark0;
+	  */
+	  // here, I will read into a marks or marking object instead!
 	}
       } else {
 	exit("Failed to open file" . $dataf . "\n");
       }
     }
   }
-  $prevtimestamp = $prev[$index];
+  //$prevtimestamp = $prev[$index];
+  $prevtimestamp = $current_test->prev;
   $stopcond = strlen($prevtimestamp) > 0;
-  if ($stopcond) $index = array_keys($timestamp0,$prevtimestamp)[0];
+  if ($stopcond) $index = array_keys($performedtests,$prevtimestamp)[0];
 } while ($stopcond);
 
 
