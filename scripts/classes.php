@@ -1,11 +1,11 @@
 <?php
 
 class item {
-  public $iname;
+  public $task;
   public $data;
   
   public function __construct($iname,$data) {
-    $this->iname = $iname;
+    $this->task = $iname;
     $this->data = $data;
   }
 }
@@ -24,9 +24,23 @@ class test {
     $this->prev = $prev;
     $this->items = $items;
   }
-  
-  public function asDateTime() {
-    
+}
+
+class mark {
+  public $subject;
+  public $level;
+  public $task;
+  public $subtask;
+  public $alphaid;
+  public $mark;
+
+  public function __construct($subject,$level,$task,$subtask,$alphaid,$mark) {
+    $this->subject = $subject;
+    $this->level = $level;
+    $this->task = $task;
+    $this->subtask = $subtask;
+    $this->alphaid = $alphaid;
+    $this->mark = $mark;
   }
 }
 
@@ -59,7 +73,7 @@ class user {
 	  $items[] = new item((string)$item['iname'],(string)$item['data']);
 	}
 	$timestamp_test = (string)$test['timestamp'];
-	$performedtests[$timestamp_test] = new test($timestamp_test,(string)$test['subject'],(string)$test['level'],(string)$test['prev'],$items);
+	$performedtests[] = new test($timestamp_test,(string)$test['subject'],(string)$test['level'],(string)$test['prev'],$items);
       }
     } else {
       exit("Failed to open the user's global xml file.\n");
@@ -67,30 +81,25 @@ class user {
     return $performedtests;
   }
 
-  public function getTestIndex($performedtests) {
-    $datetime_diff = array();
+  public function getRecentTestIndex($performedtests) { // Do we need this at all?
+    return matchTimestamp($performedtests,$this->test);
+  } 
 
-    function w_not_is_null($val) {
-      return abs($val);
-    }
+  public function getRecentTest($performedtests) {
+    $index = matchTimestamp($performedtests,$this->test);
+    return $performedtests[$index];
+  }
 
-    function w_is_null($val) {
-      return $val;
-    }
-
-    if (!is_null($this->test)) {
-      $refdate = ts2dt($this->test)->getTimeStamp();
-      $w = 'w_not_is_null';
-    } else {
-      $refdate = 0;
-      $w = 'w_is_null';
-    }
-    foreach ($performedtests as $test) {
-      $unixtime_test = ts2dt($test->timestamp)->getTimeStamp();
-      $datetime_diff[] = $w($refdate - $unixtime_test);
-    }
-    $index = array_keys($datetime_diff,min($datetime_diff))[0];
-    return $index;
+  public function getTestIndices($performedtests) {
+    $index = $this->getTestIndex($performedtests);
+    $indices = array();
+    do {
+      $current_test = $performedtests[$index];
+      $prevtimestamp = $current_test->prev;
+      $stopcond = strlen($prevtimestamp) > 0;
+      if ($stopcond) $index = array_keys($performedtests,$prevtimestamp)[0];
+    } while ($stopcond);
+    return $indices;
   }
 
   public function getMarks() {

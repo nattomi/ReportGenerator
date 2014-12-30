@@ -11,56 +11,19 @@ include 'classes.php';
 // MAIN
 // We define wich user and (optionally) which test we wish to evaluate
 //$user = new user($_POST['user']); // this is going to be the most common use case
-$user = new user('SD5AM'); // for testing/developing 
+//$user = new user('SD5AM'); // for testing/developing 
 //$user = new user('SD5AM','2014_9_12_11_30_29'); // for testing/developing
+$user = new user('SD5AM',"2014_9_12_11_15_17");
 echo $user->id . "\n";
-$performedtests = $user->performedTests(); // parsing the user's global XML file
-$index = $user->getTestIndex($performedtests); // this tells us the index from which we start collecting the relevant test sessions following the 'prev' properties
-// It goes like this:
-do {
-  //echo $index . "\n";
-  //$current_test = $xmldoc->test[$index];
-  $current_test = $performedtests[$index];
-  var_dump($performedtests[$index]);
-  //$current_test_timestamp = $timestamp0[$index];
-  $current_test_timestamp = $current_test->timestamp;
-  //$current_test_subject = (string)$current_test['subject'];
-  $current_test_subject = $current_test->subject;
-  //$current_test_level = (string)$current_test['level'];
-  $current_test_level = $current_test->level;
-  foreach ($current_test->items as $item) {
-    //$iname = (string)$item['iname'];
-    $iname = $item->iname;
-    //$data = (string)$item['data'];
-    $data = $item->data;
-    if (strlen($data) > 0) {
-      $dataf = $user->getUserDir() . $data;
-      if (file_exists($dataf)) {
-	$xmldoc_item = simplexml_load_file($dataf);
-	foreach ($xmldoc_item->marking->mark as $mark0) {
-	  /*
-	  $timestamp[] = $current_test_timestamp;
-	  $subject[] = $current_test_subject;
-	  $level[] = $current_test_level;
-	  $task[] = $iname;
-	  $subtask[] = (string)$mark0['itemnumber'];
-	  $alphaid[] = (string)$mark0['alphalevel'];
-	  $mark[] = (int)$mark0;
-	  */
-	  // here, I will read into a marks or marking object instead!
-	}
-      } else {
-	exit("Failed to open file" . $dataf . "\n");
-      }
-    }
-  }
-  //$prevtimestamp = $prev[$index];
-  $prevtimestamp = $current_test->prev;
-  $stopcond = strlen($prevtimestamp) > 0;
-  if ($stopcond) $index = array_keys($performedtests,$prevtimestamp)[0];
-} while ($stopcond);
-
-
+$performedtests = $user->performedTests(); // parsing the user's global XML file;
+$RecentTest = $user->getRecentTest($performedtests); // Either the latest test or a test matching $user->test
+$RecentTests = RecentSession($performedtests,$RecentTest); // starting from $RecentTest, all other referenced tests are traced down 
+//var_dump($RecentTests);
+$subject = $RecentTest->subject;
+$level = $RecentTest->level;
+// something like this will follow
+//markings($RecentTests);
+/*
 $marks = $user->getMarks();
 
 $user = $user->id; // this is a dummy line so I can commit the object oriented initiative - it is to be removed later
@@ -100,6 +63,7 @@ $result = new result($pdfname,$xmlTimestamp,$subject,$level);
 $xmlpath_full = $xmlpath . ".xml";
 //$result->asXML()->save($xmlpath_full);
 //echo $result->asXML()->saveXML();
+*/
 
 /*
 // Here we parse the just created XML and create TEX files
