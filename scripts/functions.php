@@ -21,22 +21,6 @@ function ts2dt($timestamp) { // shorthand for timestamp 2 DateTime
   return $date;
 }
 
-/* Probably these won't be necessary
-function callback_abs(&$item,$key) {
-  $item = abs($item);
-}
-
-function callback_id(&$item,$key) {
-  $item = $item;
-}
-
-function weightedMin($arr,$weightfunction) {
-  array_walk($arr,$weightfunction);
-  $index = array_keys($arr,min($arr))[0];
-  return $index;
-}
-*/
-
 function getTimestamps($performedtests) {
   function callback(&$item,$key) {
     $item = $item->timestamp;
@@ -86,17 +70,22 @@ function RecentSession($performedtests,$test) {
   return $tests;
 }
 
-function traceSessionHistory($performedtests,$index) {
-  $indices = array();
-  echo count($performedtests) . "\n";
-  do {
-    $current_test = $performedtests[$index];
-    $prevtimestamp = $current_test->prev;
-    $stopcond = strlen($prevtimestamp) > 0;
-    if ($stopcond) $index = array_keys($performedtests,$prevtimestamp)[0];
-  } while ($stopcond);
-  return $indices;
+/* I probably do not need this
+function getMarks($file_task) {
+  if (file_exists($file_task)) { // parsing the user's global xml file (if exists)
+    $xmldoc = simplexml_load_file($file_task);
+    $marks = array();
+    foreach ($xmldoc->marking->mark as $mark) {
+      $marks[] = new mark((string)$mark['itemnumber'],
+			  (string)$mark['alphalevel'],
+			  (int)$mark);
+    }
+  } else {
+    exit("Failed to open file" . $file_task . "\n");
+  }
+  return $marks;
 }
+*/
 
 function ifelse($condition,$value_true,$value_false) { // resembles R's ifelse function. FIXME: It would be better to drop this and use statements like ($a < $b) ? -1 : 1 instead 
   if ($condition) {

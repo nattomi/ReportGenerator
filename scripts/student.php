@@ -17,15 +17,12 @@ $user = new user('SD5AM',"2014_9_12_11_15_17");
 echo $user->id . "\n";
 $performedtests = $user->performedTests(); // parsing the user's global XML file;
 $RecentTest = $user->getRecentTest($performedtests); // Either the latest test or a test matching $user->test
-$RecentTests = RecentSession($performedtests,$RecentTest); // starting from $RecentTest, all other referenced tests are traced down 
-//var_dump($RecentTests);
 $subject = $RecentTest->subject;
 $level = $RecentTest->level;
-// something like this will follow
-//markings($RecentTests);
+$RecentTests = RecentSession($performedtests,$RecentTest); // starting from $RecentTest, all other referenced tests are traced down 
+$marks = $user->getMarks($RecentTests); // all marks received organized into a nice table
+$marks->display();
 /*
-$marks = $user->getMarks();
-
 $user = $user->id; // this is a dummy line so I can commit the object oriented initiative - it is to be removed later
 
 // writing out marking table into a marking txt file
@@ -39,7 +36,7 @@ if (file_exists($tempdir)) rrmdir($tempdir); // if $tempdir exists we remove it 
 mkdir($tempdir);
 $markingfile = $tempdir . "/" . $baseName . ".mar";
 ob_start();
-$marks->display();
+marks->display();
 $contents = ob_get_contents();
 ob_end_clean();
 file_put_contents($markingfile,$contents);
