@@ -118,9 +118,94 @@ function tapply_mean($val,$fac) { // resembles a special case of R's tapply func
   }
   return $means;
 }
-// I'm not sure yet but maybe there will be a need for comparing alphaIDs
-//function cmp_alphaID($a,$b) {
-//$a="1.4.1.1"
-//$b="1.4.1.2"
-//}
+
+function conjAlphaId($a) {
+  $pieces = explode(".",$a);
+  $conj = array();
+  foreach ($pieces as $p) {
+    $conj[] = (int)$p; 
+  }
+  return $conj;
+}
+
+function cmpAlphaId($a,$b) { // 
+  // test cases
+  // equal length, not equal (returns -1)
+  //$a="1.3.2.1";
+  //$b="1.4.1.2";
+  // equal length, equal (returns 0)
+  //$a="1.3.1.2";
+  //$b="1.3.1.2";
+  // different length, not equal (returns -1)
+  //$a="1.4.1.1.5";
+  //$b="1.4.2.2";
+  // different length, equal (returns 1)
+  //$a="1.3.1.2.4";
+  //$b="1.3.1.2";
+  // main
+  $conj_a = conjAlphaId($a);
+  $conj_b = conjAlphaId($b);
+  $conj_a_len = count($conj_a);
+  $conj_b_len = count($conj_b);
+  for ($i=0; $i<min($conj_a_len,$conj_b_len); $i++) {
+    $val = $conj_a[$i] - $conj_b[$i];
+    if ($val <> 0) break;
+  }
+  if ($conj_a_len <> $conj_b_len and $val == 0) {
+    $val = $conj_a_len - $conj_b_len;
+  }
+  return $val;
+}
+
+function readAlphalist($alphalist_xml) {
+  if (file_exists($alphalist_xml)) {
+    $xmldoc = simplexml_load_file($alphalist_xml);
+    $alphalist = array();
+    foreach ($xmldoc->alphanode as $alphanode0) {
+      $alphalist[] =new alphanode((string)$alphanode0['alphaID'],
+				  (int)$alphanode0['order'],
+				  (string)$alphanode0['description'],
+				  (string)$alphanode0['userdescription'],
+				  (string)$alphanode0['example']);
+    }
+  } else {
+    exit("Reading alphalist file failed: file not found\n");
+  }
+  return $alphalist;
+}
+
+function alphaids($alphalist) {
+  $alphaids = array();
+  foreach ($alphalist as $alpha) {
+    $alphaids[] = $alpha->alphaID; 
+  }
+  return $alphaids;
+}
+
+function subset_alphalist($alphalist,$alphaids) {
+  $alphalist_subset = array();
+  $alphalist_alphaids = alphaids($alphalist);
+  foreach ($alphaids as $a) {
+    $i = array_search($a,$alphalist_alphaids);
+    $alphalist_subset[] = $alphalist[$i];
+  }
+  return $alphalist_subset;
+}
+
+function readAlphalist2($alphalist_xml) {
+  if (file_exists($alphalist_xml)) {
+    $xmldoc = simplexml_load_file($alphalist_xml);
+    foreach ($xmldoc->alphanode as $alphanode) {
+      $alphaid[] = (string)$alphanode['alphaID'];
+      $order[] = (int)$alphanode['order'];
+      $description[] = (string)$alphanode['description'];
+      $userdescription[] = (string)$alphanode['description'];
+      $example[] = (string)$alphanode['example'];
+    }
+  } else {
+    exit("Creating new alphalist object failed: file not found\n");
+  }
+  return new alphalist($alphaid,$order,$description,
+		       $userdescription,$example);
+}
 ?>

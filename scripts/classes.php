@@ -105,14 +105,14 @@ class user {
 	  $file_task = $udir . $item->data;
 	  if (file_exists($file_task)) {
 	    $xmldoc_task = simplexml_load_file($file_task);
-	    foreach ($xmldoc_task->marking->mark as $mark) {
+	    foreach ($xmldoc_task->marking->mark as $mark0) {
 	      $timestamp[] = $timestamp_test;
 	      $subject[] = $subject_test;
 	      $level[] = $level_test;
 	      $task[] = $taskname;
-	      $subtask[] = (string)$mark['itemnumber'];
-	      $alphaid[] = (string)$mark['alphalevel'];
-	      $mark[] = (int)$mark;
+	      $subtask[] = (string)$mark0['itemnumber'];
+	      $alphaid[] = (string)$mark0['alphalevel'];
+	      $mark[] = (int)$mark0;
 	    }
 	  } else {
 	    exit("Failed to open file " . $basename_task . "\n");
@@ -127,6 +127,15 @@ class user {
 }
 
 class marksMatrix {
+  public $timestamp;
+  public $subject;
+  public $level;
+  public $task;
+  public $subtask;
+  public $alphaid;
+  public $mark;
+  public $length;
+
   public function __construct($timestamp,$subject,$level,
 			      $task,$subtask,$alphaid,$mark) {
     $this->timestamp = $timestamp;
@@ -136,61 +145,82 @@ class marksMatrix {
     $this->subtask = $subtask;
     $this->alphaid = $alphaid;
     $this->mark = $mark;
-  }
-
-  public function length() {
-    return count($this->timestamp);
+    $this->length = count($timestamp);
   }
 
   public function display() {
     $content = "timestamp\t" . "subject\t" . "level\t" . "task\t" .
       "subtask\t" . "alphaid\t" . "mark\n";
-    foreach (range(0,$this->length()-1) as $i) {
-      $content .= $this->timestamp[$i] . "\t" .
-	$this->subject[$i] . "\t" . 
-	$this->level[$i] . "\t" .
-	$this->task[$i] . "\t" . 
-	$this->subtask[$i] . "\t" .
-	$this->alphaid[$i] . "\t" .
-	$this->mark[$i] ."\n";
+    if ($this->length > 0) {
+      foreach (range(0,$this->length-1) as $i) {
+	$content .= $this->timestamp[$i] . "\t" .
+	  $this->subject[$i] . "\t" . 
+	  $this->level[$i] . "\t" .
+	  $this->task[$i] . "\t" . 
+	  $this->subtask[$i] . "\t" .
+	  $this->alphaid[$i] . "\t" .
+	  $this->mark[$i] ."\n";
+      }
     }
     echo $content;
   }
   
-  public function evalA1($threshold) {
-    if ($this->length() > 0) {
+  public function evalA1($threshold,$head) {
+    $above = array();
+    if ($this->length > 0) {
       $score_by_alphaid = tapply_mean($this->mark,$this->alphaid);
       $alphas_tested = array_keys($score_by_alphaid);
-      $above = array();
-      //print_r($above);
       foreach($score_by_alphaid as $k => $v) {
 	if ($v >= $threshold/100) {
 	  $above[] = $k;
 	}
       }
-      return $above;
-    } else {
-      return array();
     }
+    usort($above,"cmpAlphaId"); // sort them increasingly in dictionary-style
+    // the last step is truncating the result
+    // * the meaning of a positive number is straightforward
+    // * 0 results in empty list
+    // * a negative number means no truncation at all
+    if ($head >= 0) {
+      $above = array_slice($above,0,$head);
+    }
+    return $above;
   }
 
-  public function evalA2($threshold) { // note that at the moment it is a dummy function
-    if ($this->length() > 0) {
+  public function evalA2($threshold,$head) { // note that this is a dummy function, to be changed later
+    $above = array();
+    if ($this->length > 0) {
       $score_by_alphaid = tapply_mean($this->mark,$this->alphaid);
       $alphas_tested = array_keys($score_by_alphaid);
-      $above = array();
-      //print_r($above);
       foreach($score_by_alphaid as $k => $v) {
 	if ($v >= $threshold/100) {
 	  $above[] = $k;
 	}
       }
-      return $above;
-    } else {
-      return array();
     }
+    usort($above,"cmpAlphaId"); // sort them increasingly in dictionary-style
+    // the last step is truncating the result
+    // * the meaning of a positive number is straightforward
+    // * 0 results in empty list
+    // * a negative number means no truncation at all
+    if ($head >= 0) {
+      $above = array_slice($above,0,$head);
+    }
+    return $above;
   }
 
+}
+
+class eval_ {
+  public $mode;
+  public $message;
+  public $alphanodes;
+
+  public function __construct($mode,$message,$alphanodes) {
+    $this->mode = $mode;
+    $this->message = $message;
+    $this->alphanodes = $alphanodes;
+  }
 }
 
 class result {
@@ -198,15 +228,52 @@ class result {
   public $timestamp;
   public $subject;
   public $level;
+  public $evals;
 
-  public function __construct($pdfname,$timestamp,$subject,$level) {
+  public function __construct($pdfname,$timestamp,$subject,$level,$evals) {
     $this->pdfname = $pdfname;
     $this->timestamp = $timestamp;
     $this->subject = $subject;
     $this->level = $level;
+    $this->evals = $evals;
   }
   
   public function asXML() {
+    $node_results = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?>' . "<results></results>");
+    // print node
+    $node_print = $node_results->addChild('print');
+    $node_print->addAttribute('file', $this->pdfname);
+    // timestamp node
+    $node_timestamp = $node_results->addChild('timestamp');
+    $node_timestamp->addAttribute('order', 'YmdHis');
+    $node_timestamp->addAttribute('value', $this->timestamp);
+    // subject node
+    $node_subject = $node_results->addChild('subject');
+    $node_subject->addAttribute('value', $this->subject);
+    // level node
+    $node_level = $node_results->addChild('level');
+    $node_level->addAttribute('value', $this->level);
+    // Adding eval nodes
+    foreach ($this->evals as $e) {
+      $node_eval = $node_results->addChild('eval');
+      $node_eval->addAttribute('mode', $e->mode);
+      foreach ($e->alphanodes as $an) {
+	$node_an = $node_eval->addChild('alphanode');
+	$node_an->addAttribute('alphaID',$an->alphaID);
+	$node_an->addAttribute('userdescription',$an->userdescription);
+	$node_an->addAttribute('example',$an->example);	
+      }
+    }
+    // simple_xml doesn't print out nice so we
+    // convert to a DOM object
+    $dom = new DOMDocument('1.0');
+    $dom = dom_import_simplexml($node_results)->ownerDocument;
+    $dom->preserveWhiteSpace = false;
+    $dom->formatOutput = true;
+    return $dom;
+  }
+
+  public function asXML2() {
     $dom = new DomDocument('1.0','UTF-8');
     $results = $dom->appendChild($dom->createElement('results'));
     // print node
@@ -242,34 +309,57 @@ class result {
   }
 }
 
-class alphalist {
+class alphanode {
+  public $alphaID;
+  public $order;
+  public $description;
+  public $userdescription;
+  public $example;
 
-  public $alphaID=array();
+  public function __construct($alphaID,$order,$description,
+			      $userdescription,$example) {
+    $this->alphaID = $alphaID;
+    $this->order = $order;
+    $this->description = $description;
+    $this->userdescription = $userdescription;
+    $this->example = $example;
+  }
+}
+
+class alphalist {
+  public $alphaid=array();
   public $order=array();
   public $description=array();
   public $userdescription=array();
   public $example=array();
-  
-  public function __construct($alphalist) {
-    if (file_exists($alphalist)) {
-      $xmldoc = simplexml_load_file($alphalist);
-      foreach ($xmldoc->alphanode as $alphanode) {
-	$alphaID[] = (string)$alphanode['alphaID'];
-	$order[] = (int)$alphanode['order'];
-	$description[] = (string)$alphanode['description'];
-	$userdescription[] = (string)$alphanode['description'];
-	$example[] = (string)$alphanode['example'];
-      }
-      $this->alphaID = $alphaID;
-      $this->order = $order;
-      $this->description = $description;
-      $this->userdescription = $userdescription;
-      $this->example = $example;
-    } else {
-      exit("Creating new alphalist object failed: file not found\n");
-    }
-  }
 
+  public function __construct($alphaid,$order,$description,
+			      $userdescription,$example) {
+    $this->alphaid = $alphaid;
+    $this->order = $order;
+    $this->description = $description;
+    $this->userdescription = $userdescription;
+    $this->example = $example;
+  }
+  
+  public function subset($alphaids) {
+    $alphaid = array();
+    $order = array();
+    $description = array();
+    $userdescription = array();
+    $example = array();
+    foreach ($alphaids as $a) {
+      $i = array_search($a,$this->alphaid);
+      $alphaid[] = $this->alphaid[$i];
+      $order[] = $this->order[$i];
+      $description[] = $this->description[$i];
+      $userdescription[] = $this->userdescription[$i];
+      $example[] = $this->example[$i];
+    }
+    return new alphalist($alphaid,$order,$description,
+			 $userdescription,$example);
+  } 
+  /*
   public function order() {
     $a0 = array();
     $a1 = array();
@@ -286,7 +376,7 @@ class alphalist {
       $a3[] = (int)$pieces[3];
     }
     array_multisort($a0,$a1,$a2,$a3);
-  }
+    }*/
 }
 
 

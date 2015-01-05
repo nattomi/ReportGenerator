@@ -13,7 +13,10 @@ include 'classes.php';
 //$user = new user($_POST['user']); // this is going to be the most common use case
 //$user = new user('SD5AM'); // for testing/developing 
 //$user = new user('SD5AM','2014_9_12_11_30_29'); // for testing/developing
-$user = new user('SD5AM',"2014_9_12_11_15_17");
+//$user = new user('SD5AM',"2014_9_12_11_15_17"); // test was done in more steps
+//$user = new user('SD5AM',"2014_7_9_12_8_50"); // some are 0 some are 1
+$user = new user('SD5AM',"2014_9_24_12_31_13"); // in this test nothing was solved at all (data attributes are empty)
+//$user = new user('SD5AM',"2014_7_9_12_36_38"); // all tasks are solved (every mark is 0)
 echo $user->id . "\n";
 $performedtests = $user->performedTests(); // parsing the user's global XML file;
 $RecentTest = $user->getRecentTest($performedtests); // Either the latest test or a test matching $user->test
@@ -22,15 +25,21 @@ $level = $RecentTest->level;
 $RecentTests = RecentSession($performedtests,$RecentTest); // starting from $RecentTest, all other referenced tests are traced down 
 $marks = $user->getMarks($RecentTests); // all marks received organized into a nice table
 $marks->display();
-/*
-$user = $user->id; // this is a dummy line so I can commit the object oriented initiative - it is to be removed later
 
+
+
+
+//$user = $user->id; // this is a dummy line so I can commit the object oriented initiative - it is to be removed later
+
+/*
 // writing out marking table into a marking txt file
 $odir_user = $odir . $user;
 if (!file_exists($odir_user)) mkdir($odir_user); // this is most probably not needed in the real application
 // we also generate a timestamp to be used in the name of the XML and PDF files and in the timestamp field of the XML file
+*/
 $systime = time(); 
-$baseName = $user . "_" .date('Ymd_H_i_s',$systime) . "_result";
+$baseName = $user->id . "_" .date('Ymd_H_i_s',$systime) . "_result";
+/*
 $tempdir = $odir_user . "/tmp";
 if (file_exists($tempdir)) rrmdir($tempdir); // if $tempdir exists we remove it (Alternatively, we could name the temporary directory based on $baseName and delete them in a cronjob...)
 mkdir($tempdir);
@@ -41,26 +50,35 @@ $contents = ob_get_contents();
 ob_end_clean();
 file_put_contents($markingfile,$contents);
 // we transform the data contained in the just created marking file into an xml result file using the external R script evalMarking.R
+*/
 $xmlTimestamp = date('YmdHis',$systime); // date/time of evaluation, used in the <timestamp> node of the xml file
+/*
 $xmlpath = $odir_user . "/" . $baseName;
 $rcmd = "$path_evalMarking -m $markingfile -t $threshold -l $maxListings -x $xmlTimestamp -f $xmlpath -a $alphalist";
 //echo $rcmd;
 exec($rcmd); // this one creates the XML file
 // At first we parse the alphalist file
-$alphalist = new alphalist($alphalist);
-//$alphalist->order();
+*/
+$alphalist = readAlphalist($alphalist_xml);
 
-//var_dump($marks->evalA1($threshold));
-//var_dump($marks->evalA2($threshold));
+if ($marks->length > 0) {
+$alphaids_A1 = $marks->evalA1($threshold,2);
+var_dump($alphaids_A1);
+$alphalist_A1 = subset_alphalist($alphalist,$alphaids_A1);
+$eval_A1 = new eval_("A1",null,$alphalist_A1);
+$alphalist_A2 = subset_alphalist($alphalist,$marks->evalA2($threshold,2));
+$eval_A2 = new eval_("A2",null,$alphalist_A2);
+} else {
+  
+}
+$evals = array($eval_A1,$eval_A2);
 
 $pdfname = $baseName . ".pdf";
-$subject = "Lesen";
-$level = "Einfach";
-$result = new result($pdfname,$xmlTimestamp,$subject,$level);
-$xmlpath_full = $xmlpath . ".xml";
+$result = new result($pdfname,$xmlTimestamp,$subject,$level,$evals);
+echo $result->asXML()->saveXML();
+//$xmlpath_full = $xmlpath . ".xml";
 //$result->asXML()->save($xmlpath_full);
 //echo $result->asXML()->saveXML();
-*/
 
 /*
 // Here we parse the just created XML and create TEX files
