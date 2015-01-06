@@ -257,6 +257,9 @@ class result {
     foreach ($this->evals as $e) {
       $node_eval = $node_results->addChild('eval');
       $node_eval->addAttribute('mode', $e->mode);
+      // message node
+      if (!is_null($e->message)) $node_msg = $node_eval->addChild('message',$e->message);
+      // alphanodes
       foreach ($e->alphanodes as $an) {
 	$node_an = $node_eval->addChild('alphanode');
 	$node_an->addAttribute('alphaID',$an->alphaID);

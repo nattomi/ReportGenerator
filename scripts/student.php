@@ -1,35 +1,87 @@
 <?php
-//$user = $_POST['user']; // user id
-$id = 'SD5AM';
-//$test = $_POST['test']; // timestamp of the test to be evaluated (as specified in the global user file, f.i. 2014_3_3_20_32_49)
-//$test = '2014_9_12_11_30_29'; // if $test is not set here then it defaults to the last test
+//************************************************
 // load settings + function and class definitions
+//************************************************
+
 include 'conf_student.php';
 include 'functions.php';
 include 'classes.php';
 
-// MAIN
+//********************************************************************
 // We define wich user and (optionally) which test we wish to evaluate
+// by creating a new 'user' object
+//********************************************************************
+
 //$user = new user($_POST['user']); // this is going to be the most common use case
 //$user = new user('SD5AM'); // for testing/developing 
 //$user = new user('SD5AM','2014_9_12_11_30_29'); // for testing/developing
 //$user = new user('SD5AM',"2014_9_12_11_15_17"); // test was done in more steps
 //$user = new user('SD5AM',"2014_7_9_12_8_50"); // some are 0 some are 1
-$user = new user('SD5AM',"2014_9_24_12_31_13"); // in this test nothing was solved at all (data attributes are empty)
-//$user = new user('SD5AM',"2014_7_9_12_36_38"); // all tasks are solved (every mark is 0)
-echo $user->id . "\n";
+//$user = new user('SD5AM',"2014_9_24_12_31_13"); // in this test nothing was solved at all (data attributes are empty)
+$user = new user('SD5AM',"2014_7_9_12_36_38"); // with one exception all tasks are solved
+
+//***********************************************************
+// transforming the 'user' object into a 'marksMatrix' object
+// Normally, you do not want to edit below this line!
+//***********************************************************
+
 $performedtests = $user->performedTests(); // parsing the user's global XML file;
 $RecentTest = $user->getRecentTest($performedtests); // Either the latest test or a test matching $user->test
-$subject = $RecentTest->subject;
-$level = $RecentTest->level;
 $RecentTests = RecentSession($performedtests,$RecentTest); // starting from $RecentTest, all other referenced tests are traced down 
 $marks = $user->getMarks($RecentTests); // all marks received organized into a nice table
-$marks->display();
+
+//*************************************************************
+// transforming the 'marksMatrix' object into a 'result' object
+//*************************************************************
+
+$systime = time(); 
+$baseName = $user->id . "_" .date('Ymd_H_i_s',$systime) . "_result";
+$pdfname = $baseName . ".pdf"; // used in the pdfname property of the result object
+$xmlTimestamp = date('YmdHis',$systime); // date/time of evaluation, used in the timestamp property of the result object
+$subject = $RecentTest->subject;
+$level = $RecentTest->level;
+$alphalist = readAlphalist($alphalist_xml); // parsing the alphalist file
+if ($marks->length > 0) {
+  // mode A1
+  $alphaids_A1 = $marks->evalA1($threshold,0);
+  $alphalist_A1 = subset_alphalist($alphalist,$alphaids_A1);
+  $message_A1 = count($alphaids_A1)==0 ? $allwrong : null;
+  // mode A2
+  $alphaids_A2 = $marks->evalA2($threshold,2);
+  $alphalist_A2 = subset_alphalist($alphalist,$alphaids_A2);
+  $message_A2 = count($alphaids_A2)==0 ? $welldone[$level] : null;
+} else { // in this case no tasks were solved at all
+  $alphalist_A1 = array();
+  $message_A1 = $keinbearbeitet_string;
+  $alphalist_A2 = array();
+  $message_A2 = $keinbearbeitet_string;
+}
+$eval_A1 = new eval_("A1",$message_A1,$alphalist_A1);
+$eval_A2 = new eval_("A2",$message_A2,$alphalist_A2);
+$evals = array($eval_A1,$eval_A2);
+$result = new result($pdfname,$xmlTimestamp,$subject,$level,$evals);
+
+//*************************************************************
+// Writing out the 'result' object into an xml file
+//*************************************************************
+
+$odir_user = $odir . $user->id;
+$xmlpath = $odir_user . "/" . $baseName;
+$xmlpath_full = $xmlpath . ".xml";
+if (!file_exists($odir_user)) mkdir($odir_user); // this is most probably not needed in the real application
+$result_xml = $result->asXML();
+$result_xml->save($xmlpath_full);
+
+//*************************************************************
+// Printing the 'result' object as xml
+//*************************************************************
+echo $result_xml->saveXML();
 
 
+//$tempdir = $odir_user . "/tmp";
+//if (file_exists($tempdir)) rrmdir($tempdir); // if $tempdir exists we remove it (Alternatively, we could name the temporary directory based on $baseName and delete them in a cronjob...)
+//mkdir($tempdir);
 
-
-//$user = $user->id; // this is a dummy line so I can commit the object oriented initiative - it is to be removed later
 
 /*
 // writing out marking table into a marking txt file
@@ -37,8 +89,6 @@ $odir_user = $odir . $user;
 if (!file_exists($odir_user)) mkdir($odir_user); // this is most probably not needed in the real application
 // we also generate a timestamp to be used in the name of the XML and PDF files and in the timestamp field of the XML file
 */
-$systime = time(); 
-$baseName = $user->id . "_" .date('Ymd_H_i_s',$systime) . "_result";
 /*
 $tempdir = $odir_user . "/tmp";
 if (file_exists($tempdir)) rrmdir($tempdir); // if $tempdir exists we remove it (Alternatively, we could name the temporary directory based on $baseName and delete them in a cronjob...)
@@ -51,7 +101,6 @@ ob_end_clean();
 file_put_contents($markingfile,$contents);
 // we transform the data contained in the just created marking file into an xml result file using the external R script evalMarking.R
 */
-$xmlTimestamp = date('YmdHis',$systime); // date/time of evaluation, used in the <timestamp> node of the xml file
 /*
 $xmlpath = $odir_user . "/" . $baseName;
 $rcmd = "$path_evalMarking -m $markingfile -t $threshold -l $maxListings -x $xmlTimestamp -f $xmlpath -a $alphalist";
@@ -59,26 +108,17 @@ $rcmd = "$path_evalMarking -m $markingfile -t $threshold -l $maxListings -x $xml
 exec($rcmd); // this one creates the XML file
 // At first we parse the alphalist file
 */
-$alphalist = readAlphalist($alphalist_xml);
 
-if ($marks->length > 0) {
-$alphaids_A1 = $marks->evalA1($threshold,2);
-var_dump($alphaids_A1);
-$alphalist_A1 = subset_alphalist($alphalist,$alphaids_A1);
-$eval_A1 = new eval_("A1",null,$alphalist_A1);
-$alphalist_A2 = subset_alphalist($alphalist,$marks->evalA2($threshold,2));
-$eval_A2 = new eval_("A2",null,$alphalist_A2);
-} else {
-  
-}
-$evals = array($eval_A1,$eval_A2);
 
-$pdfname = $baseName . ".pdf";
-$result = new result($pdfname,$xmlTimestamp,$subject,$level,$evals);
-echo $result->asXML()->saveXML();
+
+
+
+//var_dump($result);
+//echo $result->asXML()->saveXML();
 //$xmlpath_full = $xmlpath . ".xml";
 //$result->asXML()->save($xmlpath_full);
 //echo $result->asXML()->saveXML();
+
 
 /*
 // Here we parse the just created XML and create TEX files
