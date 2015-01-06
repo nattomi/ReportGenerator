@@ -221,6 +221,49 @@ class eval_ {
     $this->message = $message;
     $this->alphanodes = $alphanodes;
   }
+
+  public function asTex() {
+    global $mode_strings;
+    global $graphics;
+    
+    $content ="";
+    if (!is_null($this->message)) {
+      $content .= $this->message . PHP_EOL;
+    }
+    $rownum = count($this->alphanodes);
+    $userdescription = array();
+    $example = array();
+    $nBeispiel = 0;
+    foreach ($this->alphanodes as $a) {
+      $userdescription[] = $a->userdescription;
+      $e = $a->example;
+      $example[] = $e;
+      if ($e!="") $nBeispiel++;
+    }
+    $beispiel = $nBeispiel > 0;
+    if ($rownum > 0) {
+      $content .= "\\begin{tabular}{r";
+      $content .= $beispiel ? "p{.4\\textwidth}@{\hspace{2em}}!{\color{TextDark}\\vrule}@{\hspace{2em}}p{.4\\textwidth}" : "p{.8\\textwidth}";
+      $content .= "}\n";
+      $content .= "& \\textcolor{TextStandard}{\\fontsize{20pt}{1em}\\selectfont ";
+      $content .= $mode_strings[$this->mode];
+      $content .= "}";
+      if ($beispiel) $content .= " & \\textcolor{TextStandard}{\\fontsize{20pt}{1em}\\selectfont Beispiel}";
+      $content .= "\\\\[-50px]\n";
+      for ($i=0; $i < $rownum; $i++) {
+	$content .= $graphics[$this->mode];
+	$content .= " & ";
+	$content .= $userdescription[$i];
+	if ($beispiel) {
+	  $content .= " & ";
+	  $content .= $example[$i];
+	}
+	$content .= "\\\\\n";
+      }
+      $content .= "\\end{tabular}\n";
+    }
+    return $content;
+  }
 }
 
 class result {

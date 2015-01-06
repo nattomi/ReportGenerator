@@ -70,31 +70,6 @@ function RecentSession($performedtests,$test) {
   return $tests;
 }
 
-/* I probably do not need this
-function getMarks($file_task) {
-  if (file_exists($file_task)) { // parsing the user's global xml file (if exists)
-    $xmldoc = simplexml_load_file($file_task);
-    $marks = array();
-    foreach ($xmldoc->marking->mark as $mark) {
-      $marks[] = new mark((string)$mark['itemnumber'],
-			  (string)$mark['alphalevel'],
-			  (int)$mark);
-    }
-  } else {
-    exit("Failed to open file" . $file_task . "\n");
-  }
-  return $marks;
-}
-*/
-
-function ifelse($condition,$value_true,$value_false) { // resembles R's ifelse function. FIXME: It would be better to drop this and use statements like ($a < $b) ? -1 : 1 instead 
-  if ($condition) {
-    return $value_true; 
-  } else {
-    return $value_false;
-  }
-}
-
 function array_mean($array) { // tells you the mean of an array
   return array_sum($array) / count($array);
 }
@@ -192,20 +167,14 @@ function subset_alphalist($alphalist,$alphaids) {
   return $alphalist_subset;
 }
 
-function readAlphalist2($alphalist_xml) {
-  if (file_exists($alphalist_xml)) {
-    $xmldoc = simplexml_load_file($alphalist_xml);
-    foreach ($xmldoc->alphanode as $alphanode) {
-      $alphaid[] = (string)$alphanode['alphaID'];
-      $order[] = (int)$alphanode['order'];
-      $description[] = (string)$alphanode['description'];
-      $userdescription[] = (string)$alphanode['description'];
-      $example[] = (string)$alphanode['example'];
-    }
-  } else {
-    exit("Creating new alphalist object failed: file not found\n");
-  }
-  return new alphalist($alphaid,$order,$description,
-		       $userdescription,$example);
+function settingsTex($user,$subject,$level) {
+  $content = "";
+  $content .= "% subject\n";
+  $content .= "\\toggletrue{" . $subject . "}\n";
+  $content .= "% user\n";
+  $content .= "\\def\\user{" . $user . "}\n";
+  $content .= "% level\n";
+  $content .= "\\def\\level{" . strtolower($level) . "}\n";
+  return $content;
 }
 ?>
