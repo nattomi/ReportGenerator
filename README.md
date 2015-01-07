@@ -6,11 +6,19 @@ This library is used as a pdf report generator for the [otu.lea](http://otulea.u
 git clone git://github.com/nattomi/ReportGenerator.git 
 ## for developers
 git clone git@github.com:nattomi/ReportGenerator.git
-## to get the current stable release
-cd otulear
+## to get the current stable release, cd to project folder then issue
 git checkout tags/v.1.2.1
+## to get the current testing release, cd to project folder then issue
+git checkout tags/v.1.3
+
 
 ## CHANGELOG
+
+v1.3
+====
+* The student report has been migrated to php completely.
+* Messages such as "Sehr gut, Sie haben alle Aufgaben gelöscht!" were not displayed at all in the online report. Therefore, a new subnode called 'message' has been added to the 'eval' nodes. With the help of this, it is now possible to resolve the above mentioned issue.
+* Object-oriented approach.
 
 v1.2.1
 ======
