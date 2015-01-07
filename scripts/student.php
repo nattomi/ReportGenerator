@@ -18,7 +18,8 @@ include 'classes.php';
 //$user = new user('SD5AM',"2014_9_12_11_15_17"); // test was done in more steps
 //$user = new user('SD5AM',"2014_7_9_12_8_50"); // some are 0 some are 1
 //$user = new user('SD5AM',"2014_9_24_12_31_13"); // in this test nothing was solved at all (data attributes are empty)
-$user = new user('SD5AM',"2014_7_9_12_36_38"); // with one exception all tasks are solved
+//$user = new user('SD5AM',"2014_7_9_12_36_38"); // with one exception all tasks are solved right
+$user = new user('SD5AM',"2014_9_4_16_24_0"); // everything is solved right
 
 //********************************************************************
 // transforming the 'user' object into a 'marksMatrix' object
@@ -43,11 +44,11 @@ $level = $RecentTest->level;
 $alphalist = readAlphalist($alphalist_xml); // parsing the alphalist file
 if ($marks->length > 0) {
   // mode A1
-  $alphaids_A1 = $marks->evalA1($threshold,0);
+  $alphaids_A1 = $marks->evalA1($threshold,$maxListings_A1);
   $alphalist_A1 = subset_alphalist($alphalist,$alphaids_A1);
   $message_A1 = count($alphaids_A1)==0 ? $allwrong : null;
   // mode A2
-  $alphaids_A2 = $marks->evalA2($threshold,2);
+  $alphaids_A2 = $marks->evalA2($threshold,$maxListings_A2);
   $alphalist_A2 = subset_alphalist($alphalist,$alphaids_A2);
   $message_A2 = count($alphaids_A2)==0 ? $welldone[$level] : null;
 } else { // in this case no tasks were solved at all
@@ -131,5 +132,4 @@ rrmdir($tempdir);
 //********************************************************************
 
 echo $result_xml->saveXML();
-
 ?>

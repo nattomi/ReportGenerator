@@ -188,25 +188,24 @@ class marksMatrix {
   }
 
   public function evalA2($threshold,$head) { // note that this is a dummy function, to be changed later
-    $above = array();
-    if ($this->length > 0) {
-      $score_by_alphaid = tapply_mean($this->mark,$this->alphaid);
-      $alphas_tested = array_keys($score_by_alphaid);
-      foreach($score_by_alphaid as $k => $v) {
-	if ($v >= $threshold/100) {
-	  $above[] = $k;
-	}
+    $wrongalpha = array();
+    for ($i=0; $i<$this->length; $i++) {
+      if ($this->mark[$i]==0) {
+	$candidate = $this->alphaid[$i];
+	if (!in_array($candidate,$wrongalpha)) {
+	  $wrongalpha[] = $candidate;
+	}  
       }
     }
-    usort($above,"cmpAlphaId"); // sort them increasingly in dictionary-style
+    usort($wrongalpha,"cmpAlphaId"); // sort them increasingly in dictionary-style
     // the last step is truncating the result
     // * the meaning of a positive number is straightforward
     // * 0 results in empty list
     // * a negative number means no truncation at all
     if ($head >= 0) {
-      $above = array_slice($above,0,$head);
+      $wrongalpha = array_slice($wrongalpha,0,$head);
     }
-    return $above;
+    return $wrongalpha;
   }
 
 }
