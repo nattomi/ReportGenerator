@@ -9,10 +9,14 @@ git clone git@github.com:nattomi/ReportGenerator.git
 ## to get the current stable release, cd to project folder then issue
 git checkout tags/v.1.2.1
 ## to get the current testing release, cd to project folder then issue
-git checkout tags/v.1.3
+git checkout tags/v.1.3.1
 
 
 ## CHANGELOG
+
+v1.3.1
+======
+* Changed the order in which alpha IDs are reported in eval monde A1 from increasing to decreasing.
 
 v1.3
 ====
