@@ -177,6 +177,7 @@ class marksMatrix {
       }
     }
     usort($above,"cmpAlphaId"); // sort them increasingly in dictionary-style
+    $above = array_reverse($above); // this is a hack to achieve decreasing sorting
     // the last step is truncating the result
     // * the meaning of a positive number is straightforward
     // * 0 results in empty list
