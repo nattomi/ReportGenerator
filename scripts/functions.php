@@ -132,6 +132,10 @@ function cmpAlphaId($a,$b) { //
   return $val;
 }
 
+function cmpItem($a,$b) {
+  return cmpAlphaId($a->task,$b->task);
+}
+
 function readAlphalist($alphalist_xml) {
   if (file_exists($alphalist_xml)) {
     $xmldoc = simplexml_load_file($alphalist_xml);

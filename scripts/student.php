@@ -19,7 +19,8 @@ include 'classes.php';
 //$user = new user('SD5AM',"2014_7_9_12_8_50"); // some are 0 some are 1
 //$user = new user('SD5AM',"2014_9_24_12_31_13"); // in this test nothing was solved at all (data attributes are empty)
 //$user = new user('SD5AM',"2014_7_9_12_36_38"); // with one exception all tasks are solved right
-$user = new user('SD5AM',"2014_9_4_16_24_0"); // everything is solved right
+//$user = new user('SD5AM',"2014_9_4_16_24_0"); // everything is solved right
+$user = new user('SD5AM',"2014_9_12_11_11_6"); // interrupted test
 
 //********************************************************************
 // transforming the 'user' object into a 'marksMatrix' object
@@ -28,8 +29,13 @@ $user = new user('SD5AM',"2014_9_4_16_24_0"); // everything is solved right
 
 $performedtests = $user->performedTests(); // parsing the user's global XML file;
 $RecentTest = $user->getRecentTest($performedtests); // Either the latest test or a test matching $user->test
-$RecentTests = RecentSession($performedtests,$RecentTest); // starting from $RecentTest, all other referenced tests are traced down 
+$RecentTests = RecentSession($performedtests,$RecentTest); // starting from $RecentTest, all other referenced tests are traced down
+//$MostRecentItems = $RecentTests[0]->items;
+
+//usort($RecentTests[0]->items,"cmpAlphaId"); // sort them increasingly in dictionary-style
+//    $above = array_reverse($above);
 $marks = $user->getMarks($RecentTests); // all marks received organized into a nice table
+//print_r($marks);
 
 //********************************************************************
 // transforming the 'marksMatrix' object into a 'result' object
@@ -44,7 +50,11 @@ $level = $RecentTest->level;
 $alphalist = readAlphalist($alphalist_xml); // parsing the alphalist file
 if ($marks->length > 0) {
   // mode A1
-  $alphaids_A1 = $marks->evalA1($threshold,$maxListings_A1);
+  if($RecentTest->isInterrupted()) {
+    $alphaids_A1 = $marks->evalA1(0,$maxListings_A1); // in that case the threshold doesn't have to be fulfilled. Using evalA1 might be a slight overkill here.
+  } else {
+    $alphaids_A1 = $marks->evalA1($threshold,$maxListings_A1);
+  }
   $alphalist_A1 = subset_alphalist($alphalist,$alphaids_A1);
   $message_A1 = count($alphaids_A1)==0 ? $allwrong : null;
   // mode A2
@@ -131,5 +141,5 @@ rrmdir($tempdir);
 // Printing the 'result' object as xml
 //********************************************************************
 
-echo $result_xml->saveXML();
+//echo $result_xml->saveXML();
 ?>

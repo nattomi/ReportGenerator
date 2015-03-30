@@ -24,6 +24,12 @@ class test {
     $this->prev = $prev;
     $this->items = $items;
   }
+
+  public function isInterrupted() {
+    $sortedItems = $this->items;
+    usort($sortedItems,"cmpItem"); // sort them increasingly in dictionary-style
+    return (strlen(end($sortedItems)->data) == 0);
+  }
 }
 
 class mark {
@@ -188,7 +194,8 @@ class marksMatrix {
     return $above;
   }
 
-  public function evalA2($threshold,$head) { // note that this is a dummy function, to be changed later
+
+  public function evalA2($threshold,$head) {
     $wrongalpha = array();
     for ($i=0; $i<$this->length; $i++) {
       if ($this->mark[$i]==0) {
