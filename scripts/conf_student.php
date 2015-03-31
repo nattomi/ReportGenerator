@@ -1,7 +1,8 @@
 <?php
 $Udir = "../data/user/"; // don't forget the trailing slash 
 $odir = "/tmp/" ; // the XML and PDF files are going to be put into the corresponding subfolder whose name is identical to $user) of this directory. 
-$threshold = 100; // threshold for fullfilling a competency
+$threshold_A1 = 100; // threshold for fullfilling a competency
+$threshold_A2 = 75; // threshold for failing in a competency
 $maxListings_A1 = 3; // number of ability descriptions listed in eval mode A1
 $maxListings_A2 = 2; // number of ability descriptions listed in eval mode A2
 $alphalist_xml = "../data/item/alphalist/alphalist.xml"; // path to the alphalist xml file

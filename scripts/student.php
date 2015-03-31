@@ -30,10 +30,6 @@ $user = new user('SD5AM',"2014_9_12_11_11_6"); // interrupted test
 $performedtests = $user->performedTests(); // parsing the user's global XML file;
 $RecentTest = $user->getRecentTest($performedtests); // Either the latest test or a test matching $user->test
 $RecentTests = RecentSession($performedtests,$RecentTest); // starting from $RecentTest, all other referenced tests are traced down
-//$MostRecentItems = $RecentTests[0]->items;
-
-//usort($RecentTests[0]->items,"cmpAlphaId"); // sort them increasingly in dictionary-style
-//    $above = array_reverse($above);
 $marks = $user->getMarks($RecentTests); // all marks received organized into a nice table
 //print_r($marks);
 
@@ -50,15 +46,16 @@ $level = $RecentTest->level;
 $alphalist = readAlphalist($alphalist_xml); // parsing the alphalist file
 if ($marks->length > 0) {
   // mode A1
-  if($RecentTest->isInterrupted()) {
-    $alphaids_A1 = $marks->evalA1(0,$maxListings_A1); // in that case the threshold doesn't have to be fulfilled. Using evalA1 might be a slight overkill here.
+  if($RecentTest->isInterrupted()) { //evaluation differs if a test is interrupted
+    $alphaids_A1 = $marks->evalA1(0,$maxListings_A1); // in that case the threshold doesn't have to be fulfilled. Using evalA1 might be a slight overkill here (or, alternatively, evalA1 could be rewritten to handle $threshold=0 separately
+    $alphaids_A2 = $marks->evalA2($threshold_A2,$maxListings_A2);   
   } else {
-    $alphaids_A1 = $marks->evalA1($threshold,$maxListings_A1);
+    $alphaids_A1 = $marks->evalA1($threshold_A1,$maxListings_A1);
+    $alphaids_A2 = $marks->evalA2i($threshold_A2,$maxListings_A2);
   }
   $alphalist_A1 = subset_alphalist($alphalist,$alphaids_A1);
   $message_A1 = count($alphaids_A1)==0 ? $allwrong : null;
   // mode A2
-  $alphaids_A2 = $marks->evalA2($threshold,$maxListings_A2);
   $alphalist_A2 = subset_alphalist($alphalist,$alphaids_A2);
   $message_A2 = count($alphaids_A2)==0 ? $welldone[$level] : null;
 } else { // in this case no tasks were solved at all
