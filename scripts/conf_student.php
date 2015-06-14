@@ -7,7 +7,6 @@ $maxListings_A1 = 3; // number of ability descriptions listed in eval mode A1
 $maxListings_A2 = 2; // number of ability descriptions listed in eval mode A2
 $alphalist_xml = "../data/item/alphalist/alphalist.xml"; // path to the alphalist xml file
 $dir_template = "../template"; // location of template files
-$path_evalMarking = "./evalMarking.R"; // path of evalMarking.R script
 // Settings related to pdf generation
 $mode_names = array("A1","A2"); // abbreviation of the different evaluation modes in the order they appear in the final pdf document
 $mode_strings = array("A1"=>"Das kann ich!","A2"=>"Das kann ich bald wenn ich noch ein wenig übe."); // Title strings associated to the evaluation modes
