@@ -29,16 +29,12 @@ class test {
     $this->items = $items;
   }
 
-  public function truncate() {
-    $items = $this->items;
-    foreach ($items as $item) {
-      if ($item->isempty()) {
-	array_shift($items);
-      } else {
-	break;
-      }
+  public function tasks() {
+    $tasks = array();
+    foreach($this->items as $item) {
+      $tasks[$item->task] = $item->task;
     }
-    $this->items = $items;
+    return $tasks;
   }
 
 }
@@ -111,11 +107,12 @@ class user {
     $subtask = array();
     $alphaid = array();
     $mark = array();
-    // test[0] needs special treatment
-    $tests[0]->truncate();
-    //foreach ($tests as $test) {
-    for ($i=0; $i < count($tests); $i++) {
-      $test = $tests[$i];
+    // all possible task names
+    $lastTest = $tests[0];
+    $alltasks = $lastTest->tasks();
+    //for ($i=0; $i < count($tests); $i++) { 
+    foreach ($tests as $test) {
+      //$test = $tests[$i];
       $timestamp_test = $test->timestamp;
       $subject_test = $test->subject;
       $level_test = $test->level;
@@ -138,27 +135,31 @@ class user {
 	  } else {
 	    exit("Failed to open file " . $basename_task . "\n");
 	  }
-	} else { // we fill matrix elements from the 'item' folder
-	  if ($i == 0) { // but only if we are dealing with the last test
-	    $file_task = $idir . $taskname . "/" . $taskname . ".xml";
-	    if (file_exists($file_task)) {
-	      $xmldoc_task = simplexml_load_file($file_task);
-	      foreach ($xmldoc_task->marking->mark as $mark0) {
-		$timestamp[] = $timestamp_test;
-		$subject[] = $subject_test;
-		$level[] = $level_test;
-		$task[] = $taskname;
-		$subtask[] = (string)$mark0['itemnumber'];
-		$alphaid[] = (string)$mark0['alphalevel'];
-		$mark[] = 0;
-	      }
-	    } else {
-	      exit("Failed to open file " . $taskname . '.xml' . "\n");
-	    }
+	  $alltasks[$taskname] = null;
+	} 
+      }
+    }
+    
+    foreach($alltasks as $taskname) {
+      if (!is_null($taskname)) {
+	$file_task = $idir . $taskname . "/" . $taskname . ".xml";
+	if (file_exists($file_task)) {
+	  $xmldoc_task = simplexml_load_file($file_task);
+	  foreach ($xmldoc_task->marking->mark as $mark0) {
+	    $timestamp[] = $lastTest->timestamp;
+	    $subject[] = $lastTest->subject;
+	    $level[] = $lastTest->level;
+	    $task[] = $taskname;
+	    $subtask[] = (string)$mark0['itemnumber'];
+	    $alphaid[] = (string)$mark0['alphalevel'];
+	    $mark[] = 0;
 	  }
+	} else {
+	  exit("Failed to open file " . $taskname . '.xml' . "\n");
 	}
       }
     }
+    
     return new marksMatrix($timestamp,$subject,$level,
 			   $task,$subtask,$alphaid,$mark);
   }
