@@ -12,7 +12,7 @@ include 'classes.php';
 // by creating a new 'user' object
 //********************************************************************
 
-//$user = new user($_POST['user']); // this is going to be the most common use case
+$user = new user($_POST['user']); // this is going to be the most common use case
 //$user = new user('SD5AM'); // for testing/developing 
 //$user = new user('SD5AM','2014_9_12_11_30_29'); // for testing/developing
 //$user = new user('SD5AM',"2014_9_12_11_15_17"); // test was done in more steps
@@ -20,8 +20,8 @@ include 'classes.php';
 //$user = new user('SD5AM',"2014_9_24_12_31_13"); // in this test nothing was solved at all (data attributes are empty)
 //$user = new user('SD5AM',"2014_7_9_12_36_38"); // with one exception all tasks are solved right
 //$user = new user('SD5AM',"2014_9_4_16_24_0"); // everything is solved right
-$user = new user('SD5AM',"2014_9_12_11_11_6"); // interrupted test
-
+//$user = new user('ATFZB','2015_6_27_19_3_8');
+//$user = new user('ATFZB','2015_6_27_19_5_30');
 //********************************************************************
 // transforming the 'user' object into a 'marksMatrix' object
 // Normally, you do not want to edit below this line!
@@ -29,9 +29,9 @@ $user = new user('SD5AM',"2014_9_12_11_11_6"); // interrupted test
 
 $performedtests = $user->performedTests(); // parsing the user's global XML file;
 $RecentTest = $user->getRecentTest($performedtests); // Either the latest test or a test matching $user->test
-$RecentTests = RecentSession($performedtests,$RecentTest); // starting from $RecentTest, all other referenced tests are traced down
+$RecentTests = RecentSession($performedtests,$RecentTest); // starting from $RecentTest, all other referenced tests are traced down 
 $marks = $user->getMarks($RecentTests); // all marks received organized into a nice table
-//print_r($marks);
+// $marks->display();
 
 //********************************************************************
 // transforming the 'marksMatrix' object into a 'result' object
@@ -46,16 +46,11 @@ $level = $RecentTest->level;
 $alphalist = readAlphalist($alphalist_xml); // parsing the alphalist file
 if ($marks->length > 0) {
   // mode A1
-  if($RecentTest->isInterrupted()) { //evaluation differs if a test is interrupted
-    $alphaids_A1 = $marks->evalA1(0,$maxListings_A1); // in that case the threshold doesn't have to be fulfilled. Using evalA1 might be a slight overkill here (or, alternatively, evalA1 could be rewritten to handle $threshold=0 separately
-    $alphaids_A2 = $marks->evalA2($threshold_A2,$maxListings_A2);   
-  } else {
-    $alphaids_A1 = $marks->evalA1($threshold_A1,$maxListings_A1);
-    $alphaids_A2 = $marks->evalA2i($threshold_A2,$maxListings_A2);
-  }
+  $alphaids_A1 = $marks->evalA1($threshold,$maxListings_A1);
   $alphalist_A1 = subset_alphalist($alphalist,$alphaids_A1);
   $message_A1 = count($alphaids_A1)==0 ? $allwrong : null;
   // mode A2
+  $alphaids_A2 = $marks->evalA2($threshold,$maxListings_A2);
   $alphalist_A2 = subset_alphalist($alphalist,$alphaids_A2);
   $message_A2 = count($alphaids_A2)==0 ? $welldone[$level] : null;
 } else { // in this case no tasks were solved at all
@@ -138,5 +133,5 @@ rrmdir($tempdir);
 // Printing the 'result' object as xml
 //********************************************************************
 
-//echo $result_xml->saveXML();
+echo $result_xml->saveXML();
 ?>

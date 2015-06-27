@@ -8,6 +8,10 @@ class item {
     $this->task = $iname;
     $this->data = $data;
   }
+
+  public function isempty() {
+    return strlen($this->data) == 0 ? true : false;
+  }
 }
 
 class test {
@@ -25,11 +29,18 @@ class test {
     $this->items = $items;
   }
 
-  public function isInterrupted() {
-    $sortedItems = $this->items;
-    usort($sortedItems,"cmpItem"); // sort them increasingly in dictionary-style
-    return (strlen(end($sortedItems)->data) == 0);
+  public function truncate() {
+    $items = $this->items;
+    foreach ($items as $item) {
+      if ($item->isempty()) {
+	array_shift($items);
+      } else {
+	break;
+      }
+    }
+    $this->items = $items;
   }
+
 }
 
 class mark {
@@ -92,7 +103,7 @@ class user {
 
   public function getMarks($tests) {
     $udir = $this->getUserDir();
-
+    global $idir;
     $timestamp = array();
     $subject = array();
     $level = array();
@@ -100,14 +111,18 @@ class user {
     $subtask = array();
     $alphaid = array();
     $mark = array();
-    foreach ($tests as $test) {
+    // test[0] needs special treatment
+    $tests[0]->truncate();
+    //foreach ($tests as $test) {
+    for ($i=0; $i < count($tests); $i++) {
+      $test = $tests[$i];
       $timestamp_test = $test->timestamp;
       $subject_test = $test->subject;
       $level_test = $test->level;
       foreach ($test->items as $item) {
 	$basename_task = $item->data;
 	$taskname = $item->task;
-	if (strlen($basename_task)>0) {
+	if (strlen($basename_task) > 0) {
 	  $file_task = $udir . $item->data;
 	  if (file_exists($file_task)) {
 	    $xmldoc_task = simplexml_load_file($file_task);
@@ -122,6 +137,24 @@ class user {
 	    }
 	  } else {
 	    exit("Failed to open file " . $basename_task . "\n");
+	  }
+	} else { // we fill matrix elements from the 'item' folder
+	  if ($i == 0) { // but only if we are dealing with the last test
+	    $file_task = $idir . $taskname . "/" . $taskname . ".xml";
+	    if (file_exists($file_task)) {
+	      $xmldoc_task = simplexml_load_file($file_task);
+	      foreach ($xmldoc_task->marking->mark as $mark0) {
+		$timestamp[] = $timestamp_test;
+		$subject[] = $subject_test;
+		$level[] = $level_test;
+		$task[] = $taskname;
+		$subtask[] = (string)$mark0['itemnumber'];
+		$alphaid[] = (string)$mark0['alphalevel'];
+		$mark[] = 0;
+	      }
+	    } else {
+	      exit("Failed to open file " . $taskname . '.xml' . "\n");
+	    }
 	  }
 	}
       }
@@ -183,7 +216,6 @@ class marksMatrix {
       }
     }
     usort($above,"cmpAlphaId"); // sort them increasingly in dictionary-style
-    $above = array_reverse($above); // this is a hack to achieve decreasing sorting
     // the last step is truncating the result
     // * the meaning of a positive number is straightforward
     // * 0 results in empty list
@@ -194,30 +226,7 @@ class marksMatrix {
     return $above;
   }
 
-  public function evalA2($threshold,$head) {
-    $below = array();
-    if ($this->length > 0) {
-      $score_by_alphaid = tapply_mean($this->mark,$this->alphaid);
-      $alphas_tested = array_keys($score_by_alphaid);
-      foreach($score_by_alphaid as $k => $v) {
-	if ($v < $threshold/100) {
-	  $below[] = $k;
-	}
-      }
-    }
-    usort($below,"cmpAlphaId"); // sort them increasingly in dictionary-style
-
-    // the last step is truncating the result
-    // * the meaning of a positive number is straightforward
-    // * 0 results in empty list
-    // * a negative number means no truncation at all
-    if ($head >= 0) {
-      $below = array_slice($below,0,$head);
-    }
-    return $below;
-  }
-
-  public function evalA2i($threshold,$head) {
+  public function evalA2($threshold,$head) { // note that this is a dummy function, to be changed later
     $wrongalpha = array();
     for ($i=0; $i<$this->length; $i++) {
       if ($this->mark[$i]==0) {
