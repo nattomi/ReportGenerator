@@ -1,3 +1,0 @@
-timestamp	subject	level	task	subtask	alphaid	mark
-2014_9_12_10_59_17	Lesen	Einfach	1.2.2	1.2.2_1	1.2.1.1	0
-2014_9_12_10_59_17	Lesen	Einfach	1.2.2	1.2.2_2	1.2.1.1	0
