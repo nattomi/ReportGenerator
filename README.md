@@ -9,10 +9,15 @@ git clone git@github.com:nattomi/ReportGenerator.git
 ## to get the current stable release, cd to project folder then issue
 git checkout tags/v.1.2.1
 ## to get the current testing release, cd to project folder then issue
-git checkout tags/v.1.3.2
+git checkout tags/v.1.3.3
 
 
 ## CHANGELOG
+v1.3.3
+======
+* An obsolete folder removed.
+* Correct evaluation of interrupted tests.
+
 v1.3.2
 ======
 * Confusing line refering to a formerly existed but now unused R script removed from the configuration file. 
