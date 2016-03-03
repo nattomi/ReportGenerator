@@ -274,26 +274,15 @@ class otulea {
     return true;
   }
 
-  static function get_next_item($testarray, $timestamp) {
-    $currentKey = key($testarray);
-    while ($currentKey !== null && $currentKey != $timestamp) {
-      next($testarray);
-      $currentKey = key($testarray);
-    }
-    return next($array);
-  }
-
   static function filter_latest(&$testarray) {
-    // FIXME: most probably it doesn't work anymore
     $index = array_keys($testarray);
-    $timestamp = (string)$testarray[$index[0]]['timestamp'];
+    $timestamp = $testarray[$index[0]]->get_timestamp();
     $latest_tests = array();
     do {
       $current_test = $testarray[$timestamp];
       $latest_tests[$timestamp] = $current_test; 
-      $timestamp = (string)$current_test['prev']; 
+      $timestamp = $current_test->get_prev(); 
     } while(strlen($timestamp) > 0);
- 
     return $latest_tests;
   }
 
