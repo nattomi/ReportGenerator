@@ -184,7 +184,7 @@ class otulea {
 
   public function get_marks($test) {
     $marks = array();
-    foreach($test->items() as $item=>$value) {
+    foreach($test->get_items() as $item=>$value) {
       if(strlen($value['data']) != 0) {
 	$xml_data = $this->dir_user       . "/" . 
 	            $this->user->get_id() . "/" .
@@ -255,7 +255,7 @@ class otulea {
 
   static function glue_session(&$testarray, $timestamp) {
     if(strlen($timestamp) == 0)
-      $timestamp = reset($testarray)->timestamp();
+      $timestamp = reset($testarray)->get_timestamp();
     $test = $testarray[$timestamp];
     $timestamp_prev = $test->get_prev();
     while(strlen($timestamp_prev) > 0) {
