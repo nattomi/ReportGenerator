@@ -1,0 +1,135 @@
+<item>
+  <itemnumber>2.3.03_I</itemnumber>
+  <meta_item>cloze</meta_item>
+  <Item_creation>
+    <version>1</version>
+    <date>11.02.2012</date>
+    <person>Inga Brehm</person>
+  </Item_creation>
+  <presets/>
+  <prescreen>
+    <pre_text sound="2.3.03_I_pretext_1.mp3">Helga Bauer arbeitet in einem Warenlager. Hier wird auch der LKW von Olaf beladen. So haben sie oft Gelegenheit, sich auf der Arbeit zu sehen.</pre_text>
+    <pre_text sound="2.3.03_I_instruct_1.mp3">Frau Bauer muss in ihrem Job sehr sorgfältig arbeiten, damit die Ware ordentlich sortiert ist.</pre_text>
+    <pre_media file="2.3.03_I_premedia_1.png"/>
+    <pre_media file="2.3.03_I_premedia_2.png"/>
+  </prescreen>
+  <instruction>
+    <in_text sound="2.3.03_I_question_instruct_1.mp3">Klicken Sie mit der linken Maustaste auf das Lautsprechersymbol, hören Sie sich die folgenden Sätze an und tippen Sie die Sätze mit der Tastatur in das freie Feld.</in_text>
+    <media file="2.3.03_I_premedia_1.png"/>
+  </instruction>
+  <questions>
+    <questionpage>
+      <question>
+        <answertext sound="2.3.03_I_question_1.mp3"/>
+        <answertext>
+          <gap answerid="2.3.03_I_1" style="TextInput_blue" length="50"/>
+        </answertext>
+      </question>
+      <question>
+        <answertext sound="2.3.03_I_question_2.mp3"/>
+        <answertext>
+          <gap answerid="2.3.03_I_2" style="TextInput_blue" length="50"/>
+        </answertext>
+      </question>
+    </questionpage>
+    <questionpage>
+      <question>
+        <answertext sound="2.3.03_I_question_3.mp3"/>
+        <answertext>
+          <gap answerid="2.3.03_I_3" style="TextInput_blue" length="50"/>
+        </answertext>
+      </question>
+      <question>
+        <answertext sound="2.3.03_I_question_4.mp3"/>
+        <answertext>
+          <gap answerid="2.3.03_I_4" style="TextInput_blue" length="50"/>
+        </answertext>
+      </question>
+    </questionpage>
+  </questions>
+  <answers>
+    <answer answerid="2.3.03_I_1" question="1" debug="Jeden Tag um eins kommt die frische Ware.">Jeden tag um eins kommt die frische Ware.</answer>
+    <answer answerid="2.3.03_I_2" question="1" debug="Helga ist dann immer im Lager.">Helga ist dann immer im Lager.</answer>
+    <answer answerid="2.3.03_I_3" question="1" debug="Sie muss für Ordnung sorgen.">Sie muss für Ordnung sorgen.</answer>
+    <answer answerid="2.3.03_I_4" question="1" debug="Ihre Kollegin ist allerdings etwas faul.">Ihre Kollegin ist allerdings etwas faul.</answer>
+  </answers>
+  <correctResponse>
+    <value itemnumber="2.3.03_I_1a" answerid="2.3.03_I_1" casesensitiv="yes" match="first" matchlength="1" points="0.5">J</value>
+    <value itemnumber="2.3.03_I_1a" answerid="2.3.03_I_1" casesensitiv="yes" match="find_words" matchlength="1" points="0.5">Jeden</value>
+    <value itemnumber="2.3.03_I_1b" answerid="2.3.03_I_1" casesensitiv="no" match="first" matchlength="5" points="1">jeden</value>
+    <value itemnumber="2.3.03_I_1c" answerid="2.3.03_I_1" casesensitiv="no" match="first" matchlength="1" points="1">j</value>
+    <value itemnumber="2.3.03_I_1d" answerid="2.3.03_I_1" casesensitiv="no" match="find_pattern" points="1">fr</value>
+    <value itemnumber="2.3.03_I_1e" answerid="2.3.03_I_1" casesensitiv="yes" match="find_words" matchlength="1" points="0.5">Ware</value>
+    <value itemnumber="2.3.03_I_1e" answerid="2.3.03_I_1" casesensitiv="yes" match="find_pattern" points="0.5">W</value>
+    <value itemnumber="2.3.03_I_1f" answerid="2.3.03_I_1" casesensitiv="no" match="full" points="1">jeden tag um eins kommt die frische ware.</value>
+    <value itemnumber="2.3.03_I_1f" answerid="2.3.03_I_1" casesensitiv="no" match="full" points="1">jeden tag um eins komt die frische ware.</value>
+    <value itemnumber="2.3.03_I_2a" answerid="2.3.03_I_2" casesensitiv="yes" match="find_words" matchlength="1" points="0.5">Helga</value>
+    <value itemnumber="2.3.03_I_2a" answerid="2.3.03_I_2" casesensitiv="yes" match="first" matchlength="1" points="0.5">H</value>
+    <value itemnumber="2.3.03_I_2b" answerid="2.3.03_I_2" casesensitiv="no" match="find_words" matchlength="0" points="1">immer</value>
+    <value itemnumber="2.3.03_I_2c" answerid="2.3.03_I_2" casesensitiv="no" match="find_words" matchlength="1" points="0.5">immer</value>
+    <value itemnumber="2.3.03_I_2c" answerid="2.3.03_I_2" casesensitiv="no" match="find_pattern" points="0.5">mme</value>
+    <value itemnumber="2.3.03_I_2d" answerid="2.3.03_I_2" casesensitiv="yes" match="find_words" matchlength="1" points="0.5">Lager</value>
+    <value itemnumber="2.3.03_I_2d" answerid="2.3.03_I_2" casesensitiv="yes" match="find_pattern" points="0.5">L</value>
+    <value itemnumber="2.3.03_I_2e" answerid="2.3.03_I_2" casesensitiv="no" match="full" points="1">helga ist dann immer im lager.</value>
+    <value itemnumber="2.3.03_I_2e" answerid="2.3.03_I_2" casesensitiv="no" match="full" points="1">helga ist dann imer im lager.</value>
+    <value itemnumber="2.3.03_I_3a" answerid="2.3.03_I_3" casesensitiv="yes" match="find_words" matchlength="1" points="0.5">Sie</value>
+    <value itemnumber="2.3.03_I_3a" answerid="2.3.03_I_3" casesensitiv="yes" match="first" matchlength="1" points="0.5">S</value>
+    <value itemnumber="2.3.03_I_3b" answerid="2.3.03_I_3" casesensitiv="no" match="first" matchlength="12" points="0.5">Sie muss für</value>
+    <value itemnumber="2.3.03_I_3b" answerid="2.3.03_I_3" casesensitiv="no" match="first" matchlength="11" points="0.5">Si muss für</value>
+    <value itemnumber="2.3.03_I_3b" answerid="2.3.03_I_3" casesensitiv="no" match="first" matchlength="11" points="0.5">Sie mus für</value>
+    <value itemnumber="2.3.03_I_3b" answerid="2.3.03_I_3" casesensitiv="no" match="first" matchlength="10" points="0.5">Si mus für</value>
+    <value itemnumber="2.3.03_I_3b" answerid="2.3.03_I_3" casesensitiv="no" match="last" matchlength="7" points="0.5">sorgen.</value>
+    <value itemnumber="2.3.03_I_4a" answerid="2.3.03_I_4" casesensitiv="yes" match="find_words" matchlength="1" points="0.5">Ihre</value>
+    <value itemnumber="2.3.03_I_4a" answerid="2.3.03_I_4" casesensitiv="yes" match="first" matchlength="1" points="0.5">I</value>
+    <value itemnumber="2.3.03_I_4b" answerid="2.3.03_I_4" casesensitiv="no" match="find_words" points="1">ihre</value>
+    <value itemnumber="2.3.03_I_4c" answerid="2.3.03_I_4" casesensitiv="yes" match="find_words" matchlength="1" points="0.5">Kollegin</value>
+    <value itemnumber="2.3.03_I_4c" answerid="2.3.03_I_4" casesensitiv="yes" match="find_pattern" points="0.5">Kol</value>
+    <value itemnumber="2.3.03_I_4d" answerid="2.3.03_I_4" casesensitiv="no" match="find_words" matchlength="1" points="0.5">kollegin</value>
+    <value itemnumber="2.3.03_I_4d" answerid="2.3.03_I_4" casesensitiv="no" match="find_pattern" points="0.5">oll</value>
+    <value itemnumber="2.3.03_I_4e" answerid="2.3.03_I_4" casesensitiv="no" match="first" matchlength="17" points="0.5">ihre kollegin ist</value>
+    <value itemnumber="2.3.03_I_4e" answerid="2.3.03_I_4" casesensitiv="no" match="first" matchlength="16" points="0.5">ire kollegin ist</value>
+    <value itemnumber="2.3.03_I_4e" answerid="2.3.03_I_4" casesensitiv="no" match="first" matchlength="16" points="0.5">ihre kolegin ist</value>
+    <value itemnumber="2.3.03_I_4e" answerid="2.3.03_I_4" casesensitiv="no" match="first" matchlength="15" points="0.5">ire kolegin ist</value>
+    <value itemnumber="2.3.03_I_4e" answerid="2.3.03_I_4" casesensitiv="no" match="last" matchlength="11" points="0.5">etwas faul.</value>
+  </correctResponse>
+  <abilities>
+    <ability number="1" alphalevel="2.1.11">Satzanfang II</ability>
+    <ability number="2" alphalevel="2.1.12">Eigennamen I</ability>
+    <ability number="3" alphalevel="2.2.03">Funktionswörter II</ability>
+    <ability number="4" alphalevel="2.2.05">schwierige Dauerkonsonanten</ability>
+    <ability number="5" alphalevel="2.2.06">Satzanfang III</ability>
+    <ability number="6" alphalevel="2.2.08">Konkreta I</ability>
+    <ability number="7" alphalevel="2.3.02">Konsonantenhäufung II</ability>
+    <ability number="8" alphalevel="2.3.05">aggregierte Konkreta</ability>
+    <ability number="9" alphalevel="2.3.09">Konsonantendopplung II</ability>
+    <ability number="10" alphalevel="2.4.11">Satz lautgetreu</ability>
+    <ability number="11" alphalevel="2.5.04">Konsonantendopplung III</ability>
+  </abilities>
+  <marking>
+    <pointuse maxpoint="1"/>
+    <mark itemnumber="2.3.03_I_1a" alphalevel="2.1.11">1</mark>
+    <mark itemnumber="2.3.03_I_1b" alphalevel="2.2.03">1</mark>
+    <mark itemnumber="2.3.03_I_1c" alphalevel="2.2.05">1</mark>
+    <mark itemnumber="2.3.03_I_1d" alphalevel="2.3.02">1</mark>
+    <mark itemnumber="2.3.03_I_1e" alphalevel="2.3.05">1</mark>
+    <mark itemnumber="2.3.03_I_1f" alphalevel="2.4.11">1</mark>
+    <mark itemnumber="2.3.03_I_2a" alphalevel="2.1.12">1</mark>
+    <mark itemnumber="2.3.03_I_2b" alphalevel="2.2.03">1</mark>
+    <mark itemnumber="2.3.03_I_2c" alphalevel="2.3.09">1</mark>
+    <mark itemnumber="2.3.03_I_2d" alphalevel="2.2.08">1</mark>
+    <mark itemnumber="2.3.03_I_2e" alphalevel="2.4.11">1</mark>
+    <mark itemnumber="2.3.03_I_3a" alphalevel="2.2.06">1</mark>
+    <mark itemnumber="2.3.03_I_3b" alphalevel="2.4.11">0</mark>
+    <mark itemnumber="2.3.03_I_4a" alphalevel="2.2.06">1</mark>
+    <mark itemnumber="2.3.03_I_4b" alphalevel="2.2.03">1</mark>
+    <mark itemnumber="2.3.03_I_4c" alphalevel="2.3.05">1</mark>
+    <mark itemnumber="2.3.03_I_4d" alphalevel="2.5.04">1</mark>
+    <mark itemnumber="2.3.03_I_4e" alphalevel="2.4.11">0</mark>
+  </marking>
+  <time>
+    <start_time>2014_10_7_13_56_23</start_time>
+    <end_time>2014_10_7_13_57_9</end_time>
+    <time_consumption>45</time_consumption>
+  </time>
+  <usernumber>SD5AM</usernumber>
+</item>

@@ -106,6 +106,14 @@ class test {
       $this->items[$item] = otulea::merge_items($this->items[$item], $test->items[$item]);
     }
   } 
+
+  public function print_test() {
+    foreach($this->items as $item=>$v) {
+      echo $item      . " " . 
+	   $v['data'] . PHP_EOL;
+    }
+  }
+
 }
 
 class user {

@@ -1,5 +1,18 @@
 <performedtests> 
- <test timestamp="2014_10_7_11_47_5" subject="Lesen" level="Einfach">
+  <test timestamp="2014_9_5_10_55_25" subject="Schreiben" level="Mittel">
+    <item iname="2.3.01_I" data="SD5AM_2014_9_5_10_55_25_2.3.01_I.xml"/>
+    <item iname="2.3.01_II" data="SD5AM_2014_9_5_10_58_13_2.3.01_II.xml"/>
+    <item iname="2.3.01_III" data="SD5AM_2014_9_5_10_59_33_2.3.01_III.xml"/>
+    <item iname="2.3.03_I" data=""/>
+    <item iname="2.3.03_II" data=""/>
+    <item iname="2.3.03_III" data=""/>
+    <item iname="2.3.03_IV" data=""/>
+    <item iname="2.3.04_I" data=""/>
+    <item iname="2.3.04_II" data=""/>
+    <item iname="2.3.04_III" data=""/>
+    <item iname="2.3.04_IV" data=""/>
+  </test>
+  <test timestamp="2014_10_7_11_47_5" subject="Lesen" level="Einfach">
     <item iname="1.2.1" data="SD5AM_2014_10_7_11_47_5_1.2.1.xml"/>
     <item iname="1.2.2" data=""/>
     <item iname="1.3.2" data=""/>
@@ -25,5 +38,18 @@
     <item iname="1.3.4" data=""/>
     <item iname="1.3.5" data=""/>
     <item iname="1.3.6" data=""/>
+  </test>
+  <test timestamp="2014_10_7_13_56_23" subject="Schreiben" level="Mittel" prev="2014_9_5_10_55_25">
+    <item iname="2.3.01_I" data=""/>
+    <item iname="2.3.01_II" data=""/>
+    <item iname="2.3.01_III" data=""/>
+    <item iname="2.3.03_I" data="SD5AM_2014_10_7_13_56_23_2.3.03_I.xml"/>
+    <item iname="2.3.03_II" data=""/>
+    <item iname="2.3.03_III" data=""/>
+    <item iname="2.3.03_IV" data=""/>
+    <item iname="2.3.04_I" data=""/>
+    <item iname="2.3.04_II" data=""/>
+    <item iname="2.3.04_III" data=""/>
+    <item iname="2.3.04_IV" data=""/>
   </test>
 </performedtests>
