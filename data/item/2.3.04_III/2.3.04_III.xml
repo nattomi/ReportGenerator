@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="ISO-8859-15"?>
+<!DOCTYPE item SYSTEM "ITEMS.DTD">
+<!--Headder-->
+<item>
+	<!--Itemnumber - coresponding item number of the lea universe-->
+	<itemnumber>2.3.04_III</itemnumber>
+	<!--Meta_Item - Selection of a design template-->
+	<meta_item>cloze</meta_item>
+	<!--Creation/Change - Version information-->
+	<Item_creation>
+	    <version>1</version>
+	    <date>12.02.2012</date>
+	    <person>Inga Brehm</person>
+	</Item_creation>
+	<!--Presets - All generally used item presets-->
+	<presets>
+	   
+	</presets>
+	<!--Instructions - Left side entry-->
+	<instruction>
+	   <!--Text-->
+	   <in_text sound="2.3.04_III_question_instruct.mp3">Der Chef kann den Zweitschlüssel für das Lager nicht finden. Leila und Anil grinsen, weil sie das Chaos des Chefs kennen. Nun muss der Schlüsseldienst kommen. Klicken Sie auf das Lautsprechersymbol und tragen Sie bitte mit der Tastatur in der Quittung folgendes ein:&#13;1. Den Namen des KFZ-Fachbetriebes. Der Name wird Ihnen vorgelesen, wenn Sie auf den Lautsprecher klicken.&#13;2. Das Datum. Auch das Datum wird Ihnen vorgelesen. &#13;3. Die Stadt, in der sie wohnen.</in_text>
+	   <!--Media-->
+	   <media file="2.3.04_III_instruction_1.png" />
+	</instruction>
+	<!--Questions - Right side entry-->
+	<questions>
+	  <!-- Page - partcollection for one question display-->
+	  <questionpage> 
+		   <question>   
+		      <answertext>
+		      	<a_text>Quittung</a_text>
+		      	<a_text>Betrag: </a_text><a_text>150 Euro</a_text>
+		      </answertext>
+		      <answertext>
+		      	<a_text>Betrag in Worten</a_text><a_text>hundertfünzig</a_text>
+		      </answertext>
+		      <answertext>
+		      	<a_text>von</a_text><a_text>KFZ-Fachbetrieb</a_text>
+		      	<gap sound="2.3.04_III_question_1.mp3" answerid="2.3.04_III_1" style="TextInput_blue" length="10" />
+		      </answertext>
+		      <answertext>
+		      	<a_text>an: </a_text><a_text>Schlüsseldienst Hoppe</a_text>
+		      	<a_text>für: </a_text><a_text>Lagertor aufbrechen</a_text>
+		      </answertext>
+		      <answertext>
+		      	<a_text>Datum</a_text> 
+		      	<gap sound="2.3.04_III_datum.mp3" answerid="2.3.04_III_2" style="TextInput_blue" length="16" /> 
+			  </answertext>
+		      <answertext>
+		      	<a_text>Ort</a_text> 
+		      	<gap answerid="2.3.04_III_3" style="TextInput_blue" length="16" /> 
+		      </answertext>
+		      <answertext>
+		      	<a_text>Stempel/ Unterschrift</a_text> 
+		     </answertext>
+		  </question>
+	   </questionpage>
+	</questions>
+	<!--Answers - User input data-->
+	<answers>
+	   <answer answerid="2.3.04_III_1" question="1" debug="Schmal"></answer><!--vorher 2.2.04_III_-->
+	   <answer answerid="2.3.04_III_2" question="1"></answer>
+	   <answer answerid="2.3.04_III_3" question="1"></answer>
+	</answers>
+	<!--Right answers, evaluation details and Pointvalues-->
+	<correctResponse>
+		 <value itemnumber="2.3.04_III_1a" answerid="2.3.04_III_1" casesensitiv="yes" match="levenshtein" matchlength="1" points="0.5">Schmal</value><!--vorher alle id=2.3.04_II_1-->
+		 <value itemnumber="2.3.04_III_1a" answerid="2.3.04_III_1" casesensitiv="yes" match="first" matchlength="1" points="0.5">S</value>
+		 <value itemnumber="2.3.04_III_1b" answerid="2.3.04_III_1" casesensitiv="no" match="levenshtein" matchlength="1" points="0.5">schmal</value>
+		 <value itemnumber="2.3.04_III_1b" answerid="2.3.04_III_1" casesensitiv="no" match="first" matchlength="4" points="0.5">schm</value>
+		 
+		 <!--Keine Ahnung was bei Ort und Datum als richtige Lösung hin kommt oder ob die folgenden Lücken überhaupt ausgewertet werden können-->
+		 <value itemnumber="2.3.04_III_2" answerid="2.3.04_III_2" casesensitiv="no" match="full" points="1">15. Februar 2013</value> 
+		 <value itemnumber="2.3.04_III_2" answerid="2.3.04_III_2" casesensitiv="no" match="full" points="1">15-Februar-2013</value>
+		 
+		 <value itemnumber="2.3.04_III_3a" answerid="2.3.04_III_3" casesensitiv="no" match="any" points="1"></value>
+		 <value itemnumber="2.3.04_III_3b" answerid="2.3.04_III_3" casesensitiv="yes" match="any" points="1"></value>
+	</correctResponse>
+	<!--List of implemented "discretionary clauses" (Kannbestimmung)-->
+	<abilities>
+	   <ability number="1" alphalevel="2.1.10">Datum</ability>
+	   <ability number="2" alphalevel="2.2.01">Eigennamen II</ability>
+	   <ability number="3" alphalevel="2.2.02">persönliche Angabe</ability>
+	   <ability number="4" alphalevel="2.2.09">Dauerkonsonantenhäufung I</ability>
+	</abilities >
+	<!--Marking - How many points did the answers get-->
+	<marking>
+	 <pointuse maxpoint="1" />
+	   <mark itemnumber="2.3.04_III_1a" alphalevel="2.2.01" ></mark>
+	   <mark itemnumber="2.3.04_III_1b" alphalevel="2.2.09" ></mark>
+	   <mark itemnumber="2.3.04_III_2" alphalevel="2.1.10" ></mark>
+<!--	<mark itemnumber="2.3.04_III_3a" alphalevel="2.2.02" ></mark>
+	   <mark itemnumber="2.3.04_III_3b" alphalevel="2.2.01" ></mark> Ortsangabe aus Auswertung raus, da nicht umsetzbar-->
+	</marking>
+	<!--Time - Start, end and consumption time of the item-->
+	<time>
+	   <start_time></start_time>
+	   <end_time></end_time>
+	   <time_consumption></time_consumption>
+	</time>
+	<!--User identifikation - Identification Number of the user-->
+	<usernumber></usernumber>
+</item>

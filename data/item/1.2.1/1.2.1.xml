@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="ISO-8859-15"?>
+<!DOCTYPE item SYSTEM "ITEMS.DTD"> 
+<!--Headder-->
+<item>
+<!--Itemnumber - coresponding item number of the lea universe-->
+<itemnumber>1.2.1</itemnumber>
+<!--Meta_Item - Selection of a design template-->
+<meta_item>mchoice</meta_item>
+<!--Creation/Change - Version information-->
+<Item_creation>
+    <version>1</version>
+    <date>28.6.2010</date>
+    <person>Ilka Koppel</person>
+</Item_creation>
+<!--Presets - All generally used item presets-->
+<presets>
+
+</presets>
+<!--item introduction screen will be shown first-->
+<prescreen>
+	<pre_text style="" sound="1.2.1_pretext_1.mp3">Simone arbeitet als Reinigungskraft in einer Grundschule.&#13;Heute möchte sie nach der Arbeit mit Leon ins Kino gehen.</pre_text>
+	<pre_media file="1.2.1_I_premedia_1.png" />
+  <pre_media file="1.2.1_I_premedia_2.png" />
+</prescreen>
+
+<!--Instructions - Left side entry-->
+<instruction>
+   <!--Text-->
+   <in_text style="" sound="1.2.1_instruct_1.mp3">Simone möchte mit Leon ins Kino gehen. Bitte sehen Sie sich dieses Kinoplakat an.</in_text>
+      
+	 <!--Media-->
+	 <media file="1_2_1_kino_plakat.png"  />
+</instruction>
+<!--Questions - Right side entry-->
+<questions>
+  <!-- Page - partcollection for one question display-->
+  <questionpage> 
+	   <q_text sound="1.2.1_question_instruct_1.mp3">Beantworten Sie bitte die folgende Frage.</q_text>	
+	   <question>
+	      <answertext>
+            <a_text sound="1.2.1_question_instruct_2.mp3">Welcher Film läuft am Donnerstag? Klicken Sie bitte mit der linken Maustaste die richtige Antwort an.</a_text>
+        </answertext>
+        <choices>
+          <choice answerid="1.2.1_1_1">Sissy</choice>
+          <choice answerid="1.2.1_1_2">Manie</choice> <!--vorher: answerid="1.3.4_1_2"-->
+          <choice answerid="1.2.1_1_3">Otto</choice> <!--vorher: answerid="1.3.4_1_3-->
+        </choices>	
+	   </question>
+  </questionpage> 
+  <questionpage> 
+	   <q_text sound="1.2.1_question_instruct_1.mp3">Beantworten Sie bitte die folgende Frage.</q_text>	
+	   <question>
+	      <answertext>
+            <a_text sound="1.2.1_question_instruct_3.mp3">An welchem Tag hat das Kino geschlossen? Klicken Sie bitte mit der linken Maustaste die richtige Antwort an.</a_text>
+        </answertext>
+        <choices>
+          <choice answerid="1.2.1_2_1">Dienstag.</choice>
+          <choice answerid="1.2.1_2_2">Mittwoch.</choice>
+          <choice answerid="1.2.1_2_3">Donnerstag.</choice>
+        </choices>	
+	   </question>
+  </questionpage> 
+</questions>
+<!--Answers - User input data-->
+<answers>
+   <answer answerid="1.2.1_1_1" question="1"></answer>
+   <answer answerid="1.2.1_1_2" question="1"></answer>
+   <answer answerid="1.2.1_1_3" question="1"></answer>
+   <answer answerid="1.2.1_2_1" question="2"></answer>
+   <answer answerid="1.2.1_2_2" question="2"></answer>
+	<answer answerid="1.2.1_2_3" question="2"></answer>
+</answers>
+<!--Right answers, evaluation details and Pointvalues-->
+<correctResponse>
+	 <value itemnumber="1.2.1_1" answerid="1.2.1_1_3" casesensitiv="yes" match="full" points="1">1</value>
+	 <value itemnumber="1.2.1_2" answerid="1.2.1_2_1" casesensitiv="yes" match="full" points="1">1</value>
+</correctResponse>
+<!--List of implemented "discretionary clauses" (Kannbestimmung)-->
+<abilities> 
+   <ability number="1" alphalevel="1.2.1.2">Kann Zeitpläne sinnentnehmend lesen (Dokument literacy).</ability>
+   <ability number="2" alphalevel="1.2.1.1">Kann Wörter mit ansteigneder Komplexität (Konsonantenhäufungen) recodieren und dekodieren.</ability>
+</abilities>
+<!--Marking - How many points did the answers get-->
+<marking>
+   <pointuse maxpoint="1" />
+   <mark itemnumber="1.2.1_1" alphalevel="1.2.1.1" ></mark> <!--vorher (beide): alphalevel="1.2.1"-->
+   <mark itemnumber="1.2.1_2" alphalevel="1.2.1.2" ></mark>
+</marking>
+<!--Time - Start, end and consumption time of the item-->
+<time>
+   <start_time></start_time>
+   <end_time></end_time>
+   <time_consumption></time_consumption>
+</time>
+<!--User identifikation - Identification Number of the user-->
+<usernumber></usernumber>
+</item>

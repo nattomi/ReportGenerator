@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="ISO-8859-15"?>
+<!DOCTYPE item SYSTEM "ITEMS.DTD">
+<!--Headder-->
+<item>
+<!--Itemnumber - coresponding item number of the lea universe-->
+<itemnumber>2.3.01_I</itemnumber>
+<!--Meta_Item - Selection of a design template-->
+<meta_item>cloze</meta_item>
+<!--Creation/Change - Version information-->
+<Item_creation>
+    <version>1</version>
+    <date>4.5.2011</date>
+    <person>Kai Schwedes</person>
+</Item_creation>
+<!--Presets - All generally used item presets-->
+<presets>
+   
+</presets>
+<!--item introduction screen will be shown first-->
+<prescreen>
+	<pre_text sound="2.3.01_I_pretext_1.mp3">Simone Fischer ist alleinerziehende Mutter der vierjährigen Tochter Lara. Oft hilft Simones Mutter bei der Betreuung der Kleinen. Ausgerechnet heute hat die Mutter von Simone jedoch keine Zeit.</pre_text>
+	<pre_text sound="2.3.01_I_pretext_2.mp3">Simones Tochter Lara ist heute Morgen mit Fieber aufgewacht und kann nicht in den Kindergarten gehen. Simone Fischer kann daher leider nicht zur Arbeit gehen. Simone schreibt eine Mail für die Kindergärtnerin Frau Lang.</pre_text>
+	<pre_media file="2.3.01_I_premedia_1.png" />
+	<pre_media file="2.3.01_I_premedia_2.png" />
+</prescreen>
+<instruction>
+   <!--Text-->
+    <in_text sound="2.3.01_I_question_instruct_1.mp3">Beachten Sie bitte bei allen Aufgaben besonders die Groß- und Kleinschreibung.</in_text>
+   <in_text sound="2.3.01_I_question_instruct_2.mp3">Klicken Sie bitte auf das Lautsprechersymbol, hören Sie zu und ergänzen Sie die Buchstaben im Text. Sie können sich einzelne Wörter wiederholen lassen, indem Sie in der entsprechenden Lücke auf den Lautsprecher klicken.</in_text>
+   <!--Media-->
+   <media file="2.3.01_I_instruction_1.png" />
+</instruction>
+<!--Questions - Right side entry-->
+<questions>
+  <!-- Page - partcollection for one question display-->
+  <questionpage>
+  	<q_text sound="2.3.01_I_question_text_1.mp3"></q_text>
+	<question>
+	  <answertext>
+          <gap answerid="2.3.01_I_1" style="TextInput_blue" length="2" sound="2.3.01_I_question_1.mp3" />
+	  <a_text>iebe Frau Lang,</a_text>
+	  </answertext>
+	  <answertext>	   
+	  <gap answerid="2.3.01_I_2" style="TextInput_blue" length="2" sound="2.3.01_I_question_2.mp3" />
+	  <a_text>ara ist</a_text>
+	  <gap answerid="2.3.01_I_3" style="TextInput_blue" length="2" sound="2.3.01_I_question_3.mp3" />
+	  <a_text>eute leider krank.</a_text>
+	  <gap answerid="2.3.01_I_4" style="TextInput_blue" length="2" sound="2.3.01_I_question_4.mp3" />
+	  <a_text>ie kann daher nicht in den</a_text>
+	  <gap answerid="2.3.01_I_5" style="TextInput_blue" length="2" sound="2.3.01_I_question_5.mp3" />
+	  <a_text>indergarten</a_text>
+	  <gap answerid="2.3.01_I_6" style="TextInput_blue" length="2" sound="2.3.01_I_question_6.mp3" />
+	  <a_text>ehen.</a_text>
+	  </answertext>
+	  <answertext>	   
+	  <a_text>Viele Grüße</a_text>
+	  </answertext>
+	  <answertext>	   
+	  <a_text>Simone Fischer</a_text>
+	  </answertext>
+	</question>
+  </questionpage> 
+</questions>
+<!--Answers - User input data-->
+<answers>
+   <answer answerid="2.3.01_I_1" question="1"></answer>
+   <answer answerid="2.3.01_I_2" question="1"></answer>
+   <answer answerid="2.3.01_I_3" question="1"></answer>
+   <answer answerid="2.3.01_I_4" question="1" debug="S"></answer>
+   <answer answerid="2.3.01_I_5" question="1" debug="K"></answer>
+   <answer answerid="2.3.01_I_6" question="1"></answer>
+</answers>
+<!--Right answers, evaluation details and Pointvalues-->
+<correctResponse>
+	 <value itemnumber="2.3.01_I_1" answerid="2.3.01_I_1" casesensitiv="yes" match="full" points="1">L</value>
+	 <value itemnumber="2.3.01_I_2" answerid="2.3.01_I_2" casesensitiv="yes" match="full" points="1">L</value>
+	 <value itemnumber="2.3.01_I_3" answerid="2.3.01_I_3" casesensitiv="no" match="full" points="1">h</value>
+	 <value itemnumber="2.3.01_I_4a" answerid="2.3.01_I_4" casesensitiv="yes" match="full" points="1">S</value>
+	 <value itemnumber="2.3.01_I_4b" answerid="2.3.01_I_4" casesensitiv="no" match="full" points="1">s</value><!--fehlte, vorher nur 4-->
+	 <value itemnumber="2.3.01_I_5a" answerid="2.3.01_I_5" casesensitiv="yes" match="full" points="1">K</value>
+	 <value itemnumber="2.3.01_I_5b" answerid="2.3.01_I_5" casesensitiv="no" match="full" points="1">k</value>
+	 <value itemnumber="2.3.01_I_6" answerid="2.3.01_I_6" casesensitiv="yes" match="full" points="1">g</value>
+</correctResponse>
+<!--List of implemented "discretionary clauses" (Kannbestimmung)-->
+<abilities> 
+   <ability number="1" alphalevel="2.1.06">Satzanfang I</ability>
+   <ability number="2" alphalevel="2.1.09">weiche Stoppkonsoanten</ability>
+   <ability number="3" alphalevel="2.1.12">Eigennamen I</ability>
+   <ability number="4" alphalevel="2.2.03"> Funktionswörter II</ability><!--fehlte-->
+   <ability number="5" alphalevel="2.2.05">schwierige Dauerkonsonanten</ability>
+   <ability number="6" alphalevel="2.2.06">Satzanfang III</ability>
+   <ability number="7" alphalevel="2.2.07">harte Stoppkonsonanten</ability>
+   <ability number="8" alphalevel="2.3.05">aggregierte Konkreta</ability><!--vorher Abstrakta-->
+</abilities>
+<!--Marking - How many points did the answers get-->
+<marking>
+   <pointuse maxpoint="1" />
+   <mark itemnumber="2.3.01_I_1" alphalevel="2.1.06" ></mark>
+   <mark itemnumber="2.3.01_I_2" alphalevel="2.1.12" ></mark>
+   <mark itemnumber="2.3.01_I_3" alphalevel="2.2.05" ></mark>
+   <mark itemnumber="2.3.01_I_4a" alphalevel="2.2.06" ></mark>
+   <mark itemnumber="2.3.01_I_4b" alphalevel="2.2.03" ></mark>
+   <mark itemnumber="2.3.01_I_5a" alphalevel="2.3.05" ></mark>
+   <mark itemnumber="2.3.01_I_5b" alphalevel="2.2.07" ></mark>
+   <mark itemnumber="2.3.01_I_6" alphalevel="2.1.09" ></mark>
+</marking>
+<!--Time - Start, end and consumption time of the item-->
+<time>
+   <start_time></start_time>
+   <end_time></end_time>
+   <time_consumption></time_consumption>
+</time>
+<!--User identifikation - Identification Number of the user-->
+<usernumber></usernumber>
+</item>

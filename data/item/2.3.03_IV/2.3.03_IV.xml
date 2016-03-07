@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="ISO-8859-15"?>
+<!DOCTYPE item SYSTEM "ITEMS.DTD">
+<!--Headder-->
+<item>
+	<!--Itemnumber - coresponding item number of the lea universe-->
+	<itemnumber>2.3.03_IV</itemnumber>
+	<!--Meta_Item - Selection of a design template-->
+	<meta_item>cloze</meta_item>
+	<!--Creation/Change - Version information-->
+	<Item_creation>
+	    <version>1</version>
+	    <date>28.04.2012</date>
+	    <person>Inga Brehm</person>
+	</Item_creation>
+	<!--Presets - All generally used item presets-->
+	<presets>
+	   
+	</presets>
+	<!--Instructions - Left side entry-->
+	<instruction>
+	   <!--Text-->
+	   <in_text sound="2.3.03_IV_instruct_1.mp3">Sehen Sie sich bitte die unten stehende Wörterliste an. Vergleichen Sie die Wörter mit den entsprechenden fett geschriebenen Wörtern im eben bearbeiteten Text. Korrigieren Sie ggf. die Fehler. Klicken Sie dafür mit der linken Maustaste das falsche Wort an und tippen Sie es dann richtig mit der Tastatur ein.</in_text>
+	   <!--Media-->
+	   <media file="2.3.03_IV_instruction_1.png" />
+	</instruction>
+	<!--Questions - Right side entry-->
+	<questions>
+	  <!-- Page - partcollection for one question display-->
+	  <questionpage>
+	 	  <q_text sound="2.3.03_IV_question_text_1.mp3"></q_text>
+		   <question>
+		   <answertext></answertext>
+		   <answertext>
+ 		      	<a_text>Jetzt dauert es nur noch eine</a_text>
+ 		      	<gap answerid="2.3.03_IV_1"  style="TextInput_default" length="10">Stunnde</gap>
+ 		      	<a_text>, bevor die LKWs mit der neuen Ware kommen. Helga ist aufgeregt und sieht schnell noch einmal in den</a_text>
+ 		      	<gap answerid="2.3.03_IV_2"  style="TextInput_default" length="10">Spigel</gap>
+ 		      	<a_text>. Ob Olaf heute mal wieder in einem der LKWs sitzt? Sie hat Schmetterlinge im Bauch, wenn sie an Olaf</a_text>
+ 		      	<gap answerid="2.3.03_IV_3"  style="TextInput_default" length="10">dengt</gap>
+ 		      	<a_text>.</a_text>
+		     </answertext>
+			 <answertext></answertext>
+			 <answertext>
+			 	<a_text>Wörterliste: Bauch  denkt  sieht  sitzt  Spiegel  Stunde</a_text>
+		     </answertext>
+		  </question>
+	   </questionpage>  
+	</questions>
+	
+	
+	<!--Answers - User input data-->
+	<answers>
+	   <answer answerid="2.3.03_IV_1" question="1"></answer>
+	   <answer answerid="2.3.03_IV_2" question="1"></answer>
+	   <answer answerid="2.3.03_IV_3" question="1"></answer>
+	</answers>
+	<!--Right answers, evaluation details and Pointvalues-->
+	<correctResponse>
+		 <value itemnumber="2.3.03_IV_1" answerid="2.3.03_IV_1" casesensitiv="yes" match="full" points="1">Stunde</value>
+		 <value itemnumber="2.3.03_IV_2" answerid="2.3.03_IV_2" casesensitiv="yes" match="full" points="1">Spiegel</value>
+		 <value itemnumber="2.3.03_IV_3" answerid="2.3.03_IV_3" casesensitiv="yes" match="full" points="1">denkt</value>
+	</correctResponse>
+	<!--List of implemented "discretionary clauses" (Kannbestimmung)-->
+	<abilities> 
+	   <ability number="1" alphalevel="2.2.10">Wortliste</ability>  
+	</abilities >
+	<!--Marking - How many points did the answers get-->
+	<marking>
+	<pointuse maxpoint="1" />
+	   <mark itemnumber="2.3.03_IV_1" alphalevel="2.2.10" ></mark>
+	   <mark itemnumber="2.3.03_IV_2" alphalevel="2.2.10" ></mark>
+	   <mark itemnumber="2.3.03_IV_3" alphalevel="2.2.10" ></mark>
+	</marking>
+	<!--Time - Start, end and consumption time of the item-->
+	<time>
+	   <start_time></start_time>
+	   <end_time></end_time>
+	   <time_consumption></time_consumption>
+	</time>
+	<!--User identifikation - Identification Number of the user-->
+	<usernumber></usernumber>
+</item>

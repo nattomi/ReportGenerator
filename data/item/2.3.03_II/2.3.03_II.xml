@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="ISO-8859-15"?>
+<!DOCTYPE item SYSTEM "ITEMS.DTD">
+<!--Headder-->
+<item>
+	<!--Itemnumber - coresponding item number of the lea universe-->
+	<itemnumber>2.3.03_II</itemnumber>
+	<!--Meta_Item - Selection of a design template-->
+	<meta_item>cloze</meta_item>
+	<!--Creation/Change - Version information-->
+	<Item_creation>
+	    <version>1</version>
+	    <date>11.02.2012</date>
+	    <person>Inga Brehm</person>
+	</Item_creation>
+	<!--Presets - All generally used item presets-->
+	<presets>
+	   
+	</presets>
+	<!--Instructions - Left side entry-->
+	<instruction>
+	   <!--Text-->
+	   <in_text sound="2.3.03_II_question_instruct_1.mp3">Eine von Helgas Aufgaben besteht darin, die neue Ware in einer Liste zu erfassen. Klicken Sie auf den Lautsprecher und hören Sie zu. Ergänzen Sie bitte das Datum und die fehlenden Wörter. Sie können sich einzelne Wörter wiederholen lassen, indem Sie auf den Lautsprecher in dem jeweiligen Feld klicken.</in_text>
+	   <!--Media-->
+	   <media file="2.3.03_II_instruction_1.png" /> 
+	</instruction>
+	<!--Questions - Right side entry-->
+	<questions>
+	  <!-- Page - partcollection for one question display-->
+	  <questionpage>  	
+  	   <q_text sound="2.3.03_II_question_text_1.mp3"></q_text><!--damit sound button über dem Text ist-->
+		   <question> 
+		 <!--     <answertext sound="2.3.03_II_question_text_1.mp3"> und nicht in einer Zeile mit text--> 
+			  <answertext>
+		      	<a_text>Es wurden elf Paletten Fruchtsaft geliefert. Die Ware wurde von Helga Bauer kontrolliert.</a_text>
+		      </answertext>
+		      <answertext>
+		      	<!--Tabelle muss noch als Bild eingefügt werden-->
+		        	<gap sound="2.3.03_II_question_1.mp3" answerid="2.3.03_II_1" style="TextInput_blue" length="14" />
+		        	<gap sound="2.3.03_II_question_2.mp3" answerid="2.3.03_II_2" style="TextInput_blue" length="14" />
+		        	<gap sound="2.3.03_II_question_4.mp3" answerid="2.3.03_II_4" style="TextInput_blue" length="14" />
+					<gap sound="2.3.03_II_question_3.mp3" answerid="2.3.03_II_3" style="TextInput_blue" length="14" />
+		      </answertext>
+		   </question>
+	   </questionpage>	   
+	</questions>
+	<!--Answers - User input data-->
+	<answers>
+	   <answer answerid="2.3.03_II_1" question="1" debug="Paletten"></answer>
+	   <answer answerid="2.3.03_II_2" question="1" debug="Fruchtsaft"></answer>
+	   <answer answerid="2.3.03_II_3" question="1" debug="Helga Bauer"></answer>
+	   <answer answerid="2.3.03_II_4" question="1"></answer>
+	</answers>
+	<!--Right answers, evaluation details and Pointvalues-->
+	<correctResponse>
+		 <value itemnumber="2.3.03_II_1a" answerid="2.3.03_II_1" casesensitiv="yes" match="levenshtein" matchlength="1" points="0.5">Paletten</value>
+		 <value itemnumber="2.3.03_II_1a" answerid="2.3.03_II_1" casesensitiv="yes" match="first" matchlength="1" points="0.5">P</value>
+		 <value itemnumber="2.3.03_II_1b" answerid="2.3.03_II_1" casesensitiv="yes" match="find_pattern" points="1">tt</value>
+		 
+		 <value itemnumber="2.3.03_II_2a" answerid="2.3.03_II_2" casesensitiv="yes" match="levenshtein" matchlength="1" points="0.5">Fruchtsaft</value>
+		 <value itemnumber="2.3.03_II_2a" answerid="2.3.03_II_2" casesensitiv="yes" match="first" matchlength="1" points="0.5">F</value>
+		 <value itemnumber="2.3.03_II_2b" answerid="2.3.03_II_2" casesensitiv="no" match="first" matchlength="2" points="0.5">fr</value>
+		 <value itemnumber="2.3.03_II_2b" answerid="2.3.03_II_2" casesensitiv="no" match="levenshtein" matchlength="1" points="0.5">fruchtsaft</value>
+		 
+		 <value itemnumber="2.3.03_II_3a" answerid="2.3.03_II_3" casesensitiv="yes" match="find_words" matchlength="1" points="0.5">Helga</value>
+		 <value itemnumber="2.3.03_II_3a" answerid="2.3.03_II_3" casesensitiv="yes" match="first" matchlength="1" points="0.5">H</value>
+		 <value itemnumber="2.3.03_II_3b" answerid="2.3.03_II_3" casesensitiv="yes" match="find_words" matchlength="1" points="0.5">Bauer</value><!--vorher: casesensitiv="no"; richtig??-->
+		 <value itemnumber="2.3.03_II_3b" answerid="2.3.03_II_3" casesensitiv="yes" match="find_pattern" points="0.5">B</value><!--vorher: casesensitiv="no"; richtig??-->
+		  <value itemnumber="2.3.03_II_4" answerid="2.3.03_II_4" casesensitiv="yes" match="full" points="1">2. April 2013</value>
+		  <value itemnumber="2.3.03_II_4" answerid="2.3.03_II_4" casesensitiv="yes" match="full" points="1">2-April-2013</value>
+	</correctResponse>
+	<!--List of implemented "discretionary clauses" (Kannbestimmung)-->
+	<abilities> 
+	   <ability number="1" alphalevel="2.1.10">Datum</ability> <!--nAuswertung/bzw. entsprechende Aufgabe (wie in PDF) fehlt -->
+	   <ability number="2" alphalevel="2.1.12">Eigennamen I</ability>
+	   <ability number="3" alphalevel="2.2.08">Konkreta I</ability>
+	   <ability number="4" alphalevel="2.3.02">Konsonantenhäufung II</ability>
+	   <ability number="5" alphalevel="2.5.04">Konsonantendopplung III</ability>
+	</abilities >
+	<!--Marking - How many points did the answers get-->
+	<marking>
+		<pointuse maxpoint="1" />
+	   <mark itemnumber="2.3.03_II_1a" alphalevel="2.2.08" ></mark> <!-- itemnumber xxx_1 (Datum) aus der PDF fehlt, ergänzt als itemnb. 4-->
+	   <mark itemnumber="2.3.03_II_1b" alphalevel="2.5.04" ></mark>
+	   <mark itemnumber="2.3.03_II_2a" alphalevel="2.2.08" ></mark><!--vorher level= "2.3.09"-->
+	   <mark itemnumber="2.3.03_II_2b" alphalevel="2.3.02" ></mark><!--vorher level= "2.3.09"-->
+	   <mark itemnumber="2.3.03_II_3a" alphalevel="2.1.12" ></mark>
+	   <mark itemnumber="2.3.03_II_3b" alphalevel="2.1.12" ></mark>
+	   <mark itemnumber="2.3.03_II_4" alphalevel="2.1.10" ></mark>
+	</marking>
+	<!--Time - Start, end and consumption time of the item-->
+	<time>
+	   <start_time></start_time>
+	   <end_time></end_time>
+	   <time_consumption></time_consumption>
+	</time>
+	<!--User identifikation - Identification Number of the user-->
+	<usernumber></usernumber>
+</item>

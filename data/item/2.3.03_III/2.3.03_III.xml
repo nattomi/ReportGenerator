@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="ISO-8859-15"?>
+<!DOCTYPE item SYSTEM "ITEMS.DTD">
+<!--Headder-->
+<item>
+	<!--Itemnumber - coresponding item number of the lea universe-->
+	<itemnumber>2.3.03_III</itemnumber>
+	<!--Meta_Item - Selection of a design template-->
+	<meta_item>cloze</meta_item>
+	<!--Creation/Change - Version information-->
+	<Item_creation>
+	    <version>1</version>
+	    <date>11.02.2012</date>
+	    <person>Inga Brehm</person>
+	</Item_creation>
+	<!--Presets - All generally used item presets-->
+	<presets>
+	   
+	</presets>
+	<!--Instructions - Left side entry-->
+	<instruction>
+	   <!--Text-->
+	   <in_text sound="2.3.03_III_question_instruct_1.mp3">Hören Sie sich folgenden Text an und ergänzen Sie die fehlenden Wörter. Sie können sich einzelne Wörter wiederholen lassen, indem Sie auf das Lautsprechersymbol in der entsprechenden Lücke klicken.</in_text>
+	   <!--Media-->
+	   <media file="2.3.03_III_instruction_1.png" />
+	</instruction>
+	<!--Questions - Right side entry-->
+	<questions>
+	  <!-- Page - partcollection for one question display-->
+	  <questionpage>
+	  	   <q_text sound="2.3.03_III_question_text_1.mp3"></q_text>
+		   <question>   
+		      <answertext> 
+		      	<gap sound="2.3.03_III_question_1.mp3" answerid="2.3.03_III_1" style="TextInput_blue" length="10" />
+		      	<a_text>dauert es nur noch eine Stunnde,</a_text> 
+		      	<gap sound="2.3.03_III_question_2.mp3" answerid="2.3.03_III_2" style="TextInput_blue" length="10" /> 
+		      	<a_text>die LKWs mit der neuen Ware kommen. Helga ist aufgeregt</a_text> 
+		      	<gap sound="2.3.03_III_question_3.mp3" answerid="2.3.03_III_3" style="TextInput_blue" length="10" /> 
+		      	<a_text>sieht</a_text> 
+		      	<gap sound="2.3.03_III_question_4.mp3" answerid="2.3.03_III_4" style="TextInput_blue" length="10" /> 
+		      	<a_text>noch einmal in den Spigel.</a_text> 
+		      	<gap sound="2.3.03_III_question_5.mp3" answerid="2.3.03_III_5" style="TextInput_blue" length="10" /> 
+		      	<a_text>Olaf</a_text> 
+		      	<gap sound="2.3.03_III_question_6.mp3" answerid="2.3.03_III_6" style="TextInput_blue" length="10" /> 
+		      	<a_text>mal wieder in einem der LKWs sitzt? Sie hat</a_text> 
+		      	<gap sound="2.3.03_III_question_7.mp3" answerid="2.3.03_III_7" style="TextInput_blue" length="17" /> 
+		      	<a_text>im Bauch, wenn sie an Olaf dengt.</a_text> 
+		     </answertext>
+		  </question>
+	   </questionpage>  
+	</questions>
+	<!--Answers - User input data-->
+	<answers>
+	   <answer answerid="2.3.03_III_1" question="1"></answer>
+	   <answer answerid="2.3.03_III_2" question="1"></answer>
+	   <answer answerid="2.3.03_III_3" question="1"></answer>
+	   <answer answerid="2.3.03_III_4" question="1" debug="schnell"></answer>
+	   <answer answerid="2.3.03_III_5" question="1"></answer>
+	   <answer answerid="2.3.03_III_6" question="1" debug="heute"></answer>
+	   <answer answerid="2.3.03_III_7" question="1" debug="Schmetterlinge"></answer>
+	</answers>
+	<!--Right answers, evaluation details and Pointvalues-->
+	<correctResponse>
+		 <value itemnumber="2.3.03_III_1" answerid="2.3.03_III_1" casesensitiv="no" match="full" points="1">jetzt</value>
+		 <value itemnumber="2.3.03_III_2" answerid="2.3.03_III_2" casesensitiv="no" match="full" points="1">bevor</value>
+		 <value itemnumber="2.3.03_III_3" answerid="2.3.03_III_3" casesensitiv="no" match="full" points="1">und</value>
+		 <value itemnumber="2.3.03_III_4a" answerid="2.3.03_III_4" casesensitiv="no" match="first" matchlength="4" points="1">schn</value>
+		 <value itemnumber="2.3.03_III_4b" answerid="2.3.03_III_4" casesensitiv="no" match="last" matchlength="2" points="1">ll</value>
+		 <value itemnumber="2.3.03_III_5" answerid="2.3.03_III_5" casesensitiv="no" match="full" points="1">ob</value>
+		 <value itemnumber="2.3.03_III_6" answerid="2.3.03_III_6" casesensitiv="no" match="levenshtein" matchlength="1" points="0.5">heute</value>
+		 <value itemnumber="2.3.03_III_6" answerid="2.3.03_III_6" casesensitiv="no" match="first" matchlength="1" points="0.5">h</value>
+		 <value itemnumber="2.3.03_III_7a" answerid="2.3.03_III_7" casesensitiv="yes" match="levenshtein" matchlength="1" points="0.5">Schmetterlinge</value>
+		 <value itemnumber="2.3.03_III_7a" answerid="2.3.03_III_7" casesensitiv="yes" match="first" matchlength="1" points="0.5">S</value>
+		 <value itemnumber="2.3.03_III_7b" answerid="2.3.03_III_7" casesensitiv="no" match="levenshtein" matchlength="1" points="0.5">schmetterlinge</value>
+		 <value itemnumber="2.3.03_III_7b" answerid="2.3.03_III_7" casesensitiv="no" match="first" matchlength="4" points="0.5">schm</value>
+		 <value itemnumber="2.3.03_III_7c" answerid="2.3.03_III_7" casesensitiv="no" match="levenshtein" matchlength="1" points="0.5">schmetterlinge</value>
+		 <value itemnumber="2.3.03_III_7c" answerid="2.3.03_III_7" casesensitiv="no" match="find_pattern" points="0.5">tt</value> 
+	</correctResponse>
+	<!--List of implemented "discretionary clauses" (Kannbestimmung)-->
+	<abilities> 
+	   <ability number="1" alphalevel="2.1.07">Funktionswörter I</ability>
+	   <ability number="2" alphalevel="2.2.05">schwierige Dauerkonsonanten</ability>
+	   <ability number="3" alphalevel="2.2.08">Konkreta</ability>
+	   <ability number="4" alphalevel="2.2.09">Dauerkonsonantenhäufung I</ability>
+	   <ability number="5" alphalevel="2.3.01">Funktionswörter III</ability>
+	   <ability number="6" alphalevel="2.3.07">Konsonantendopplung I</ability>
+	   <ability number="7" alphalevel="2.3.09">Konsonantendopplung II</ability>
+	</abilities >
+	<!--Marking - How many points did the answers get-->
+	<marking>
+	<pointuse maxpoint="1" />
+	   <mark itemnumber="2.3.03_III_1" alphalevel="2.3.01" ></mark>
+	   <mark itemnumber="2.3.03_III_2" alphalevel="2.3.01" ></mark>
+	   <mark itemnumber="2.3.03_III_3" alphalevel="2.1.07" ></mark>
+	   <mark itemnumber="2.3.03_III_4a" alphalevel="2.2.09" ></mark>
+	   <mark itemnumber="2.3.03_III_4b" alphalevel="2.3.07" ></mark>
+	   <mark itemnumber="2.3.03_III_5" alphalevel="2.3.01" ></mark>
+	   <mark itemnumber="2.3.03_III_6" alphalevel="2.2.05" ></mark>
+	   <mark itemnumber="2.3.03_III_7a" alphalevel="2.2.08" ></mark>
+	   <mark itemnumber="2.3.03_III_7b" alphalevel="2.2.09" ></mark>
+	   <mark itemnumber="2.3.03_III_7c" alphalevel="2.3.09" ></mark>
+	</marking>
+	<!--Time - Start, end and consumption time of the item-->
+	<time>
+	   <start_time></start_time>
+	   <end_time></end_time>
+	   <time_consumption></time_consumption>
+	</time>
+	<!--User identifikation - Identification Number of the user-->
+	<usernumber></usernumber>
+</item>

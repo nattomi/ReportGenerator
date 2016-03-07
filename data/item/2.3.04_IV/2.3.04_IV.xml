@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="ISO-8859-15"?>
+<!DOCTYPE item SYSTEM "ITEMS.DTD">
+<!--Headder-->
+<item>
+	<!--Itemnumber - coresponding item number of the lea universe-->
+	<itemnumber>2.3.04_IV</itemnumber>
+	<!--Meta_Item - Selection of a design template-->
+	<meta_item>cloze</meta_item>
+	<!--Creation/Change - Version information-->
+	<Item_creation>
+	    <version>1</version>
+	    <date>12.02.2012</date>
+	    <person>Inga Brehm</person>
+	</Item_creation>
+	<!--Presets - All generally used item presets-->
+	<presets>
+	   
+	</presets>
+	<!--Instructions - Left side entry-->
+	<instruction>
+	   <!--Text-->
+	   <in_text sound="2.3.04_IV_question_instruct_1.mp3">Nachdem die Tür aufgebrochen wurde, stürmt Anil ins Lager, um den Schlüssel herauszuholen. Da sieht er den Schlüssel, das alte Radio und sein Handy nebeneinander liegen. &#13;Hören Sie sich die Sätze an und ergänzen Sie die fehlenden Wörter. Sie können sich einzelne Wörter wiederholen lassen, indem Sie auf das Lautsprechersymbol in der Lücke klicken.</in_text>
+	   <!--Media-->
+	   <media file="2.3.04_IV_instruction_1.png" />
+	</instruction>
+	<!--Questions - Right side entry-->
+	<questions>
+	  <!-- Page - partcollection for one question display-->
+	  <questionpage>
+	  	   <q_text sound="2.3.04_IV_question_text_1.mp3"></q_text>
+		   <question>   
+		      <answertext>
+		      	<a_text>So was</a_text>
+		      	<gap sound="2.3.04_IV_question_1.mp3" answerid="2.3.04_IV_1" style="TextInput_blue" length="14" />
+		      	<a_text>!</a_text>
+		      </answertext>
+		      <answertext>
+		      	<a_text>Ich glaub, ich</a_text> 
+		      	<gap sound="2.3.04_IV_question_2.mp3" answerid="2.3.04_IV_2" style="TextInput_blue" length="14" /> 
+		      	<a_text>!</a_text>
+		      </answertext>
+		      <answertext>
+		      	<a_text>Durch den</a_text> 
+		      	<gap sound="2.3.04_IV_question_3.mp3" answerid="2.3.04_IV_3" style="TextInput_blue" length="14" /> 
+		      	<a_text>mit dem Schlüssel habe ich gar nicht bemerkt, dass ich mein Handy auch im Lager</a_text> 
+		      	<gap sound="2.3.04_IV_question_4.mp3" answerid="2.3.04_IV_4" style="TextInput_blue" length="14" /> 
+		      	<a_text>hatte.</a_text> 
+		     </answertext>
+		  </question>
+	   </questionpage>
+	</questions>
+	<!--Answers - User input data-->
+	<answers>
+	   <answer answerid="2.3.04_IV_1" question="1" debug="Dummes"></answer>
+	   <answer answerid="2.3.04_IV_2" question="1" debug="spinne"></answer>
+	   <answer answerid="2.3.04_IV_3" question="1" debug="Schlamassel"></answer>
+	   <answer answerid="2.3.04_IV_4" question="1" debug="vergessen"></answer><!--vorher: 2.2.xxx-->
+	</answers>
+	<!--Right answers, evaluation details and Pointvalues-->
+	<correctResponse>
+		 <value itemnumber="2.3.04_IV_1" answerid="2.3.04_IV_1" casesensitiv="no" match="levenshtein" matchlength="1" points="0.5">dummes</value>
+		 <value itemnumber="2.3.04_IV_1" answerid="2.3.04_IV_1" casesensitiv="no" match="find_pattern" points="0.5">mm</value>
+		 
+		 <value itemnumber="2.3.04_IV_2" answerid="2.3.04_IV_2" casesensitiv="no" match="levenshtein" matchlength="1" points="0.5">spinne</value>
+		 <value itemnumber="2.3.04_IV_2" answerid="2.3.04_IV_2" casesensitiv="no" match="find_pattern" points="0.5">nn</value>
+		 
+		 <value itemnumber="2.3.04_IV_3a" answerid="2.3.04_IV_3" casesensitiv="no" match="levenshtein" matchlength="1" points="0.5">schlamassel</value>
+		 <value itemnumber="2.3.04_IV_3a" answerid="2.3.04_IV_3" casesensitiv="no" match="find_pattern" points="0.5">ss</value>
+		 <value itemnumber="2.3.04_IV_3b" answerid="2.3.04_IV_3" casesensitiv="no" match="levenshtein" matchlength="1" points="0.5">schlamassel</value>
+		 <value itemnumber="2.3.04_IV_3b" answerid="2.3.04_IV_3" casesensitiv="no" match="first" matchlength="4" points="0.5">schl</value>
+		 
+		 <value itemnumber="2.3.04_IV_4" answerid="2.3.04_IV_4" casesensitiv="no" match="levenshtein" matchlength="1" points="0.5">vergessen</value>
+		 <value itemnumber="2.3.04_IV_4" answerid="2.3.04_IV_4" casesensitiv="no" match="find_pattern" points="0.5">ss</value>
+	</correctResponse>
+	<!--List of implemented "discretionary clauses" (Kannbestimmung)-->
+	<abilities> 
+	   <ability number="1" alphalevel="2.2.09">Dauerkonsonantenhäufung I</ability>
+	   <ability number="2" alphalevel="2.3.09">Konsonantendopplung II</ability>
+	   <ability number="3" alphalevel="2.5.01">Konsonantendopplung III</ability><!--fehlte-->
+	   <ability number="4" alphalevel="2.5.04">Konsonantendopplung IV</ability>
+	</abilities >
+	<!--Marking - How many points did the answers get-->
+	<marking>
+	<pointuse maxpoint="1" />
+	   <mark itemnumber="2.3.04_IV_1" alphalevel="2.5.01" ></mark><!--vorher 2.5.04-->
+	   <mark itemnumber="2.3.04_IV_2" alphalevel="2.3.09" ></mark>
+	   <mark itemnumber="2.3.04_IV_3a" alphalevel="2.5.04" ></mark>
+	   <mark itemnumber="2.3.04_IV_3b" alphalevel="2.2.09" ></mark>
+	   <mark itemnumber="2.3.04_IV_4" alphalevel="2.3.09" ></mark>
+	</marking>
+	<!--Time - Start, end and consumption time of the item-->
+	<time>
+	   <start_time></start_time>
+	   <end_time></end_time>
+	   <time_consumption></time_consumption>
+	</time>
+	<!--User identifikation - Identification Number of the user-->
+	<usernumber></usernumber>
+</item>

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="ISO-8859-15"?>
+<!DOCTYPE item SYSTEM "ITEMS.DTD">
+<!--Headder-->
+<item>
+	<!--Itemnumber - coresponding item number of the lea universe-->
+	<itemnumber>2.3.04_I</itemnumber>
+	<!--Meta_Item - Selection of a design template-->
+	<meta_item>cloze</meta_item>
+	<!--Creation/Change - Version information-->
+	<Item_creation>
+	    <version>1</version>
+	    <date>11.02.2012</date>
+	    <person>Inga Brehm</person>
+	</Item_creation>
+	<!--Presets - All generally used item presets-->
+	<presets>
+
+	</presets>
+	<!--item introduction screen will be shown first-->
+	<prescreen>
+		 <!--Text-->
+		<pre_text sound="2.3.04_I_pretext_1.mp3">Anil Patel ist als Hilfskraft in einer Autowerkstatt tätig. Zusammen mit Leila bastelt und schraubt er an den unterschiedlichsten Modellen. Dabei hört er am liebsten Musik.</pre_text>
+		<pre_text sound="2.3.04_I_instruct_1.mp3"> Panne in der Autowerkstatt&#13;Anil Patel hat ein neues Handy. Das nimmt er mit in die Werkstatt, in der er arbeitet, damit er beim Arbeiten Musik abspielen kann.</pre_text>
+		<!--Media-->
+		<pre_media file="2.3.04_I_premedia_1.png" />
+	</prescreen>
+	<!--Instructions - Left side entry-->
+	<instruction>
+	   <!--Text-->
+	   <in_text sound="2.3.04_I_question_instruct_1.mp3">Klicken Sie mit der linken Maustaste auf das Lautsprechersymbol und hören Sie sich nacheinander die Sätze an. Tippen Sie die Sätze mit der Tastatur anschließend in das freie Feld neben dem Lautsprechersymbol.</in_text>
+	   <!--Media-->
+	   <media file="2.3.04_I_premedia_1.png" />
+	</instruction>
+	<!--Questions - Right side entry-->
+	<questions>
+	  <!-- Page - partcollection for one question display-->
+	  <questionpage>    
+		   <question>   
+		      <answertext sound="2.3.04_I_question_1.mp3"></answertext>
+		        <answertext>
+				<gap answerid="2.3.04_I_1" style="TextInput_blue" length="40" /> 
+		      </answertext>
+		   </question>
+		   <question>
+		      <answertext sound="2.3.04_I_question_2.mp3"></answertext>
+		        <answertext>
+				<gap answerid="2.3.04_I_2" style="TextInput_blue" length="40" />
+		      </answertext>
+		   </question>
+		</questionpage>
+	    <questionpage>
+		   <question>
+		      <answertext sound="2.3.04_I_question_3.mp3"></answertext>
+			  <answertext>
+		        <gap answerid="2.3.04_I_3" style="TextInput_blue" length="40" />
+		      </answertext>
+		   </question>
+		   <question>
+		      <answertext sound="2.3.04_I_question_4.mp3"></answertext>
+			  <answertext>
+		        <gap answerid="2.3.04_I_4" style="TextInput_blue" length="40" />
+		      </answertext>
+		   </question>
+	   </questionpage> 
+	</questions>
+	<!--Answers - User input data-->
+	<answers>
+	   <answer answerid="2.3.04_I_1" question="1" debug="Anil hat Musik auf sein Handy geladen."></answer>
+	   <answer answerid="2.3.04_I_2" question="1" debug="Die will er bei der Arbeit hören."></answer>
+	   <answer answerid="2.3.04_I_3" question="1" debug="Das schwarze Radio kommt ins Lager."></answer>
+	   <answer answerid="2.3.04_I_4" question="1" debug="Das stand sowieso immer nur im Weg."></answer>
+	</answers>
+	<!--Right answers, evaluation details and Pointvalues-->
+	<correctResponse>
+		 <value itemnumber="2.3.04_I_1a" answerid="2.3.04_I_1" casesensitiv="yes" match="find_words" matchlength="1" points="0.5">Anil</value>
+		 <value itemnumber="2.3.04_I_1a" answerid="2.3.04_I_1" casesensitiv="yes" match="find_pattern" points="0.5">An</value>
+		
+		<!-- <value itemnumber="2.3.04_I_1b" answerid="2.3.04_I_1" casesensitiv="no" match="find_words" matchlength="0" points="0.2">hat</value>
+		 <value itemnumber="2.3.04_I_1b" answerid="2.3.04_I_1" casesensitiv="no" match="find_words" matchlength="0" points="0.2">musik</value>
+		 <value itemnumber="2.3.04_I_1b" answerid="2.3.04_I_1" casesensitiv="no" match="find_words" matchlength="0" points="0.2">auf</value>
+		 <value itemnumber="2.3.04_I_1b" answerid="2.3.04_I_1" casesensitiv="no" match="find_words" matchlength="0" points="0.2">sein</value>
+		 <value itemnumber="2.3.04_I_1b" answerid="2.3.04_I_1" casesensitiv="no" match="find_pattern" points="0.2">geladen.</value>	 -->
+	
+		 <value itemnumber="2.3.04_I_1b" answerid="2.3.04_I_1" casesensitiv="no" match="find_words" points="0.5">hat musik auf sein</value>
+		 <value itemnumber="2.3.04_I_1b" answerid="2.3.04_I_1" casesensitiv="no" match="last" matchlength="8" points="0.5">geladen.</value>
+		 
+		 <value itemnumber="2.3.04_I_2a" answerid="2.3.04_I_2" casesensitiv="yes" match="find_words" matchlength="1" points="0.5">Die</value>
+		 <value itemnumber="2.3.04_I_2a" answerid="2.3.04_I_2" casesensitiv="yes" match="first" matchlength="1" points="0.5">D</value>
+		 <value itemnumber="2.3.04_I_2b" answerid="2.3.04_I_2" casesensitiv="no" match="first" matchlength="3" points="1">die</value>
+		 <value itemnumber="2.3.04_I_2c" answerid="2.3.04_I_2" casesensitiv="no" match="find_pattern" points="1">ll</value>
+		 
+		 <value itemnumber="2.3.04_I_2d" answerid="2.3.04_I_2" casesensitiv="no" match="full" points="1">die will er bei der arbeit hören.</value>
+		 <value itemnumber="2.3.04_I_2d" answerid="2.3.04_I_2" casesensitiv="no" match="full" points="1">di will er bei der arbeit hören.</value>
+		 <value itemnumber="2.3.04_I_2d" answerid="2.3.04_I_2" casesensitiv="no" match="full" points="1">die wil er bei der arbeit hören.</value>
+		 <value itemnumber="2.3.04_I_2d" answerid="2.3.04_I_2" casesensitiv="no" match="full" points="1">di wil er bei der arbeit hören.</value>
+		 
+		 <value itemnumber="2.3.04_I_3a" answerid="2.3.04_I_3" casesensitiv="yes" match="find_words" matchlength="1" points="0.5">Das</value>
+		 <value itemnumber="2.3.04_I_3a" answerid="2.3.04_I_3" casesensitiv="yes" match="first" matchlength="1" points="0.5">D</value>
+		 <value itemnumber="2.3.04_I_3b" answerid="2.3.04_I_3" casesensitiv="no" match="first" matchlength="3" points="1">das</value>
+		 <value itemnumber="2.3.04_I_3c" answerid="2.3.04_I_3" casesensitiv="yes" match="find_words" matchlength="1" points="0.5">Radio</value>
+		 <value itemnumber="2.3.04_I_3c" answerid="2.3.04_I_3" casesensitiv="yes" match="find_pattern" points="0.5">Ra</value>
+		 <value itemnumber="2.3.04_I_3d" answerid="2.3.04_I_3" casesensitiv="no" match="full" points="1">das schwarze radio kommt ins lager.</value>
+		 <value itemnumber="2.3.04_I_3d" answerid="2.3.04_I_3" casesensitiv="no" match="full" points="1">das schwarze radio komt ins lager.</value>
+		 
+		 <value itemnumber="2.3.04_I_4a" answerid="2.3.04_I_4" casesensitiv="yes" match="find_words" matchlength="1" points="0.5">Das</value>
+		 <value itemnumber="2.3.04_I_4a" answerid="2.3.04_I_4" casesensitiv="yes" match="first" matchlength="1" points="0.5">D</value>
+		 <value itemnumber="2.3.04_I_4b" answerid="2.3.04_I_4" casesensitiv="no" match="first" matchlength="3" points="1">das</value>
+		 <value itemnumber="2.3.04_I_4c" answerid="2.3.04_I_4" casesensitiv="no" match="find_words" matchlength="0" points="1">immer</value>
+		 <value itemnumber="2.3.04_I_4d" answerid="2.3.04_I_4" casesensitiv="no" match="find_pattern" points="1">mm</value>
+		 
+		 <value itemnumber="2.3.04_I_4e" answerid="2.3.04_I_4" casesensitiv="no" match="first" matchlength="3" points="0.5">das</value>
+		 <value itemnumber="2.3.04_I_4e" answerid="2.3.04_I_4" casesensitiv="no" match="last" matchlength="17" points="0.5">immer nur im weg.</value>
+		 <value itemnumber="2.3.04_I_4e" answerid="2.3.04_I_4" casesensitiv="no" match="last" matchlength="16" points="0.5">imer nur im weg.</value>
+		 <value itemnumber="2.3.04_I_4e" answerid="2.3.04_I_4" casesensitiv="no" match="last" matchlength="17" points="0.5">immer nur im wek.</value>
+		 <value itemnumber="2.3.04_I_4e" answerid="2.3.04_I_4" casesensitiv="no" match="last" matchlength="16" points="0.5">imer nur im wek.</value>
+	</correctResponse>
+	<!--List of implemented "discretionary clauses" (Kannbestimmung)--> 
+	<abilities> 
+	   <ability number="1" alphalevel="2.1.07">Funktionswörter I</ability>
+	   <ability number="2" alphalevel="2.2.01">Eigennamen II</ability>
+	   <ability number="3" alphalevel="2.2.03">Funktionswörter II</ability>
+	   <ability number="4" alphalevel="2.2.06">Satzanfang III</ability>
+	   <ability number="5" alphalevel="2.2.08">Konkreta I</ability>
+	   <ability number="6" alphalevel="2.3.07">Konsonantendopplung I</ability>	   
+	   <ability number="7" alphalevel="2.3.09">Konsonantendopplung II</ability>
+	   <ability number="8" alphalevel="2.4.11">Satz lautgetreu</ability>
+	</abilities >
+	<!--Marking - How many points did the answers get-->
+	<marking>
+	<pointuse maxpoint="1" />
+	   <mark itemnumber="2.3.04_I_1a" alphalevel="2.2.01" ></mark>
+	   <mark itemnumber="2.3.04_I_1b" alphalevel="2.4.11" ></mark>
+	   <mark itemnumber="2.3.04_I_2a" alphalevel="2.2.06" ></mark>
+	   <mark itemnumber="2.3.04_I_2b" alphalevel="2.1.07" ></mark>
+	   <mark itemnumber="2.3.04_I_2c" alphalevel="2.3.07" ></mark>
+	   <mark itemnumber="2.3.04_I_2d" alphalevel="2.4.11" ></mark>
+	   <mark itemnumber="2.3.04_I_3a" alphalevel="2.2.06" ></mark>
+	   <mark itemnumber="2.3.04_I_3b" alphalevel="2.1.07" ></mark>
+	   <mark itemnumber="2.3.04_I_3c" alphalevel="2.2.08" ></mark>
+	   <mark itemnumber="2.3.04_I_3d" alphalevel="2.4.11" ></mark>
+	   <mark itemnumber="2.3.04_I_4a" alphalevel="2.2.06" ></mark>
+	   <mark itemnumber="2.3.04_I_4b" alphalevel="2.1.07" ></mark>
+	   <mark itemnumber="2.3.04_I_4c" alphalevel="2.2.03" ></mark>
+	   <mark itemnumber="2.3.04_I_4d" alphalevel="2.3.09" ></mark>
+	   <mark itemnumber="2.3.04_I_4e" alphalevel="2.4.11" ></mark>
+	</marking>
+	<!--Time - Start, end and consumption time of the item-->
+	<time>
+	   <start_time></start_time>
+	   <end_time></end_time>
+	   <time_consumption></time_consumption>
+	</time>
+	<!--User identifikation - Identification Number of the user-->
+	<usernumber></usernumber>
+</item>
