@@ -127,7 +127,7 @@ class user {
     $this->index = $this->dir . "/" . $id . ".xml";
   }
 
-  public function get_tests($timestamp="") {
+  public function get_tests(&$timestamp="") {
     if(file_exists($this->index)) {
       $xmldoc = simplexml_load_file($this->index);
       $ans = array();
@@ -142,10 +142,11 @@ class user {
 	  $ans[$key_prev]->set_key_next($timestamp_test);
 	else
 	  $first = false;
-	if(strcmp($timestamp_test, $timestamp) === 0)
+	if(!strcmp($timestamp_test, $timestamp))
 	  break;
 	$key_prev = $timestamp_test;
       }
+      $timestamp = $timestamp_test;
       return array_reverse($ans);
     } else {
       return false;
@@ -186,7 +187,7 @@ class otulea {
     return $ids;
    }
 
-  public function get_tests($timestamp="") {
+  public function get_tests(&$timestamp="") {
     return $this->user->get_tests($timestamp);
   }
 
@@ -261,8 +262,9 @@ class otulea {
     		 'data'=>$data);
   }
 
-  static function glue_session(&$testarray, $timestamp) {
-    if(strlen($timestamp) == 0)
+  static function glue_session(&$testarray, &$timestamp, 
+			       $set_timestamp = true) {
+    if(!strlen($timestamp))
       $timestamp = reset($testarray)->get_timestamp();
     $test = $testarray[$timestamp];
     $timestamp_prev = $test->get_prev();
@@ -278,6 +280,15 @@ class otulea {
 	$testarray[$key_prev]->set_key_next($key_next);
       $testarray[$key_next]->set_key_prev($key_prev);
       $timestamp_prev = $testarray[$timestamp]->get_prev();
+    }
+    if($set_timestamp) {
+      // set pointer to next interrupted session
+      do {
+	$timestamp = $testarray[$timestamp]->get_key_prev();
+	if(is_null($timestamp))
+	  break;
+	$test = $testarray[$timestamp];
+      } while(!strlen($test->get_prev()));
     }
     return true;
   }
