@@ -109,8 +109,9 @@ class test {
 
   public function print_test() {
     foreach($this->items as $item=>$v) {
-      echo $item      . " " . 
-	   $v['data'] . PHP_EOL;
+      echo $item           . " " .
+	   $v['timestamp'] . " " . 
+	   $v['data']      . PHP_EOL;
     }
   }
 
@@ -303,6 +304,95 @@ class otulea {
       $timestamp = $current_test->get_prev(); 
     } while(strlen($timestamp) > 0);
     return $latest_tests;
+  }
+
+  static function average_marks(&$markarray) {
+    $n = array();
+    $sums = array();
+    $alphaids = array();
+    
+    foreach($markarray as $mark) {
+      foreach($mark->get_subtasks() as $subtask) {
+	$alphaid = (string)$subtask['alphaid'];
+	$m = (int)$subtask['mark'];
+	if(!array_key_exists($alphaid, $sums)) {
+	  $sums[$alphaid] = $m;
+	  $n[$alphaid] = 1;
+	  $alphaids[] = $alphaid;
+	} else {
+	  $sums[$alphaid] += $m;
+	  $n[$alphaid] += 1; 
+	};
+      }
+    }
+
+    foreach($alphaids as $alphaid) {
+      $sums[$alphaid] = $sums[$alphaid] / $n[$alphaid];
+    }
+
+    return $sums;
+
+  }
+
+  function conj_alphaid($a) {
+    $pieces = explode(".",$a);
+    $conj = array();
+    foreach ($pieces as $p) {
+      $conj[] = (int)$p; 
+    }
+    return $conj;
+  }
+
+  
+  function cmp_alphaid($a, $b) { // 
+    // test cases
+    // equal length, not equal (returns -1)
+    //$a="1.3.2.1";
+    //$b="1.4.1.2";
+    // equal length, equal (returns 0)
+    //$a="1.3.1.2";
+    //$b="1.3.1.2";
+    // different length, not equal (returns -1)
+    //$a="1.4.1.1.5";
+    //$b="1.4.2.2";
+    // different length, equal (returns 1)
+    //$a="1.3.1.2.4";
+    //$b="1.3.1.2";
+    // main
+    $conj_a = otulea::conj_alphaid($a);
+    $conj_b = otulea::conj_alphaid($b);
+    $conj_a_len = count($conj_a);
+    $conj_b_len = count($conj_b);
+    for($i = 0; $i < min($conj_a_len, $conj_b_len); $i++) {
+      $val = $conj_a[$i] - $conj_b[$i];
+      if ($val <> 0) break;
+    }
+    if($conj_a_len <> $conj_b_len and $val == 0) {
+      $val = $conj_a_len - $conj_b_len;
+    }
+    return $val;
+  }
+
+}
+
+class evaluate {
+  
+  static function student(&$markarray, $threshold) {
+    $passed = array();
+    $failed = array();
+    $scores = otulea::average_marks($markarray);
+    foreach($scores as $k => $v) {
+      if($v >= $threshold) {
+	$passed[] = $k;
+	usort($passed, "otulea::cmp_alphaid");
+      } else {
+	$failed[] = $k;
+	usort($failed, "otulea::cmp_alphaid");
+      }
+    }
+
+    return array('passed'=>$passed,
+		 'failed'=>$failed);
   }
 
 }
