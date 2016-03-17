@@ -344,21 +344,7 @@ class otulea {
   }
 
   
-  function cmp_alphaid($a, $b) { // 
-    // test cases
-    // equal length, not equal (returns -1)
-    //$a="1.3.2.1";
-    //$b="1.4.1.2";
-    // equal length, equal (returns 0)
-    //$a="1.3.1.2";
-    //$b="1.3.1.2";
-    // different length, not equal (returns -1)
-    //$a="1.4.1.1.5";
-    //$b="1.4.2.2";
-    // different length, equal (returns 1)
-    //$a="1.3.1.2.4";
-    //$b="1.3.1.2";
-    // main
+  function cmp_alphaid($a, $b) {
     $conj_a = otulea::conj_alphaid($a);
     $conj_b = otulea::conj_alphaid($b);
     $conj_a_len = count($conj_a);
