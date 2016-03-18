@@ -31,7 +31,6 @@ class mark {
     return $this->subtasks;
   }
 
-
 }
 
 class test {
@@ -334,7 +333,7 @@ class otulea {
 
   }
 
-  function conj_alphaid($a) {
+  static function conj_alphaid($a) {
     $pieces = explode(".",$a);
     $conj = array();
     foreach ($pieces as $p) {
@@ -344,7 +343,7 @@ class otulea {
   }
 
   
-  function cmp_alphaid($a, $b) {
+  static function cmp_alphaid($a, $b) {
     $conj_a = otulea::conj_alphaid($a);
     $conj_b = otulea::conj_alphaid($b);
     $conj_a_len = count($conj_a);
@@ -357,6 +356,25 @@ class otulea {
       $val = $conj_a_len - $conj_b_len;
     }
     return $val;
+  }
+
+  static function response($status, $status_message, $domdocument=null) {
+    $dom = new DomDocument('1.0','UTF-8');
+    $results = $dom->appendChild($dom->createElement('results'));
+    $results->appendChild($dom->createElement('status', $status));
+    $results->appendChild($dom->createElement('status_message', $status_message));
+    
+    if(is_null($domdocument)) {
+      $domdocument = new DomDocument('1.0','UTF-8');
+      $domdocument->appendChild($domdocument->createElement('data'));
+    }
+  
+    $import = $dom->importNode($domdocument->documentElement, TRUE);
+    $results->appendChild($import);
+
+    $dom->formatOutput = true;
+
+    echo $dom->saveXML();
   }
 
 }
