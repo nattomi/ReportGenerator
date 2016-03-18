@@ -156,6 +156,10 @@ class user {
   public function get_id() {
     return $this->id;
   }
+
+  public function is_valid_user() {
+    return file_exists($this->dir);
+  }
   
 }
 
@@ -215,6 +219,10 @@ class otulea {
       $marks[] = $mark;
     }
     return $marks;
+  }
+
+  public function is_valid_user() {
+    return $this->user->is_valid_user();
   }
 
   static function print_testarray(&$testarray) {
