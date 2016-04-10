@@ -1,34 +1,29 @@
 \documentclass{article}
-\usepackage[a4paper,landscape,left=2mm,right=2mm,top=1mm,bottom=0mm]{geometry}
+
+\usepackage[a4paper,landscape,left=2mm,right=2mm,top=14mm,bottom=19.5mm, nofoot]{geometry}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage[german,english]{babel}
-%\usepackage[table]{xcolor}
-\usepackage{xcolor,colortbl}
-\usepackage{graphicx}
-\usepackage{multirow}
-\usepackage{amssymb}
-\usepackage{array}
-%\usepackage{booktabs}
-\usepackage{tikz}
-%\usepackage{hyperref}
-%\usepackage{hhline}
-%\usepackage{verbatim}
 \usepackage{helvet}
 \renewcommand{\familydefault}{\sfdefault}
+\usepackage{paracol}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage{background}
+%\usepackage{showframe}
+\usepackage{fancyhdr}
 
-% COSTUMIZATION 
-%% LAYOUT SETTINGS
-% column widths
-\newcommand\descwidth{.181\textwidth} % width of 'description' columns
-\newcommand\taskwidth{.04\textwidth} % width of 'task' columns
-% height of background layout
-\newcommand\layoutheight{.93\textheight}
-% position of data columns
-\newcommand\posLesen{.05,-.05}
-\newcommand\posSchreiben{25.03,-.05}
-\newcommand\posSprache{50.05,-.05}
-\newcommand\posRechnen{75.02,-.05}
+\setlength{\headheight}{15.2pt}
+\setlength{\columnseprule}{0px}
+\setlength{\headsep}{47pt}
+\setcolumnwidth{.25\textwidth/0cm, .25\textwidth/0cm, .25\textwidth/0cm, .25\textwidth/0cm}%%
+
+%% PRINTING A CHECKMARK SIGN
+\newcommand\cm{%
+%\includegraphics[width=5px]{checkmark_grey}
+\checkmark
+}
 
 %% COLOR DEFINITIONS
 \definecolor{Lesen}{HTML}{87C7BD}
@@ -48,39 +43,78 @@
 \definecolor{bg}{HTML}{353534}
 \definecolor{head-small}{HTML}{3C3C3B}
 
-% COLUMN TYPES FOR COLORING THE BACKGROUND
-\newcolumntype{w}{>{\columncolor{white}}l}
-\newcolumntype{L}{>{\columncolor{Lesen}}l}
-\newcolumntype{S}{>{\columncolor{Schreiben}}l}
-\newcolumntype{P}{>{\columncolor{Sprache}}l}
-\newcolumntype{R}{>{\columncolor{Rechnen}}l}
-
-%% PRINTING A HEADER
-\newcommand\textline[5][t]{%
-  \par\smallskip\noindent{\large\parbox[#1]{.333\textwidth}{\raggedright \textcolor{white}{#2}}%
-  \parbox[#1]{.333\textwidth}{\centering\textcolor{white}{#3}}
-  \parbox[#1]{.333\textwidth}{\raggedleft\textcolor{brown}{Teilnahmecode:} \textcolor{white}{#4}\_\textcolor{brown}{Datum:} \textcolor{white}{#5} \raisebox{-.4em}{\includegraphics[width=25px]{logo}}}\par\smallskip%
-}}
-
-%% PRINTING A CHECKMARK SIGN
-\newcommand\cm{%
-%\includegraphics[width=5px]{checkmark_grey}
-\checkmark
-}
-
 %% PRINTING TENDENCY ICONS
 \newcommand\arrowup{\includegraphics[width=7px]{arrow_grey_up}}
 \newcommand\arrowdown{\includegraphics[width=7px]{arrow_grey_down}}
 \newcommand\arrowright{\includegraphics[width=7px]{arrow_grey_right}}
 \newcommand\dotthorben{\includegraphics[width=7px]{dot_grey}}
 
+%% ACTUAL CONTENT
+\newcommand\entry[4]{\begin{tabular}{p{.19\textwidth}@{}p{.05\textwidth}}
+\multicolumn{2}{l}{\small #1\quad\textbf{#2}}\\
+{\small #3} & \begin{tabular}[t]{l} #4 \end{tabular}
+\end{tabular}}
+
+%% DRAWS THE BACKGROUND
+\newcommand\mybg[4]{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=north west, xshift=2mm, yshift=-32pt] (Lesen-rect) at (current page.north west) [fill=Lesen,minimum width=.25\textwidth,minimum height=194mm] {};
+      \node[anchor=west, yshift=-12pt] at (Lesen-rect.north west) {\large\textcolor{Lesen-head}{LESEN (#1)}};
+      \node[anchor=west, yshift=-34.5pt] at (Lesen-rect.north west) {\small\textcolor{head-small}{Kannbeschreibung}};
+      \node[anchor=south west] (Lesen-white) at (Lesen-rect.south west) [fill=white,minimum width=.2\textwidth,minimum height=179mm] {};
+      \node[anchor=south west, xshift=-.5pt, yshift=-.5pt] at (Lesen-white.north east) [fill=Lesen-light,minimum width=.05\textwidth,minimum height=12pt]{\small\textcolor{head-small}{Aufgabe}};
+
+      \node[anchor=north west, xshift=.25\textwidth+2mm, yshift=-32pt] (Schreiben-rect) at (current page.north west) [fill=Schreiben,minimum width=.25\textwidth,minimum height=194mm] {};
+      \node[anchor=west, yshift=-12pt] at (Schreiben-rect.north west) {\large\textcolor{Schreiben-head}{Schreiben (#2)}};
+      \node[anchor=west, yshift=-34.5pt] at (Schreiben-rect.north west) {\small\textcolor{head-small}{Kannbeschreibung}};
+      \node[anchor=south west] (Schreiben-white) at (Schreiben-rect.south west) [fill=white,minimum width=.2\textwidth,minimum height=179mm] {};
+      \node[anchor=south west, xshift=-.5pt, yshift=-.5pt] at (Schreiben-white.north east) [fill=Schreiben-light,minimum width=.05\textwidth,minimum height=12pt]{\small\textcolor{head-small}{Aufgabe}};
+
+      \node[anchor=north west, xshift=.5\textwidth+2mm, yshift=-32pt] (Sprache-rect) at (current page.north west) [fill=Sprache,minimum width=.25\textwidth,minimum height=194mm] {};
+      \node[anchor=west, yshift=-12pt] at (Sprache-rect.north west) {\large\textcolor{Sprache-head}{Sprache (#3)}};
+      \node[anchor=west, yshift=-34.5pt] at (Sprache-rect.north west) {\small\textcolor{head-small}{Kannbeschreibung}};
+      \node[anchor=south west] (Sprache-white) at (Sprache-rect.south west) [fill=white,minimum width=.2\textwidth,minimum height=179mm] {};
+      \node[anchor=south west, xshift=-.5pt, yshift=-.5pt] at (Sprache-white.north east) [fill=Sprache-light,minimum width=.05\textwidth,minimum height=12pt]{\small\textcolor{head-small}{Aufgabe}};
+
+      \node[anchor=north west, xshift=.75\textwidth+2mm, yshift=-32pt] (Rechnen-rect) at (current page.north west) [fill=Rechnen,minimum width=.25\textwidth,minimum height=194mm] {};
+      \node[anchor=west, yshift=-12pt] at (Rechnen-rect.north west) {\large\textcolor{Rechnen-head}{Rechnen (#4)}};
+      \node[anchor=west, yshift=-34.5pt] at (Rechnen-rect.north west) {\small\textcolor{head-small}{Kannbeschreibung}};
+      \node[anchor=south west] (Rechnen-white) at (Rechnen-rect.south west) [fill=white,minimum width=.2\textwidth,minimum height=179mm] {};
+      \node[anchor=south west, xshift=-.5pt, yshift=-.5pt] at (Rechnen-white.north east) [fill=Rechnen-light,minimum width=.05\textwidth,minimum height=12pt]{\small\textcolor{head-small}{Aufgabe}};
+    \end{tikzpicture}%
+}
+
+%% SETTINGS
+% \input{settings}
+% user
+\def\user{SD5AM}
+% date
+\def\date{01.04.2010}
+% background image
+\newcommand\thisbg{\mybg{365}{46}{0}{13}}
+
+%% BACKGROUND SETUP
+
+\backgroundsetup{
+  scale=1,
+  angle=0,
+  opacity=1,
+  color=blue, % this line can be omitted probably
+  contents={\thisbg}
+}
+
+%% CUSTOMIZING HEADER 
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\chead{\large \textcolor{white}{\thepage}}
+\rhead{\large \textcolor{brown}{Teilnahmecode:} \textcolor{white}{\user}\_\textcolor{brown}{Datum:} \textcolor{white}{\date} \raisebox{-.4em}{\includegraphics[width=25px]{logo}}}
 
 \begin{document}
-%\begin{comment}
-\pagenumbering{gobble}
-\setlength{\fboxsep}{0pt}% ez minek?
 % first page is the legend
+\thispagestyle{empty}
 \newgeometry{left=1cm,right=1cm,top=1.5cm,bottom=2cm}
+\NoBgThispage
 {\small\section*{Erläuterungen zum Report}
 \subsection*{Pfeile}
 Die Pfeile beziehen sich auf die Kannbeschreibungen (nicht die Aufgaben). Sie zeigen an, ob sich eine Person im Vergleich zum vorherigen Durchlauf in Bezug auf die geprüfte Dimension verbessert, nicht verändert oder verschlechtert hat.
@@ -125,15 +159,30 @@ Die Häkchen (\cm) sind den Aufgaben zugeordnet. Ein Häkchen zeigt an, ob in di
 
 %\vspace{1em}\\
 \subsubsection*{Weitere Informationen zu den Kannbeschreibungen und der lea.-Diagnostik finden Sie unter: \underline{http://blogs.epb.uni-hamburg.de/lea/die-lea-diagnostik/}}}
+
 \newpage
+\setcounter{page}{1}
+\pagecolor{bg}
 \restoregeometry
 
+%% \backgroundsetup{
+%%   scale=1,
+%%   angle=0,
+%%   opacity=1,
+%%   color=blue,
+%%   contents={\mybg{365}{46}{0}{13}}
+%% }
 
-\pagecolor{bg}
-\input{solved}
+\lhead{\large \textcolor{white}{KANNBESCHREIBUNGEN ERFÜLLT}}
+\vspace*{.5em}
+%\input{data0}
 \newpage
-\input{partly}
+\lhead{\large \textcolor{white}{KANNBESCHREIBUNGEN TEILWEISE ERFÜLLT}}
+\vspace*{.5em}
+%\noindent\input{data1}
 \newpage
-\input{notsolved}
+\lhead{\large \textcolor{white}{KANNBESCHREIBUNGEN NICHT ERFÜLLT}}
+\vspace*{.5em}
+%\noindent\input{data2}
 
 \end{document}
