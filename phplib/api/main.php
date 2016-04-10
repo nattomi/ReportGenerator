@@ -166,11 +166,14 @@ class user {
 class otulea {
   private $dir_user;
   private $dir_item;
+  private $file_alphalist;
   private $user;
+  private $xml_alphalist;
 
   public function __construct($dir_data) {
     $this->dir_user = $dir_data . "/" . "user/";
     $this->dir_item = $dir_data . "/" . "item/";
+    $this->file_alphalist = $this->dir_item . "alphalist/alphalist.xml"; 
   }
 
   public function set_user($id) {
@@ -223,6 +226,78 @@ class otulea {
 
   public function is_valid_user() {
     return $this->user->is_valid_user();
+  }
+
+  public function set_alphalist() {
+    if (file_exists($this->file_alphalist))
+      $this->xml_alphalist = simplexml_load_file($this->file_alphalist);
+  }
+
+  //public function get_alphalist() {
+  //  return $this->xml_alphalist;
+  //}
+
+  public function results_student($e, $t) {
+    $dom = new DomDocument('1.0', 'UTF-8');
+    $data = $dom->appendChild($dom->createElement('data'));
+    // type node
+    $node = $dom->createElement('type', 'student');
+    $data->appendChild($node);
+    // user node
+    $node = $dom->createElement('user', $this->user->get_id());
+    $data->appendChild($node);
+    // test id node
+    $node = $dom->createElement('test_id', $t->get_timestamp());
+    $data->appendChild($node);
+    // subject node
+    $node = $dom->createElement('subject', $t->get_subject());
+    $data->appendChild($node);
+    // level node
+    $node = $dom->createElement('level', $t->get_level());
+    $data->appendChild($node);
+    // eval nodes
+    foreach($e as $k=>$v) {
+      $node_eval = $dom->createElement('eval');
+      $data->appendChild($node_eval);
+      $attr_eval = $dom->createAttribute('mode');
+      $attr_eval->appendChild($dom->createTextNode($k));
+      $node_eval->appendChild($attr_eval);
+      //$attr_string = $dom->createAttribute('string');
+      //$attr_string->appendChild($dom->createTextNode($mode_strings[$k]));
+      //$node_eval->appendChild($attr_string);
+      foreach($e[$k] as $a) {
+	//echo $a . PHP_EOL;
+	$node = $dom->createElement('alphanode');
+	$node_eval->appendChild($node);
+	
+	$attr = $dom->createAttribute('alphaID');
+	$attr->appendChild($dom->createTextNode($a));
+	$node->appendChild($attr);
+
+	$xpath = '/alphalist/alphanode[@alphaID="' . $a . '"]';
+	$node_alpha = $this->xml_alphalist->xpath($xpath);
+
+	$attr = $dom->createAttribute('userdescription');
+	$value = (string)$node_alpha[0]['userdescription'];
+	$attr->appendChild($dom->createTextNode($value));
+	$node->appendChild($attr);
+	
+	$attr = $dom->createAttribute('example');
+	$value = (string)$node_alpha[0]['example'];
+	$attr->appendChild($dom->createTextNode($value));
+	$node->appendChild($attr);
+
+      }
+    }
+
+    //$dom->formatOutput = true;
+    return $dom;
+  }
+
+  public function results_teacher() {
+    $dom = new DomDocument('1.0', 'UTF-8');
+    $dom->load('/home/otuleatest/phplib/dev/demo.xml');
+    return $dom;
   }
 
   static function print_testarray(&$testarray) {
@@ -364,50 +439,6 @@ class otulea {
       $val = $conj_a_len - $conj_b_len;
     }
     return $val;
-  }
-
-  static function response($status, $status_message, $domdocument=null) {
-    $dom = new DomDocument('1.0','UTF-8');
-    $results = $dom->appendChild($dom->createElement('results'));
-    $results->appendChild($dom->createElement('status', $status));
-    $results->appendChild($dom->createElement('status_message', $status_message));
-    
-    if(is_null($domdocument)) {
-      $domdocument = new DomDocument('1.0','UTF-8');
-      $domdocument->appendChild($domdocument->createElement('data'));
-    }
-  
-    $import = $dom->importNode($domdocument->documentElement, TRUE);
-    $results->appendChild($import);
-
-    $dom->formatOutput = true;
-
-    echo $dom->saveXML();
-  }
-
-}
-
-class evaluate {
-  
-  static function student(&$markarray, $limits, $threshold) {
-    $passed = array();
-    $failed = array();
-    $scores = otulea::average_marks($markarray);
-    foreach($scores as $k => $v) {
-      if($v >= $threshold) {
-	$passed[] = $k;
-      } else {
-	$failed[] = $k;
-      }
-    }
-
-    usort($passed, "otulea::cmp_alphaid");
-    $passed = array_slice($passed, 0, $limits[0]);
-    usort($failed, "otulea::cmp_alphaid");
-    $failed = array_slice($failed, 0, $limits[1]);
-    
-    return array('passed'=>$passed,
-		 'failed'=>$failed);
   }
 
 }
