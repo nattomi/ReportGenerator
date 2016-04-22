@@ -24,7 +24,48 @@ class render_teacher extends render {
   }
 
   static function eval2tex($e, $mode) {
-    return "demo content";
+    $subjects = array("Lesen", "Schreiben", "Sprache", "Rechnen"); // FIXME 1;
+
+    $content = "\lhead{\large \\textcolor{white}{" . 
+               $mode . "}}\\vspace*{.5em}\n";
+    $content .= "\\begin{paracol}{4}\n";
+    $switchc = false;
+    foreach($subjects as $subject) {
+      if($switchc)
+	$content .= "\\switchcolumn\n";
+      else
+	$switchc = true;
+      $content .= "\\noindent\n";
+      $alphanodes = $e->xpath('//alphanode[@subject="' . $subject . '"]');
+      foreach($alphanodes as $a) {
+	$content .= "\\entry{"; 
+	switch($a['tendency']) {
+	case -1:
+	  $content .= "\\arrowdown";
+	  break;
+	case 0:
+	  $content .= "\\arrowright";
+	  break;
+	case 1:
+	  $content .= "\\arrowup";
+	  break;
+	default:
+	  break;
+	}
+	$content .= "}{" . $a['id'] . "}{" . $a['description'] . "}{";
+	foreach($a->item as $item) {
+	  $content .= "{\\scriptsize " . str_replace("_", "\_", $item);
+	  if((int)$item['cm'])
+	    $content .= "\\cm";
+	  $content .= "}\\\\[-1ex]";
+	}
+	$content .= "}\n";
+	
+      }
+      
+    }
+    $content .= "\\end{paracol}\n";
+    return $content;
   }
 
   public function save_xml() {
@@ -41,5 +82,7 @@ class render_teacher extends render {
   }
 
 }
+
+//FIXME 1: shouldn't be hard-coded like this;
 
 ?>
