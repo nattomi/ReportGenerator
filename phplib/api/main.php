@@ -116,6 +116,37 @@ class test {
 
 }
 
+class alphanode {
+  private $id;
+  private $subject;
+  private $tendency;
+  private $items;
+
+  public function __construct($id, $subject, $tendency, $items) {
+    $this->id = $id;
+    $this->subject = $subject;
+    $this->tendency = $tendency;
+    $this->items = $items;
+  }
+
+  public function get_id() {
+    return $this->id;
+  }
+
+  public function get_subject() {
+    return $this->subject;
+  }
+
+  public function get_tendency() {
+    return $this->tendency;
+  }
+
+  public function get_items() {
+    return $this->items;
+  }
+
+}
+
 class user {
   private $dir;
   private $id;
@@ -290,14 +321,83 @@ class otulea {
       }
     }
 
-    //$dom->formatOutput = true;
+    $dom->formatOutput = true;
     return $dom;
   }
 
-  public function results_teacher() {
+  public function results_teacher($e, $t) {
     $dom = new DomDocument('1.0', 'UTF-8');
-    $dom->load('/home/otuleatest/phplib/dev/demo.xml');
+    $data = $dom->appendChild($dom->createElement('data'));
+    // type node
+    $node = $dom->createElement('type', 'teacher');
+    $data->appendChild($node);
+    // user node
+    $node = $dom->createElement('user', $this->user->get_id());
+    $data->appendChild($node);
+    // test id node
+    $node = $dom->createElement('test_id', $t->get_timestamp());
+    $data->appendChild($node);
+    // stats node
+    $node = $dom->createElement('stats');
+    $data->appendChild($node);
+    $stats = array('Lesen'=>365,
+	       'Schreiben'=>46,
+	       'Sprache'=>0,
+	       'Rechnen'=>13);
+    foreach($stats as $k=>$v) {
+      $node_subject = $dom->createElement('subject', $v);
+      $node->appendChild($node_subject);
+      $attr = $dom->createAttribute('title');
+      $attr->appendChild($dom->createTextNode($k));
+      $node_subject->appendChild($attr);
+    }
+    // eval nodes
+    foreach($e as $k=>$v) {
+      $node_eval = $dom->createElement('eval');
+      $data->appendChild($node_eval);
+      $attr_eval = $dom->createAttribute('mode');
+      $attr_eval->appendChild($dom->createTextNode($k));
+      $node_eval->appendChild($attr_eval);
+      foreach($e[$k] as $a) {
+	//echo $a . PHP_EOL;
+	$node = $dom->createElement('alphanode');
+	$node_eval->appendChild($node);
+
+	$attr = $dom->createAttribute('subject');
+	$attr->appendChild($dom->createTextNode($a->get_subject()));
+	$node->appendChild($attr);
+
+	$attr = $dom->createAttribute('id');
+	$attr->appendChild($dom->createTextNode($a->get_id()));
+	$node->appendChild($attr);
+	// description node is missing from here;
+	$xpath = '/alphalist/alphanode[@alphaID="' . $a->get_id() . '"]';
+	$node_alpha = $this->xml_alphalist->xpath($xpath);
+
+	$attr = $dom->createAttribute('description');
+	$value = (string)$node_alpha[0]['description'];
+	$attr->appendChild($dom->createTextNode($value));
+	$node->appendChild($attr);
+
+	$attr = $dom->createAttribute('tendency');
+	$attr->appendChild($dom->createTextNode($a->get_tendency()));
+	$node->appendChild($attr);
+	
+	foreach($a->get_items() as $ik=>$iv) {
+	  $node_item = $dom->createElement('item', $ik);
+	  $node->appendChild($node_item);
+	  $attr = $dom->createAttribute('cm');
+	  $attr->appendChild($dom->createTextNode($iv));
+	  $node_item->appendChild($attr);
+	}
+
+      }
+    }
     return $dom;
+
+    $dom2 = new DomDocument('1.0', 'UTF-8');
+    $dom2->load('/home/otuleatest/phplib/dev/demo.xml');
+    return $dom2;
   }
 
   static function print_testarray(&$testarray) {
