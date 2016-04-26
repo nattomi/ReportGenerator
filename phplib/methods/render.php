@@ -1,25 +1,27 @@
 <?php
 
-$string = $_POST['data'];
-$type = $_POST['type'];
+$data = $_POST['data'];
 
 include '../phplib/config/render_paths.php';
 include '../phplib/api/render.php';
 
-switch($type) {
+define("FILE_TMP", $paths['dir_tmp'] . "/" . $data . ".xml");
+$doc = simplexml_load_file(FILE_TMP);
+
+switch($doc->type) {
 case 'student':
   include '../phplib/config/render_modes_A.php';
   include '../phplib/api/render_student.php';
-  $r = new render_student($string);
+  $r = new render_student($doc);
   break;
 case 'teacher':
   include '../phplib/config/render_modes_B.php';
   include '../phplib/api/render_teacher.php';
-  $r = new render_teacher($string);
+  $r = new render_teacher($doc);
   break;
 default:
-  die("Unkwown render type" . PHP_EOL);
-  break;
+  api::response(500, "unkwown render type or missing input file"); 
+  die();
 }
 		
 header('Content-type: application/xml');

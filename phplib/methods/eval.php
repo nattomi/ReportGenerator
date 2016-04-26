@@ -3,6 +3,7 @@
 $user = $_POST['user'];
 $type = $_POST['type'];
 $testid = $_POST['testid'];
+$save = $_POST['save'];
 
 include '../phplib/api/main.php';
 include '../phplib/api/eval.php';
@@ -74,21 +75,30 @@ do {
   }
 } while(!is_null($testid));
 
-$marks = array();
-
-foreach($tests as $test) {
-  foreach($ot->get_marks($test) as $mark) {
-    $marks[] = $mark;
-  }
-}
-
-//otulea::print_markarray($marks);
-
 if($type_is_student) {
+  $e = evaluate::student($tests, $ot, .75, array(3, 2));
   $ot->set_alphalist();
-  $e = evaluate::student($marks, array(3, 2), .75);
-  api::response(200, "OK", $ot->results_student($e, $t));
-} else
-  api::response(200, "WARNING! DEMO DATA!", $ot->results_teacher());
+  $data = $ot->results_student($e);
+} else {
+  $e = evaluate::teacher($tests, $ot, .75);
+  $ot->set_alphalist();
+  $data = $ot->results_teacher($e);
+}
+if((int)$save != 1)
+  api::response(200, "OK", $data);
+else {
+  $systime = time();
+  $timestamp = date('YmdHis', $systime);
+  $basename = $user . "_" .
+    date('Ymd_H_i_s', $systime) .
+    "_result_" . $type;
+  $xmlname = $basename . ".xml";
+
+  $data->save(DIR_TMP . "/" . $xmlname);
+  $dom = new DomDocument('1.0', 'UTF-8');
+  $dom->appendChild($dom->createElement('data', $basename));
+
+  api::response(200, "OK", $dom);
+}
 
 ?>
