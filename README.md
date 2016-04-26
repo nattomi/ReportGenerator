@@ -7,12 +7,18 @@ git clone git://github.com/nattomi/ReportGenerator.git
 ## for developers
 git clone git@github.com:nattomi/ReportGenerator.git
 ## to get the current stable release, cd to project folder then issue
-git checkout tags/v.1.2.1
+git checkout tags/v1.2.1
 ## to get the current testing release, cd to project folder then issue
-git checkout tags/v.1.3.3
+git checkout tags/v2.0
 
 
 ## CHANGELOG
+v2.0
+======
+* Complete rewrite of former R scripts in PHP
+* Complete API rewrite
+* Updated teacher report template which handles line breaks 
+
 v1.3.3
 ======
 * An obsolete folder removed.
