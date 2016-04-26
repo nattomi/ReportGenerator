@@ -23,6 +23,10 @@ class mark {
     $this->timestamp = $timestamp;
   }
 
+  public function get_task() {
+    return $this->task;
+  }
+
   public function set_task($task) {
     $this->task = $task;
   }
@@ -127,6 +131,14 @@ class alphanode {
     $this->subject = $subject;
     $this->tendency = $tendency;
     $this->items = $items;
+  }
+
+  public function category() {
+    if(array_product($this->items) == 1)
+      return "B1";
+    if(array_sum($this->items) == 0)
+      return "B3";
+    return "B2";
   }
 
   public function get_id() {
@@ -268,7 +280,7 @@ class otulea {
   //  return $this->xml_alphalist;
   //}
 
-  public function results_student($e, $t) {
+  public function results_student($e) {
     $dom = new DomDocument('1.0', 'UTF-8');
     $data = $dom->appendChild($dom->createElement('data'));
     // type node
@@ -278,16 +290,16 @@ class otulea {
     $node = $dom->createElement('user', $this->user->get_id());
     $data->appendChild($node);
     // test id node
-    $node = $dom->createElement('test_id', $t->get_timestamp());
+    $node = $dom->createElement('test_id', $e['meta']['timestamp']);
     $data->appendChild($node);
     // subject node
-    $node = $dom->createElement('subject', $t->get_subject());
+    $node = $dom->createElement('subject', $e['meta']['subject']);
     $data->appendChild($node);
     // level node
-    $node = $dom->createElement('level', $t->get_level());
+    $node = $dom->createElement('level', $e['meta']['level']);
     $data->appendChild($node);
     // eval nodes
-    foreach($e as $k=>$v) {
+    foreach($e['eval'] as $k=>$v) {
       $node_eval = $dom->createElement('eval');
       $data->appendChild($node_eval);
       $attr_eval = $dom->createAttribute('mode');
@@ -296,7 +308,7 @@ class otulea {
       //$attr_string = $dom->createAttribute('string');
       //$attr_string->appendChild($dom->createTextNode($mode_strings[$k]));
       //$node_eval->appendChild($attr_string);
-      foreach($e[$k] as $a) {
+      foreach($v as $a) {
 	//echo $a . PHP_EOL;
 	$node = $dom->createElement('alphanode');
 	$node_eval->appendChild($node);
@@ -317,7 +329,6 @@ class otulea {
 	$value = (string)$node_alpha[0]['example'];
 	$attr->appendChild($dom->createTextNode($value));
 	$node->appendChild($attr);
-
       }
     }
 
@@ -325,7 +336,7 @@ class otulea {
     return $dom;
   }
 
-  public function results_teacher($e, $t) {
+  public function results_teacher($e) {
     $dom = new DomDocument('1.0', 'UTF-8');
     $data = $dom->appendChild($dom->createElement('data'));
     // type node
@@ -335,16 +346,12 @@ class otulea {
     $node = $dom->createElement('user', $this->user->get_id());
     $data->appendChild($node);
     // test id node
-    $node = $dom->createElement('test_id', $t->get_timestamp());
+    $node = $dom->createElement('test_id', $e['meta']['timestamp']);
     $data->appendChild($node);
     // stats node
     $node = $dom->createElement('stats');
     $data->appendChild($node);
-    $stats = array('Lesen'=>365,
-	       'Schreiben'=>46,
-	       'Sprache'=>0,
-	       'Rechnen'=>13);
-    foreach($stats as $k=>$v) {
+    foreach($e['meta']['stats'] as $k=>$v) {
       $node_subject = $dom->createElement('subject', $v);
       $node->appendChild($node_subject);
       $attr = $dom->createAttribute('title');
@@ -352,13 +359,13 @@ class otulea {
       $node_subject->appendChild($attr);
     }
     // eval nodes
-    foreach($e as $k=>$v) {
+    foreach($e['eval'] as $k=>$v) {
       $node_eval = $dom->createElement('eval');
       $data->appendChild($node_eval);
       $attr_eval = $dom->createAttribute('mode');
       $attr_eval->appendChild($dom->createTextNode($k));
       $node_eval->appendChild($attr_eval);
-      foreach($e[$k] as $a) {
+      foreach($v as $a) {
 	//echo $a . PHP_EOL;
 	$node = $dom->createElement('alphanode');
 	$node_eval->appendChild($node);
@@ -393,11 +400,10 @@ class otulea {
 
       }
     }
+
+    $dom->formatOutput = true;
     return $dom;
 
-    $dom2 = new DomDocument('1.0', 'UTF-8');
-    $dom2->load('/home/otuleatest/phplib/dev/demo.xml');
-    return $dom2;
   }
 
   static function print_testarray(&$testarray) {
@@ -527,8 +533,8 @@ class otulea {
 
   
   static function cmp_alphaid($a, $b) {
-    $conj_a = otulea::conj_alphaid($a);
-    $conj_b = otulea::conj_alphaid($b);
+    $conj_a = self::conj_alphaid($a);
+    $conj_b = self::conj_alphaid($b);
     $conj_a_len = count($conj_a);
     $conj_b_len = count($conj_b);
     for($i = 0; $i < min($conj_a_len, $conj_b_len); $i++) {
@@ -539,6 +545,23 @@ class otulea {
       $val = $conj_a_len - $conj_b_len;
     }
     return $val;
+  }
+
+  static function asint($timestamp) {
+    $parts = explode("_", $timestamp);
+    foreach ($parts as $k=>$v) {
+      $parts[$k] = str_pad($v, 2, "0", STR_PAD_LEFT);
+    }
+    return (int)implode("", $parts);
+  }
+
+  static function cmp_timestamp($t, $s) {
+    $t = self::asint($t[0]);
+    $s = self::asint($s[0]);
+
+    if($t == $s)
+      return 0;
+    return ($t < $s) ? 1 : -1;
   }
 
 }

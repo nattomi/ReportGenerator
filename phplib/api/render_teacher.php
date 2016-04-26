@@ -36,7 +36,8 @@ class render_teacher extends render {
       else
 	$switchc = true;
       $content .= "\\noindent\n";
-      $alphanodes = $e->xpath('//alphanode[@subject="' . $subject . '"]');
+      $alphanodes = $e->xpath('alphanode[@subject="' . $subject . '"]');
+      print_r($alphanodes);
       foreach($alphanodes as $a) {
 	$content .= "\\entry{"; 
 	switch($a['tendency']) {
@@ -52,7 +53,7 @@ class render_teacher extends render {
 	default:
 	  break;
 	}
-	$content .= "}{" . $a['id'] . "}{" . $a['description'] . "}{";
+	$content .= "}{" . $a['id'] . "}{" . self::sanitize($a['description']) . "}{";
 	foreach($a->item as $item) {
 	  $content .= "{\\scriptsize " . str_replace("_", "\_", $item);
 	  if((int)$item['cm'])

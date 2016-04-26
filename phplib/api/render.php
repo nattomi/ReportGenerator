@@ -13,8 +13,8 @@ class render {
   private $xmlname;
   private $dev_mode = false;
 
-  public function __construct($string) {
-    $this->xml = simplexml_load_string($string);
+  public function __construct($xmldoc) {
+    $this->xml = $xmldoc;
   }
 
   public function toggle_dev_mode() {
@@ -105,6 +105,13 @@ class render {
       reset($objects);
       rmdir($dir);
     }
+  }
+
+  static function sanitize($x) {
+    $x = str_replace("μ", "$\\mu$", $x);
+    $x = str_replace("«","\\guillemotleft ", $x);
+    $x = str_replace("»","\\guillemotright ", $x);
+    return $x;
   }
   
 }

@@ -112,4 +112,5 @@ class render_student extends render {
 
 }
 
+// FIXME 1: this function has nothing to do with the specific class really. Maybe its better to include it in other segments of the api.
 ?>
