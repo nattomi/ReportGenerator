@@ -16,7 +16,7 @@ class evaluate {
 
     $passed = array();
     $failed = array();
-    $scores = otulea::average_marks($markarray);
+    $scores = otulea::average_marks($marks);
     foreach($scores as $k => $v) {
       if($v >= $threshold) {
 	$passed[] = $k;
