@@ -37,7 +37,7 @@ class render_teacher extends render {
 	$switchc = true;
       $content .= "\\noindent\n";
       $alphanodes = $e->xpath('alphanode[@subject="' . $subject . '"]');
-      print_r($alphanodes);
+      //print_r($alphanodes);
       foreach($alphanodes as $a) {
 	$content .= "\\entry{"; 
 	switch($a['tendency']) {
