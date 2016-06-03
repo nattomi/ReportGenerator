@@ -51,11 +51,11 @@ class evaluate {
       $stats[$subject] += 1;
       $marks = $otulea->get_marks($test);
       foreach($marks as $mark) {
-	$ts = $mark->get_timestamp();
-	$task = $mark->get_task();
-	foreach($mark->get_subtasks() as $subtask=>$arr) {
-	  $alphaids0[$subject][$arr['alphaid']][$task][$subtask][] = array($ts, $arr['mark']);
-	}
+          $ts = $mark->get_timestamp();
+          $task = $mark->get_task();
+          foreach($mark->get_subtasks() as $arr) {
+              $alphaids0[$subject][$arr['alphaid']][$task][$arr['subtask']][] = array($ts, $arr['mark']);
+          }
       }
     }
     
