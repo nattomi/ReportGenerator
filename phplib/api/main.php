@@ -5,19 +5,21 @@ class mark {
   private $subtasks;
 
   public function __construct($simple_xml_data) {
-    $subtasks = array();
-    foreach($simple_xml_data->marking->mark as $mark) {
-      $subtask = (string)$mark['itemnumber'];
-      $alphaid = (string)$mark['alphalevel'];
-      $subtasks[$subtask] = array('alphaid'=>$alphaid, 
-				  'mark'=>(int)$mark);
-    }
-    $this->subtasks = $subtasks;
+      $subtasks = array();
+      foreach($simple_xml_data->marking->mark as $mark) {
+          $subtask = (string)$mark['itemnumber'];
+          $alphaid = (string)$mark['alphalevel'];
+          $subtasks[] = array('subtask'=>$subtask,
+          'alphaid'=>$alphaid,
+          'mark'=>(int)$mark);
+      }
+    
+      $this->subtasks = $subtasks;
   }
   
   public function get_timestamp() {
     return $this->timestamp;
-  }
+
 
   public function set_timestamp($timestamp) {
     $this->timestamp = $timestamp;
@@ -420,10 +422,10 @@ class otulea {
   static function print_markarray(&$markarray) {
     foreach($markarray as $mark) {
       foreach($mark->get_subtasks() as $subtask=>$value) {
-	echo $mark->get_timestamp() . " " .
-	     $subtask               . " " .
-	     $value['alphaid']      . " " .
-	     $value['mark']         . PHP_EOL;
+          echo $mark->get_timestamp() . " " .
+              $value['subtask']      . " " .
+              $value['alphaid']      . " " .
+              $value['mark']         . PHP_EOL;
       }
     }
   }
