@@ -24,12 +24,11 @@ class evaluate {
 	$failed[] = $k;
       }
     }
-
+    
     usort($passed, "otulea::cmp_alphaid");
     $passed = array_slice($passed, 0, $limits[0]);
     usort($failed, "otulea::cmp_alphaid");
     $failed = array_slice($failed, 0, $limits[1]);
-    
     return array(
 		 'meta'=>$meta,
 		 'eval'=>array(
@@ -51,11 +50,12 @@ class evaluate {
       $stats[$subject] += 1;
       $marks = $otulea->get_marks($test);
       foreach($marks as $mark) {
-          $ts = $mark->get_timestamp();
-          $task = $mark->get_task();
-          foreach($mark->get_subtasks() as $arr) {
-              $alphaids0[$subject][$arr['alphaid']][$task][$arr['subtask']][] = array($ts, $arr['mark']);
-          }
+	$ts = $mark->get_timestamp();
+	$task = $mark->get_task();
+	foreach($mark->get_subtasks() as $arr) {
+	  $m = is_null($arr['mark']) ? 0 : $arr['mark'];
+	  $alphaids0[$subject][$arr['alphaid']][$task][$arr['subtask']][] = array($ts, $arr['mark']);
+	}
       }
     }
     

@@ -5,21 +5,21 @@ class mark {
   private $subtasks;
 
   public function __construct($simple_xml_data) {
-      $subtasks = array();
-      foreach($simple_xml_data->marking->mark as $mark) {
-          $subtask = (string)$mark['itemnumber'];
-          $alphaid = (string)$mark['alphalevel'];
-          $subtasks[] = array('subtask'=>$subtask,
-          'alphaid'=>$alphaid,
-          'mark'=>(int)$mark);
-      }
-    
-      $this->subtasks = $subtasks;
+    $subtasks = array();
+    foreach($simple_xml_data->marking->mark as $mark) {
+      $m = (string)$mark == '' ? null : (int)$mark; 
+      $subtask = (string)$mark['itemnumber'];
+      $alphaid = (string)$mark['alphalevel'];
+      $subtasks[] = array('subtask'=>$subtask,
+			  'alphaid'=>$alphaid,
+      			  'mark'=>$m);
+    }
+    $this->subtasks = $subtasks;
   }
   
   public function get_timestamp() {
     return $this->timestamp;
-
+  }
 
   public function set_timestamp($timestamp) {
     $this->timestamp = $timestamp;
@@ -255,12 +255,12 @@ class otulea {
 	            $item           . "/" .
 	            $item           . ".xml";
       }
+      
       if(file_exists($xml_data)) {
 	$simple_xml_data = simplexml_load_file($xml_data);
       } else {
 	return false;
       }
-      //  echo $item . PHP_EOL;
       $mark = new mark($simple_xml_data);
       $mark->set_timestamp($value['timestamp']);
       $mark->set_task($item);
@@ -419,13 +419,13 @@ class otulea {
     }
   }
 
-  static function print_markarray(&$markarray) {
+  static function print_markarray($markarray) {
     foreach($markarray as $mark) {
-      foreach($mark->get_subtasks() as $subtask=>$value) {
-          echo $mark->get_timestamp() . " " .
-              $value['subtask']      . " " .
-              $value['alphaid']      . " " .
-              $value['mark']         . PHP_EOL;
+      foreach($mark->get_subtasks() as $value) {
+	echo $mark->get_timestamp() . " " .
+	     $value['subtask']      . " " .
+	     $value['alphaid']      . " " .
+	     $value['mark']         . PHP_EOL;
       }
     }
   }
@@ -504,7 +504,7 @@ class otulea {
     foreach($markarray as $mark) {
       foreach($mark->get_subtasks() as $subtask) {
 	$alphaid = (string)$subtask['alphaid'];
-	$m = (int)$subtask['mark'];
+	$m = is_null($subtask['mark']) ? 0 : (int)$subtask['mark'];
 	if(!array_key_exists($alphaid, $sums)) {
 	  $sums[$alphaid] = $m;
 	  $n[$alphaid] = 1;
