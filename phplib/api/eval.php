@@ -154,25 +154,6 @@ class evaluate {
   
   }
 
-  static function teacher_ex($markarray) {
-
-    $xml = simplexml_load_file('/home/otuleatest/phplib/dev/demo.xml');
-    $ans = array();
-    foreach($xml->eval as $e) {
-      $an_per_mode = array();
-      foreach($e->alphanode as $a) {
-	$items = array();
-	foreach($a->item as $i) {
-	  $items[(string)$i] = (int)$i['cm'];
-	}
-	$alphanode = new alphanode((string)$a['id'], (string)$a['subject'], (int)$a['tendency'], $items);
-	$an_per_mode[] = $alphanode;
-      }
-      $ans[(string)$e['mode']] = $an_per_mode;
-    }
-    return $ans;
-  }
-
 }
 
 
