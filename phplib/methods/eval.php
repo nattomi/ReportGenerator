@@ -76,11 +76,11 @@ do {
 } while(!is_null($testid));
 
 if($type_is_student) {
-  $e = evaluate::student($tests, $ot, .75, array(3, 2));
+  $e = evaluate::student($tests, $ot, THRES_STUDENT, array(3, 2));
   $ot->set_alphalist();
   $data = $ot->results_student($e);
 } else {
-  $e = evaluate::teacher($tests, $ot, .75);
+  $e = evaluate::teacher($tests, $ot, THRES_TEACHER);
   $ot->set_alphalist();
   $data = $ot->results_teacher($e);
 }
